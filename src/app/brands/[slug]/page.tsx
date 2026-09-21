@@ -1,0 +1,11 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { EmptyState } from "@/components/ui/empty-state";
+import { brands, products } from "@/data/products";
+import { getLocale } from "@/lib/server-locale";
+import { tr } from "@/lib/i18n";
+
+export function generateStaticParams() { return brands.map(({slug})=>({slug})); }
+export async function generateMetadata({params}: {params:Promise<{slug:string}>}):Promise<Metadata> { const [{slug},locale]=await Promise.all([params,getLocale()]); return {title:brands.find((item)=>item.slug===slug)?.name ?? tr(locale,"Brand")}; }
+export default async function BrandDetail({params}: {params:Promise<{slug:string}>}) { const [{slug},locale]=await Promise.all([params,getLocale()]); const brand=brands.find((item)=>item.slug===slug); if (!brand) notFound(); const count=products.filter((item)=>item.brandId===brand.id).length; return <div className="container page-shell"><Breadcrumb items={[{label:"Brands",href:"/brands"},{label:brand.name}]}/><div className="page-heading"><p className="eyebrow">{tr(locale,"VERIFIED BRAND PROFILE")}</p><h1>{brand.name}<span className="heading-period">.</span></h1><p>{brand.description}</p></div><div className="detail-layout"><div className="detail-main"><section className="content-panel"><h2>{tr(locale,"Brand profile")}</h2><div className="spec-table">{[["Parent company",brand.parentCompany],["Country",brand.countryOfOrigin],["Official website",brand.officialWebsite],["Categories",brand.categoryIds?.join(", ")],["Formats",brand.formatIds?.join(", ")],["Markets",brand.marketIds?.join(", ")]].map(([label,value])=><div className="spec-row" key={label}><span>{tr(locale,label ?? "")}</span><strong>{value ?? "—"}</strong></div>)}</div></section><section className="content-panel"><h2>{tr(locale,"Products")} · {count}</h2><EmptyState title="No product records yet." description="Verified records linked to this brand will appear here."/></section></div><aside className="detail-side"><div className="side-panel"><p className="eyebrow">{tr(locale,"PROVENANCE")}</p><h3>{brand.sources.length} {tr(locale,"sources")}</h3><p className="side-note">{tr(locale,"Last verified")}: {brand.lastVerified ?? "—"}</p></div></aside></div></div>; }

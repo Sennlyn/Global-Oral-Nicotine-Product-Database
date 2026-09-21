@@ -1,0 +1,11 @@
+import type { Metadata } from "next";
+import { ArrowRightLeft } from "lucide-react";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { EmptyState } from "@/components/ui/empty-state";
+import { products } from "@/data/products";
+import { getLocale } from "@/lib/server-locale";
+import { tr } from "@/lib/i18n";
+
+export async function generateMetadata(): Promise<Metadata> { return { title: tr(await getLocale(),"Compare") }; }
+const fields=["Brand","Product","Category","Format","Nicotine strength","Nicotine per unit","Contains tobacco","Nicotine source","Flavor","Unit weight","Country","Markets","Delivery route"];
+export default async function ComparePage() { const locale=await getLocale(); return <div className="container page-shell"><Breadcrumb items={[{label:"Compare"}]}/><div className="page-heading"><p className="eyebrow">{tr(locale,"SIDE BY SIDE / 05")}</p><h1>{tr(locale,"Product comparison")}<span className="heading-period">.</span></h1><p>{tr(locale,"A neutral technical comparison workspace for up to four verified products. Format specific attributes will be grouped separately.")}</p></div><div className="compare-intro"><ArrowRightLeft size={25}/><div><strong>{tr(locale,"Compare up to 4 products")}</strong><span>{tr(locale,products.length ? "Select verified products to begin." : "Selection becomes available when verified products are added.")}</span></div></div><div className="compare-table-wrap"><table className="compare-table"><thead><tr><th>{tr(locale,"ATTRIBUTE")}</th>{[1,2,3,4].map((i)=><th key={i}><div className="compare-slot"><span>0{i}</span><strong>{tr(locale,"Product slot")}</strong><small>{tr(locale,"No product selected")}</small></div></th>)}</tr></thead><tbody>{fields.map((field)=><tr key={field}><th>{tr(locale,field)}</th>{[1,2,3,4].map((i)=><td key={i}>—</td>)}</tr>)}</tbody></table></div><div className="compare-note">{tr(locale,"Cross format comparisons show common fields here; each product’s unique specifications appear in a separate section when records exist.")}</div><div className="section-spacer"><EmptyState title="No products available for comparison yet." description="The comparison table is ready for verified product records." action={{label:"View product database",href:"/products"}}/></div></div>; }
