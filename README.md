@@ -82,4 +82,3 @@ Search, filtering, sorting, grid/list controls, taxonomy navigation, category an
 ## Suggested next phase
 
 After reviewing V1, establish a small evidence-backed entry workflow and record validation checklist, then add a limited set of verified products across different formats to test the model. Database migration can follow once the content workflow is stable. Do not add records without the project owner's authorization for that phase.
-

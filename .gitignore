@@ -1,0 +1,13 @@
+node_modules/
+.next/
+.next-validation/
+.next-i18n-dev/
+.next-i18n-build/
+out/
+build/
+.env*
+!.env.example
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+*.log
