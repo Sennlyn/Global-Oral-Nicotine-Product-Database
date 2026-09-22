@@ -5,6 +5,10 @@ export type SourceType = "official-brand" | "manufacturer" | "regulator" | "gove
 export type NicotineSource = "tobacco-derived" | "synthetic" | "tobacco-material" | "unknown" | "other";
 export type DeliveryRoute = "buccal" | "gingival" | "sublingual" | "oral-dissolution" | "chewing" | "oral-mucosal" | "mixed" | "other";
 export type ProductTechnology = "pouch-matrix" | "polymer-film" | "hydrogel-film" | "compressed-tablet" | "lozenge-matrix" | "gum-base" | "candy-matrix" | "tobacco-matrix" | "powder-system" | "other";
+export type FormatGroupId = "flexible-carrier" | "formed-solid" | "elastic-gel" | "particulate" | "compacted-mass";
+export type PhysicalFormShape = "strip" | "sheet" | "spherical" | "pearl" | "other";
+export type Unitization = "pre-portioned" | "loose";
+export type OralUseMode = "placement" | "dissolution" | "chewing" | "other";
 
 export interface Source {
   id: string;
@@ -32,11 +36,28 @@ export interface Category {
 export interface ProductFormat {
   id: string;
   slug: string;
+  groupId: FormatGroupId;
   name: LocalizedText;
   description: LocalizedText;
   typicalStructure: LocalizedText;
-  categoryIds: string[];
   typicalParameters: string[];
+}
+
+export interface FormatGroup {
+  id: FormatGroupId;
+  name: LocalizedText;
+  description: LocalizedText;
+}
+
+/**
+ * Structural descriptors for a product's physical form. These do not determine
+ * product category, flavour or delivery route.
+ */
+export interface PhysicalFormDetails {
+  shape?: PhysicalFormShape;
+  unitization?: Unitization;
+  useMode?: OralUseMode;
+  commercialPresentation?: string;
 }
 
 export interface Brand {
@@ -150,6 +171,18 @@ export interface CandySpecification extends BaseSpecification {
   dissolutionTimeMin?: number;
   chewingRequired?: boolean;
 }
+export interface ParticulateSpecification extends BaseSpecification {
+  kind: "particulate";
+  particleSize?: string;
+  particleShape?: string;
+  bulkDensity?: string;
+  moisture?: string;
+}
+export interface PlugSpecification extends BaseSpecification {
+  kind: "plug";
+  dimensions?: string;
+  compressionProfile?: string;
+}
 export interface TobaccoSpecification extends BaseSpecification {
   kind: "tobacco";
   portionWeightMg?: number;
@@ -162,7 +195,7 @@ export interface OtherSpecification extends BaseSpecification {
   kind: "other";
   attributes?: Record<string, string | number | boolean>;
 }
-export type ProductSpecification = PouchSpecification | FilmSpecification | GumSpecification | LozengeSpecification | TabletSpecification | CandySpecification | TobaccoSpecification | OtherSpecification;
+export type ProductSpecification = PouchSpecification | FilmSpecification | GumSpecification | LozengeSpecification | TabletSpecification | CandySpecification | ParticulateSpecification | PlugSpecification | TobaccoSpecification | OtherSpecification;
 
 export interface Product {
   id: string;
@@ -173,6 +206,7 @@ export interface Product {
   categoryId: string;
   subcategory?: string;
   formatId: string;
+  physicalFormDetails?: PhysicalFormDetails;
   manufacturerId?: string;
   parentCompany?: string;
   countryOfOrigin?: string;

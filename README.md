@@ -55,17 +55,21 @@ src/
 
 ## Classification
 
-**Product Category** (10): Nicotine Pouches, Nicotine Films, Nicotine Gum, Nicotine Candy & Confectionery, Nicotine Lozenges, Nicotine Tablets, Other Solid Oral Nicotine, Snus, Other Oral Smokeless Tobacco, Other Oral Nicotine Products.
+**Product Category** (6): Nicotine Pouches; Nicotine Films; Nicotine Gum & Confectionery; Nicotine Lozenges & Solid Formats; Oral Smokeless Tobacco; Other Oral Nicotine Products. Gum and confectionery share one top-level category. Snus remains an identifiable subcategory of Oral Smokeless Tobacco.
 
-**Product Format** (19): Pouch, Portion, Film, Strip, Sheet, Gum, Lozenge, Tablet, Candy, Gummy, Mint, Bead, Pearl, Granule, Powder, Loose, Plug, Chew, Other.
+**Physical Form** (11): Pouch, Oral Film, Lozenge, Tablet, Hard Candy, Gum, Gummy, Bead / Pellet, Granule, Powder and Compacted Block. The browse page groups these by physical structure: flexible carriers, formed solids, elastic and gel matrices, particulate systems and compacted masses.
 
-These are independent dimensions. A product also records nicotine source, tobacco presence, delivery route and optional product technology. Categories and formats are definitions, not evidence that a corresponding product has been entered.
+Physical form is independent from product category. Each future product record has one primary physical form; its shape, unitization, use mode, commercial presentation and flavour are separate fields. “Portion” and “loose” are unitization values, “chew” is a use mode, and “mint” is a flavour or commercial presentation rather than a physical form.
+
+The original nineteen entries are preserved in `legacyFormatDefinitions` for traceability. Exact structural aliases (such as Strip → Oral Film and Bead → Bead / Pellet) resolve to an active physical form. Ambiguous former entries redirect to the formats overview so a future source-backed record can be classified from its actual structure.
+
+The original ten category definitions remain in `originalCategories` for traceability. `categoryIdAliases` maps their IDs to the six active categories, and old category URLs redirect to the corresponding new page. Formal product records are still empty, so no real product records were moved or removed.
 
 ## Product model
 
-`src/types/catalog.ts` defines `Product`, `Brand`, `Manufacturer`, `Market`, `Source`, `Flavor` and `NicotineSpecification`. A product has stable IDs/slugs, brand and manufacturer references, category and format references, markets, optional descriptive attributes, source links, verification status and last verification date. Unknown attributes are optional rather than invented.
+`src/types/catalog.ts` defines `Product`, `Brand`, `Manufacturer`, `Market`, `Source`, `Flavor` and `NicotineSpecification`. A product has stable IDs/slugs, brand and manufacturer references, independent category and primary physical-form references, markets, optional descriptive attributes, source links, verification status and last verification date. `physicalFormDetails` keeps structural shape, unitization, use mode and commercial presentation separate from category and flavour. Unknown attributes are optional rather than invented.
 
-Physical specifications are a discriminated union selected by `specifications.kind`: `pouch`, `film`, `gum`, `lozenge`, `tablet`, `candy`, `tobacco` or `other`. Each variant has its own optional technical fields. `SpecificationTable` renders only fields present in that product's selected variant. The `other` variant provides an extension point for new formats.
+Physical specifications are a discriminated union selected by `specifications.kind`: `pouch`, `film`, `gum`, `lozenge`, `tablet`, `candy`, `particulate`, `plug`, `tobacco` or `other`. Each variant has its own optional technical fields. `SpecificationTable` renders only fields present in that product's selected variant. The `other` variant provides an extension point for new formats.
 
 ## Authenticity and future entry policy
 
