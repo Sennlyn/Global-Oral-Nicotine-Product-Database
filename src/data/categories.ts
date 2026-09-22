@@ -27,14 +27,14 @@ export const categoryIdAliases: Record<string, string> = {
 export const resolveCategoryId = (id: string) => categoryIdAliases[id] ?? id;
 
 export const categories: Category[] = [
-  originalCategories[0],
-  originalCategories[1],
+  { ...originalCategories[0], typicalFormats: ["pouch"] },
+  { ...originalCategories[1], typicalFormats: ["film"] },
   {
     id: "nicotine-gum-confectionery", slug: "nicotine-gum-confectionery",
     name: { en: "Nicotine Gum & Confectionery", zh: "尼古丁口香糖与糖果制品" },
     description: { en: "Gum, candy, gummies and related confectionery-style oral nicotine products.", zh: "收录口香糖、糖果、软糖等糖果型口腔尼古丁产品。" },
     introduction: { en: "This category brings gum and confectionery together while keeping gum, candy, gummy, mint and chew as distinct physical formats. A mint-style product may instead belong with lozenges when its verified product information supports that classification.", zh: "将口香糖与糖果型产品归为一类，同时将口香糖、糖果、软糖、薄荷糖及咀嚼型形态分别记录。薄荷糖类产品如经核实更符合含片定义，可归入含片与固体剂型类别。" },
-    icon: "gum", typicalFormats: ["gum", "candy", "gummy", "mint", "chew"],
+    icon: "gum", typicalFormats: ["gum", "hard-candy", "gummy"],
     typicalRoutes: ["chewing", "oral-dissolution", "oral-mucosal"],
     keyParameters: ["Nicotine per unit", "Unit weight", "Texture", "Chewing time", "Dissolution time"],
     subcategories: ["Nicotine Gum", "Candy", "Gummy", "Mint"],
@@ -44,7 +44,7 @@ export const categories: Category[] = [
     name: { en: "Nicotine Lozenges & Solid Formats", zh: "尼古丁含片与固体剂型" },
     description: { en: "Lozenges, oral tablets, beads, granules, powders and other solid formats.", zh: "收录含片、口腔片剂、珠粒、颗粒、粉末等固体剂型。" },
     introduction: { en: "Combines lozenges, oral tablets and other solid oral nicotine forms. Physical format, delivery site, dissolution and disintegration remain separate product-level fields. Mint-style products are classified from verified product information, not flavor alone.", zh: "整合含片、口腔片剂及其他固体口腔尼古丁形态。具体剂型、使用部位、溶解与崩解特性仍在产品层独立记录；薄荷糖类产品不单凭口味归类。" },
-    icon: "lozenge", typicalFormats: ["lozenge", "tablet", "mint", "bead", "pearl", "granule", "powder"],
+    icon: "lozenge", typicalFormats: ["lozenge", "tablet", "bead-pellet", "granule", "powder"],
     typicalRoutes: ["oral-dissolution", "buccal", "sublingual", "oral-mucosal"],
     keyParameters: ["Nicotine per unit", "Unit weight", "Dissolution time", "Disintegration time", "Particle size"],
     subcategories: ["Nicotine Lozenges", "Nicotine Tablets", "Bead", "Pearl", "Granule", "Powder"],
@@ -54,12 +54,12 @@ export const categories: Category[] = [
     name: { en: "Oral Smokeless Tobacco", zh: "口腔无烟烟草" },
     description: { en: "Snus and other oral smokeless tobacco products.", zh: "收录瑞典式口含烟及其他口腔无烟烟草产品。" },
     introduction: { en: "Snus remains an identifiable subcategory alongside moist snuff, dip, chewing tobacco and other oral tobacco forms. Loose, portion and pouch formats are recorded independently; tobacco composition requires product-level evidence.", zh: "将瑞典式口含烟作为可识别的二级分类，并收录湿鼻烟、蘸用烟、嚼烟等其他口腔烟草形态。散装、份装与袋装形态独立记录；具体烟草组成须依据产品级来源核实。" },
-    icon: "tobacco", typicalFormats: ["loose", "portion", "pouch", "plug", "chew"],
+    icon: "tobacco", typicalFormats: ["pouch", "plug"],
     typicalRoutes: ["gingival", "buccal", "chewing", "oral-mucosal"],
     keyParameters: ["Portion weight", "Moisture", "Tobacco type", "Net weight"],
     subcategories: ["Snus", "Moist Snuff", "Dip", "Chewing Tobacco", "Tobacco Pouch", "Plug Tobacco", "Twist Tobacco"],
   },
-  originalCategories[9],
+  { ...originalCategories[9], typicalFormats: [] },
 ];
 
 export const getCategory = (slug: string) => categories.find((item) => item.slug === resolveCategoryId(slug));

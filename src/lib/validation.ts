@@ -1,5 +1,5 @@
 import { categories, resolveCategoryId } from "@/data/categories";
-import { formats } from "@/data/formats";
+import { formats, resolveFormatId } from "@/data/formats";
 import type { Product } from "@/types/catalog";
 
 /** Call this before a future record is published; incomplete records stay pending. */
@@ -7,7 +7,7 @@ export function validateVerifiedProduct(product: Product): string[] {
   const errors: string[] = [];
   if (!product.id || !product.slug || !product.productName.trim()) errors.push("Product identity is incomplete.");
   if (!categories.some((item) => item.id === resolveCategoryId(product.categoryId))) errors.push("Unknown category.");
-  if (!formats.some((item) => item.id === product.formatId)) errors.push("Unknown format.");
+  if (!formats.some((item) => item.id === resolveFormatId(product.formatId))) errors.push("Unknown physical form.");
   if (product.containsTobacco === true && product.tobaccoFree === true) errors.push("Tobacco status is contradictory.");
   if (product.verificationStatus === "verified") {
     if (!product.sources.length) errors.push("Verified products need at least one traceable source.");

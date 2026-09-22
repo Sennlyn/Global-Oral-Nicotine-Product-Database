@@ -11,6 +11,16 @@ const nextConfig: NextConfig = {
       { source: "/categories/other-solid-oral-nicotine", destination: "/categories/nicotine-lozenges-solids", permanent: true },
       { source: "/categories/snus", destination: "/categories/oral-smokeless-tobacco", permanent: true },
       { source: "/categories/other-oral-smokeless-tobacco", destination: "/categories/oral-smokeless-tobacco", permanent: true },
+      { source: "/formats/strip", destination: "/formats/film", permanent: true },
+      { source: "/formats/sheet", destination: "/formats/film", permanent: true },
+      { source: "/formats/candy", destination: "/formats/hard-candy", permanent: true },
+      { source: "/formats/bead", destination: "/formats/bead-pellet", permanent: true },
+      { source: "/formats/pearl", destination: "/formats/bead-pellet", permanent: true },
+      { source: "/formats/portion", destination: "/formats", permanent: false },
+      { source: "/formats/mint", destination: "/formats", permanent: false },
+      { source: "/formats/loose", destination: "/formats", permanent: false },
+      { source: "/formats/chew", destination: "/formats", permanent: false },
+      { source: "/formats/other", destination: "/formats", permanent: false },
     ];
   },
 };
