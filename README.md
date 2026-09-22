@@ -55,11 +55,13 @@ src/
 
 ## Classification
 
-**Product Category** (10): Nicotine Pouches, Nicotine Films, Nicotine Gum, Nicotine Candy & Confectionery, Nicotine Lozenges, Nicotine Tablets, Other Solid Oral Nicotine, Snus, Other Oral Smokeless Tobacco, Other Oral Nicotine Products.
+**Product Category** (6): Nicotine Pouches; Nicotine Films; Nicotine Gum & Confectionery; Nicotine Lozenges & Solid Formats; Oral Smokeless Tobacco; Other Oral Nicotine Products. Gum and confectionery share one top-level category. Snus remains an identifiable subcategory of Oral Smokeless Tobacco.
 
 **Product Format** (19): Pouch, Portion, Film, Strip, Sheet, Gum, Lozenge, Tablet, Candy, Gummy, Mint, Bead, Pearl, Granule, Powder, Loose, Plug, Chew, Other.
 
 These are independent dimensions. A product also records nicotine source, tobacco presence, delivery route and optional product technology. Categories and formats are definitions, not evidence that a corresponding product has been entered.
+
+The original ten category definitions remain in `originalCategories` for traceability. `categoryIdAliases` maps their IDs to the six active categories, and old category URLs redirect to the corresponding new page. Formal product records are still empty, so no real product records were moved or removed.
 
 ## Product model
 

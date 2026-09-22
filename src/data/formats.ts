@@ -1,10 +1,11 @@
 import type { ProductFormat } from "@/types/catalog";
+import { resolveCategoryId } from "@/data/categories";
 
 const format = (slug: string, en: string, zh: string, description: string, structure: string, categoryIds: string[], typicalParameters: string[]): ProductFormat => ({
   id: slug, slug, name: { en, zh }, description: { en: description, zh: `${zh}形态用于独立描述产品的物理剂型。` }, typicalStructure: { en: structure, zh: structure }, categoryIds, typicalParameters,
 });
 
-export const formats: ProductFormat[] = [
+const originalFormats: ProductFormat[] = [
   format("pouch", "Pouch", "袋", "A contained pouch unit for oral placement.", "Filled permeable pouch", ["nicotine-pouches", "snus"], ["Pouch size", "Portion weight", "Pouch material"]),
   format("portion", "Portion", "份装", "A measured portion supplied as a discrete unit.", "Discrete portion", ["nicotine-pouches", "snus", "other-oral-smokeless-tobacco"], ["Portion weight", "Portions per pack", "Moisture"]),
   format("film", "Film", "膜", "A thin flexible unit placed in the mouth.", "Thin polymer or other matrix sheet", ["nicotine-films"], ["Film dimensions", "Film thickness", "Dissolution time"]),
@@ -25,5 +26,10 @@ export const formats: ProductFormat[] = [
   format("chew", "Chew", "咀嚼型", "An oral form intended for chewing.", "Chewable matrix", ["nicotine-gum", "nicotine-candy", "other-oral-smokeless-tobacco"], ["Unit weight", "Chewing time", "Texture"]),
   format("other", "Other", "其他", "A format that requires a more precise future definition.", "Format specific", ["other-oral-nicotine"], ["Format specific parameters"]),
 ];
+
+export const formats: ProductFormat[] = originalFormats.map((item) => ({
+  ...item,
+  categoryIds: [...new Set(item.categoryIds.map(resolveCategoryId))],
+}));
 
 export const getFormat = (slug: string) => formats.find((item) => item.slug === slug);

@@ -3,6 +3,7 @@ node_modules/
 .next-validation/
 .next-i18n-dev/
 .next-i18n-build/
+.next-taxonomy-build/
 out/
 build/
 .env*

@@ -39,7 +39,9 @@
     ".next-i18n-dev/types/**/*.ts",
     ".next-i18n-dev/dev/types/**/*.ts",
     ".next-i18n-build/types/**/*.ts",
-    ".next-i18n-build/dev/types/**/*.ts"
+    ".next-i18n-build/dev/types/**/*.ts",
+    ".next-taxonomy-build/types/**/*.ts",
+    ".next-taxonomy-build/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

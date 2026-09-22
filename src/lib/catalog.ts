@@ -1,4 +1,5 @@
 import { brands, products } from "@/data/products";
+import { resolveCategoryId } from "@/data/categories";
 import type { Product, ProductSpecification } from "@/types/catalog";
 import { tr, type Locale } from "@/lib/i18n";
 
@@ -26,7 +27,7 @@ export function searchProducts(filters: ProductQuery, records: Product[] = produ
     const brand = brands.find((item) => item.id === product.brandId)?.name ?? "";
     const searchable = [product.productName, brand, product.series, product.manufacturerId, product.categoryId, product.formatId, product.countryOfOrigin, product.flavor?.name, ...product.markets].filter(Boolean).join(" ").toLowerCase();
     return (!q || searchable.includes(q)) &&
-      (!filters.category || product.categoryId === filters.category) &&
+      (!filters.category || resolveCategoryId(product.categoryId) === resolveCategoryId(filters.category)) &&
       (!filters.format || product.formatId === filters.format) &&
       (!filters.brand || product.brandId === filters.brand) &&
       (!filters.manufacturer || product.manufacturerId === filters.manufacturer) &&
