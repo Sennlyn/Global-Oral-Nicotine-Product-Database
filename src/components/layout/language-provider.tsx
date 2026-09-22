@@ -1,20 +1,23 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
-import { useRouter } from "next/navigation";
-import { LANGUAGE_COOKIE, type Locale } from "@/lib/i18n";
+import { createContext, useContext, useEffect, useState } from "react";
+import { type Locale } from "@/lib/i18n";
 
 const LanguageContext = createContext<{ locale: Locale; changeLanguage: (locale: Locale) => void } | null>(null);
 
 export function LanguageProvider({ initialLocale, children }: { initialLocale: Locale; children: React.ReactNode }) {
   const [locale, setLocale] = useState(initialLocale);
-  const router = useRouter();
+  useEffect(() => {
+    const storedLocale = window.localStorage.getItem("gonpd-locale");
+    if (storedLocale === "en" || storedLocale === "zh") setLocale(storedLocale);
+  }, []);
+  useEffect(() => {
+    document.documentElement.lang = locale === "zh" ? "zh-CN" : "en";
+  }, [locale]);
   function changeLanguage(next: Locale) {
     if (next === locale) return;
-    document.cookie = `${LANGUAGE_COOKIE}=${next}; Path=/; Max-Age=31536000; SameSite=Lax`;
-    document.documentElement.lang = next === "zh" ? "zh-CN" : "en";
+    window.localStorage.setItem("gonpd-locale", next);
     setLocale(next);
-    router.refresh();
   }
   return <LanguageContext.Provider value={{ locale, changeLanguage }}>{children}</LanguageContext.Provider>;
 }

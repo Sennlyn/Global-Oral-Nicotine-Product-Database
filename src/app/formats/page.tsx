@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { FormatCard } from "@/components/formats/format-card";
 import { formatGroups, formats } from "@/data/formats";
-import { getLocale } from "@/lib/server-locale";
 import { tr } from "@/lib/i18n";
+import { useLanguage } from "@/components/layout/language-provider";
 
-export async function generateMetadata(): Promise<Metadata> { return { title: tr(await getLocale(),"Formats") }; }
-export default async function FormatsPage() {
-  const locale = await getLocale();
+export default function FormatsPage() {
+  const { locale } = useLanguage();
   return <div className="container page-shell">
     <Breadcrumb items={[{ label: "Formats" }]}/>
     <div className="page-heading">

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, BookOpenCheck, Database, Globe2, Layers3, Microscope, Network, SearchCheck, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import { CategoryCard } from "@/components/categories/category-card";
@@ -7,8 +9,8 @@ import { categories } from "@/data/categories";
 import { formats } from "@/data/formats";
 import { regions } from "@/data/regions";
 import { brands, products, markets } from "@/data/products";
-import { getLocale } from "@/lib/server-locale";
 import { tr } from "@/lib/i18n";
+import { useLanguage } from "@/components/layout/language-provider";
 
 const principles = [
   { icon: ShieldCheck, title: "Verified products", text: "Formal records require evidence before publication." },
@@ -19,8 +21,8 @@ const principles = [
   { icon: Network, title: "Technical taxonomy", text: "Category, format, source and route remain separate dimensions." },
 ];
 
-export default async function Home() {
-  const locale = await getLocale();
+export default function Home() {
+  const { locale } = useLanguage();
   const stats = [ { label: "Products", value: String(products.length).padStart(2,"0"), icon: Database }, { label: "Brands", value: String(brands.length).padStart(2,"0"), icon: BookOpenCheck }, { label: "Markets", value: String(markets.length).padStart(2,"0"), icon: Globe2 }, { label: "Categories", value: String(categories.length).padStart(2,"0"), icon: Layers3 }, { label: "Formats", value: String(formats.length).padStart(2,"0"), icon: SlidersHorizontal } ];
   return <>
     <section className="hero"><div className="container hero-grid"><div className="hero-copy"><div className="hero-eyebrow"><span className="live-dot"/> {tr(locale,"A RESEARCH DATABASE FRAMEWORK")} <span className="eyebrow-divider"/> V1.0</div><h1>{tr(locale,"Mapping the world of")} <em>{tr(locale,"oral nicotine.")}</em></h1><p className="hero-lede">{tr(locale,"Explore oral nicotine products and smokeless tobacco formats from markets around the world.")}</p><p className="hero-zh">{tr(locale,"A global structured database for oral nicotine, smokeless tobacco and emerging oral delivery formats.")}</p><div className="hero-buttons"><Link href="/products" className="button button-primary">{tr(locale,"Browse products")} <ArrowUpRight size={18}/></Link><Link href="/categories" className="button button-secondary">{tr(locale,"Explore categories")} <ArrowRight size={18}/></Link></div><div className="hero-note"><span className="note-line"/> {tr(locale,"A structured foundation. Verified product records will follow.")}</div></div><div className="hero-visual" aria-label={tr(locale,"A conceptual illustration of the database classification system")}><div className="visual-orbit orbit-one"/><div className="visual-orbit orbit-two"/><div className="visual-node node-a"><span>01</span><strong>{tr(locale,"CATEGORY")}</strong><small>{tr(locale,"What it is")}</small></div><div className="visual-node node-b"><span>02</span><strong>{tr(locale,"FORMAT")}</strong><small>{tr(locale,"How it takes shape")}</small></div><div className="visual-node node-c"><span>03</span><strong>{tr(locale,"DELIVERY")}</strong><small>{tr(locale,"How it is used")}</small></div><div className="visual-center"><div className="visual-center-mark"><Microscope size={31} strokeWidth={1.4}/></div><strong>{tr(locale,"ORAL NICOTINE")}</strong><span>{tr(locale,"PRODUCT INTELLIGENCE")}</span></div><div className="visual-footer">{tr(locale,"MULTI-DIMENSIONAL CLASSIFICATION")} <span>↗</span></div></div></div></section>

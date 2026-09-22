@@ -1,5 +1,9 @@
 node_modules/
 .next/
+.next-gh-pages-build/
+.next-gh-pages-build-*/
+.next-gh-pages-dev-final/
+out/
 .next-validation/
 .next-i18n-dev/
 .next-i18n-build/
