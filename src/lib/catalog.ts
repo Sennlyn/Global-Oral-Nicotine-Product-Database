@@ -1,4 +1,4 @@
-import { brands, products } from "@/data/products";
+import { brands, manufacturers, products } from "@/data/products";
 import { resolveCategoryId } from "@/data/categories";
 import { resolveFormatId } from "@/data/formats";
 import type { Product, ProductSpecification } from "@/types/catalog";
@@ -26,12 +26,13 @@ export function searchProducts(filters: ProductQuery, records: Product[] = produ
   const q = filters.query?.trim().toLowerCase();
   const matches = records.filter((product) => {
     const brand = brands.find((item) => item.id === product.brandId)?.name ?? "";
-    const searchable = [product.productName, brand, product.series, product.manufacturerId, product.categoryId, product.formatId, product.countryOfOrigin, product.flavor?.name, ...product.markets].filter(Boolean).join(" ").toLowerCase();
+    const manufacturer = manufacturers.find((item) => item.id === product.manufacturerId)?.name ?? product.manufacturerId ?? "";
+    const searchable = [product.productName, brand, product.series, manufacturer, product.categoryId, product.formatId, product.countryOfOrigin, product.flavor?.name, ...product.markets].filter(Boolean).join(" ").toLowerCase();
     return (!q || searchable.includes(q)) &&
       (!filters.category || resolveCategoryId(product.categoryId) === resolveCategoryId(filters.category)) &&
       (!filters.format || resolveFormatId(product.formatId) === resolveFormatId(filters.format)) &&
       (!filters.brand || product.brandId === filters.brand) &&
-      (!filters.manufacturer || product.manufacturerId === filters.manufacturer) &&
+      (!filters.manufacturer || product.manufacturerId === filters.manufacturer || manufacturer.toLowerCase().includes(filters.manufacturer.trim().toLowerCase())) &&
       (!filters.country || product.countryOfOrigin === filters.country) &&
       (!filters.market || product.markets.includes(filters.market)) &&
       (!filters.flavor || product.flavor?.name === filters.flavor) &&
@@ -53,5 +54,11 @@ export function specificationRows(spec: ProductSpecification, locale: Locale = "
     pieceWeightMg: "Piece weight · mg", piecesPerPack: "Pieces per pack", chewingTimeMin: "Chewing time · min", gumBase: "Gum base", releaseProfile: "Release profile",
     lozengeWeightMg: "Lozenge weight · mg", sizeMm: "Size · mm", dissolutionTimeMin: "Dissolution time · min", tabletWeightMg: "Tablet weight · mg", tabletSizeMm: "Tablet size · mm", disintegrationTimeMin: "Disintegration time · min", unitsPerPack: "Units per pack", texture: "Texture", chewingRequired: "Chewing required", tobaccoType: "Tobacco type", format: "Format", attributes: "Additional attributes", particleSize: "Particle size", particleShape: "Particle shape", bulkDensity: "Bulk density", dimensions: "Dimensions", compressionProfile: "Compression profile",
   };
-  return Object.entries(spec).filter(([key, value]) => key !== "kind" && value !== undefined && value !== null).map(([key, value]) => ({ label: tr(locale,labels[key] ?? key), value: typeof value === "object" ? JSON.stringify(value) : typeof value === "boolean" ? tr(locale,value ? "Yes" : "No") : String(value) }));
+  return Object.entries(spec)
+    .filter(([key, value]) => key !== "kind" && value !== undefined && value !== null)
+    .map(([key, value]) => {
+      const rawValue = typeof value === "object" ? JSON.stringify(value) : typeof value === "boolean" ? tr(locale,value ? "Yes" : "No") : String(value);
+      const [englishValue, chineseValue] = rawValue.split(" | 中文：", 2);
+      return { label: tr(locale,labels[key] ?? key), value: locale === "zh" ? chineseValue ?? englishValue : englishValue };
+    });
 }

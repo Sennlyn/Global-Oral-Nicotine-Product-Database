@@ -1,7 +1,7 @@
 export type LocalizedText = { en: string; zh: string };
 export type VerificationStatus = "verified" | "pending";
 export type ProductStatus = "active" | "discontinued" | "unknown";
-export type SourceType = "official-brand" | "manufacturer" | "regulator" | "government" | "scientific" | "industry" | "retail-reference" | "other";
+export type SourceType = "official-brand" | "manufacturer" | "regulator" | "government" | "scientific" | "industry" | "retail-reference" | "user-provided" | "other";
 export type NicotineSource = "tobacco-derived" | "synthetic" | "tobacco-material" | "unknown" | "other";
 export type DeliveryRoute = "buccal" | "gingival" | "sublingual" | "oral-dissolution" | "chewing" | "oral-mucosal" | "mixed" | "other";
 export type ProductTechnology = "pouch-matrix" | "polymer-film" | "hydrogel-film" | "compressed-tablet" | "lozenge-matrix" | "gum-base" | "candy-matrix" | "tobacco-matrix" | "powder-system" | "other";
@@ -14,7 +14,7 @@ export interface Source {
   id: string;
   sourceName: string;
   sourceType: SourceType;
-  sourceUrl: string;
+  sourceUrl?: string;
   accessedAt: string;
   verifiedAt?: string;
   notes?: string;
@@ -75,6 +75,7 @@ export interface Brand {
   formatIds?: string[];
   marketIds?: string[];
   sources: Source[];
+  verificationStatus?: VerificationStatus;
   lastVerified?: string;
 }
 

@@ -2,6 +2,10 @@ import { categories, resolveCategoryId } from "@/data/categories";
 import { formats, resolveFormatId } from "@/data/formats";
 import type { Product } from "@/types/catalog";
 
+function hasAllowedReference(sourceUrl?: string): boolean {
+  return !!sourceUrl && (/^https?:\/\//.test(sourceUrl) || sourceUrl.startsWith("/products/"));
+}
+
 /** Call this before a future record is published; incomplete records stay pending. */
 export function validateVerifiedProduct(product: Product): string[] {
   const errors: string[] = [];
@@ -15,8 +19,9 @@ export function validateVerifiedProduct(product: Product): string[] {
     if (!product.productImage || !product.imageSource) errors.push("Verified products need a matched product image and a traceable image source.");
   }
   for (const source of product.sources) {
-    if (!source.sourceName || !source.accessedAt || !/^https?:\/\//.test(source.sourceUrl)) errors.push(`Source ${source.id} is incomplete.`);
+    const hasUserProvenance = source.sourceType === "user-provided" && !source.sourceUrl;
+    if (!source.sourceName || !source.accessedAt || (!hasUserProvenance && !hasAllowedReference(source.sourceUrl))) errors.push(`Source ${source.id} is incomplete.`);
   }
-  if (product.imageSource && (!product.imageSource.sourceName || !product.imageSource.accessedAt || !/^https?:\/\//.test(product.imageSource.sourceUrl))) errors.push("The image source is incomplete.");
+  if (product.imageSource && (!product.imageSource.sourceName || !product.imageSource.accessedAt || !hasAllowedReference(product.imageSource.sourceUrl))) errors.push("The image source is incomplete.");
   return errors;
 }

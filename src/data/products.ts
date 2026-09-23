@@ -6,6 +6,37 @@ function officialSource(id: string, sourceName: string, sourceUrl: string, notes
   return { id, sourceName, sourceType: "official-brand", sourceUrl, accessedAt, verifiedAt: accessedAt, notes };
 }
 
+function manufacturerSource(id: string, sourceName: string, sourceUrl: string, notes?: string): Source {
+  return { id, sourceName, sourceType: "manufacturer", sourceUrl, accessedAt, verifiedAt: accessedAt, notes };
+}
+
+function userProvidedSource(id: string, sourceName: string, sourceUrl?: string, notes?: string): Source {
+  return { id, sourceName, sourceType: "user-provided", sourceUrl, accessedAt, notes };
+}
+
+const nicoretteManufacturerReferences: Record<string, { url: string; productName: string }> = {
+  "nicorette-uk-fresh-mint-gum-2mg-105": {
+    url: "https://www.medicines.org.uk/emc/files/pil.6205.pdf",
+    productName: "Nicorette Freshmint 2 mg Gum",
+  },
+  "nicorette-uk-original-gum-2mg-105": {
+    url: "https://www.medicines.org.uk/emc/files/pil.1089.pdf",
+    productName: "Nicorette 2 mg Gum",
+  },
+  "nicorette-uk-cools-lozenge-2mg-40": {
+    url: "https://www.medicines.org.uk/emc/files/pil.4110.pdf",
+    productName: "Nicorette Cools 2 mg Lozenge",
+  },
+  "nicorette-uk-fruit-lozenge-2mg-40": {
+    url: "https://www.medicines.org.uk/emc/files/pil.9438.pdf",
+    productName: "Nicorette Fruit 2 mg Lozenge",
+  },
+  "nicorette-uk-microtab-2mg-100": {
+    url: "https://www.medicines.org.uk/emc/files/pil.6182.pdf",
+    productName: "Nicorette Microtab 2 mg Sublingual Tablet",
+  },
+};
+
 const zynCatalogs = {
   "1.5": {
     url: "https://us.zyn.com/zyn-1-5mg-nicotine-pouches/",
@@ -122,6 +153,77 @@ const zynProducts: Product[] = [
   ...zynFlavors.map((flavor) => makeZynProduct(flavor, 3)),
   ...zynFlavors.map((flavor) => makeZynProduct(flavor, 6)),
 ];
+
+const zynUltraFlavors = [
+  { name: "Citrus Zest", key: "citrus-zest", flavorCategory: "citrus", image9: "57fe6165-5dc7-46c1-9c48-641d53b15819", image11: "2f83b0e3-925b-458e-9b4e-fb8f5c176089" },
+  { name: "Peppermint Frost", key: "peppermint-frost", flavorCategory: "mint", image9: "700b90a9-ed15-4b46-bc6f-79f7135fefde", image11: "76bc076f-d4d3-44c4-a55e-faca693bcd88" },
+  { name: "Wintergreen Blast", key: "wintergreen-blast", flavorCategory: "mint", image9: "07eb0d55-d012-486e-9af4-2c2b65b4626f", image11: "4b2444b8-d41b-44ae-8a13-a0e9f1b38185" },
+  { name: "Arctic Mint", key: "arctic-mint", flavorCategory: "mint", image9: "2049176c-255f-4f79-a1dd-698659674b39", image11: "8f454ce2-1a2c-42c1-ad3b-c31536456fa2" },
+  { name: "Fresh Spearmint", key: "fresh-spearmint", flavorCategory: "mint", image9: "d6da6d2c-c4b2-4c1f-b0a5-46da368febb5", image11: "4cf2fc9f-8761-4ff3-a57f-18c6a0a9f0bd" },
+  { name: "Menthol Ice", key: "menthol-ice", flavorCategory: "mint", image9: "77c80ec4-86dd-4ca1-82db-51b92d624e52", image11: "34438d83-5ccc-4dab-bbfc-72cfeab9edd6" },
+  { name: "Chill Mist", key: "chill-mist", flavorCategory: "unflavored", image9: "ce728eae-51f6-4022-bad9-764d203acde9", image11: "f9372931-d169-4ae4-8591-6c795da47102" },
+  { name: "Signature Smooth", key: "signature-smooth", flavorCategory: "unflavored", image9: "6cdfe668-a48d-44ca-89b8-c2dc29dda73b", image11: "02cf6585-d95e-4ddc-b31e-4e2dee1642d1" },
+] as const;
+
+const zynUltraProducts: Product[] = zynUltraFlavors.flatMap((flavor) => [9, 11].map((strength) => {
+  const slug = "zyn-us-ultra-" + flavor.key + "-" + strength + "mg";
+  const officialWebsite = "https://us.zyn.com/all-products/zyn-ultra-" + flavor.key + "/";
+  const imageId = strength === 9 ? flavor.image9 : flavor.image11;
+  const imageSourceUrl = "https://smpmi.cdn-norce.tech/" + imageId + ".png?w=500";
+  const officialName = "ZYN Ultra " + flavor.name + " " + strength + " mg";
+
+  return {
+    id: slug,
+    slug,
+    productName: officialName,
+    brandId: "zyn",
+    categoryId: "nicotine-pouches",
+    formatId: "pouch",
+    markets: ["united-states"],
+    status: "active",
+    shortDescription: strength + " mg nicotine per pouch; 20 pouches per can.",
+    localizedShortDescription: {
+      en: strength + " mg nicotine per pouch; 20 pouches per can. Hydro-boosted pouch format.",
+      zh: "每袋含尼古丁 " + strength + " 毫克；每罐 20 袋。水分增强型袋装。",
+    },
+    productImage: "/products/" + slug + ".png",
+    imageSource: officialSource(
+      "official-product-image",
+      "ZYN U.S. official package image",
+      imageSourceUrl,
+      "The image file is the official front-of-can package image for " + officialName + ". / 图片为 " + officialName + " 的官网罐装正面图。",
+    ),
+    officialWebsite,
+    flavor: { name: flavor.name, category: flavor.flavorCategory },
+    nicotine: {
+      nicotineStrength: strength + " mg per pouch",
+      nicotineStrengthMg: strength,
+      nicotinePerUnit: strength,
+      nicotineForm: "Nicotine bitartrate dihydrate",
+    },
+    containsTobacco: false,
+    tobaccoFree: true,
+    deliveryRoute: ["gingival", "buccal"],
+    productTechnology: ["pouch-matrix"],
+    specifications: { kind: "pouch", portionsPerCan: 20 },
+    sources: [
+      officialSource(
+        "official-ultra-product-page",
+        "ZYN U.S. official product page",
+        officialWebsite,
+        "The page lists this flavor in 9 mg and 11 mg strengths and states 20 pouches per can. / 页面列出该口味的 9 毫克和 11 毫克规格，并说明每罐 20 袋。",
+      ),
+      officialSource(
+        "official-ultra-faq",
+        "ZYN U.S. official ZYN Ultra FAQ",
+        "https://us.zyn.com/zyn-ultra-11mg-nicotine-pouches/",
+        "The FAQ confirms ZYN Ultra's hydro-boosted pouch format, 20 pouches per can, nicotine salt and production in Kentucky, U.S. and Sweden. / FAQ 确认 ZYN Ultra 为水分增强型袋装、每罐 20 袋、使用尼古丁盐，生产地包括美国肯塔基州和瑞典。",
+      ),
+    ],
+    verificationStatus: "verified",
+    lastVerified: accessedAt,
+  } satisfies Product;
+}));
 
 const zynSwissProducts: Product[] = [
   {
@@ -392,50 +494,220 @@ const swedishSnusProducts: Product[] = [
   },
 ];
 
-export const products: Product[] = [...zynProducts, ...zynSwissProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts];
+const huabaoContextSource = officialSource(
+  "huabao-oral-tobacco-rd-context",
+  "Huabao 2026 technology projects article",
+  "https://www.hbglobal.com/news-graphics/591.html",
+  "Huabao says it is advancing oral-tobacco formulation, release-mechanism and controlled-release-carrier research. This article does not name NF1.0, NF2.0/AERO or MO and does not verify their specifications, commercial status, or manufacturer attribution. | 中文：华宝公开资料提到口含烟制剂、释放机理及控释载体研究，但未提及 NF1.0、NF2.0/AERO 或 MO，也未核实这些产品的规格、上市状态或制造商归属。",
+);
+
+const huabaoProducts: Product[] = [
+  {
+    id: "huabao-incootine-nf1-oral-film",
+    slug: "huabao-incootine-nf1-oral-film",
+    productName: "INCOOTINE NF1.0 Oral Nicotine Film",
+    brandId: "incootine",
+    series: "NF1.0",
+    categoryId: "nicotine-films",
+    subcategory: "Oral Film",
+    formatId: "film",
+    physicalFormDetails: { shape: "sheet", unitization: "pre-portioned" },
+    manufacturerId: "huabao-research-institute-reported",
+    markets: [],
+    status: "unknown",
+    shortDescription: "Project-owner-described as a single gel film sheet; product image and product-level specifications have not been independently verified.",
+    localizedShortDescription: {
+      en: "Project-owner-described as a single gel film sheet; product image and product-level specifications have not been independently verified.",
+      zh: "据项目提供者描述，为一张凝胶膜片；对应实物图及产品级规格尚未独立核实。",
+    },
+    sources: [
+      userProvidedSource("nf1-owner-description", "Project-owner-provided NF1.0 product description", undefined, "The project owner describes NF1.0 as a single oral gel film sheet. Nicotine strength, film composition, dimensions, release behavior, product availability, and exact manufacturer remain unverified. | 中文：项目提供者描述 NF1.0 为一张口含凝胶膜片；尼古丁强度、膜片组成与尺寸、释放特性、产品供应情况及具体制造商仍待核实。"),
+      huabaoContextSource,
+    ],
+    verificationStatus: "pending",
+    specifications: { kind: "film", filmMaterial: "Gel film (project-owner description; composition unverified) | 中文：凝胶膜（据项目提供者描述；具体组成待核实）" },
+  },
+  {
+    id: "huabao-incootine-nf2-aero-pouch",
+    slug: "huabao-incootine-nf2-aero-pouch",
+    productName: "INCOOTINE AERO Pouch (NF2.0)",
+    brandId: "incootine",
+    series: "NF2.0 / AERO",
+    categoryId: "nicotine-pouches",
+    formatId: "pouch",
+    physicalFormDetails: { shape: "other", unitization: "pre-portioned" },
+    manufacturerId: "huabao-research-institute-reported",
+    markets: [],
+    status: "unknown",
+    shortDescription: "Described as a gel film sheet covered by nonwoven fabric; the supplied infographic depicts the layered construction but is not retail-packaging photography.",
+    localizedShortDescription: {
+      en: "Described as a gel film sheet covered by nonwoven fabric; the supplied infographic depicts the layered construction but is not retail-packaging photography.",
+      zh: "据描述，以无纺布覆盖凝胶薄片；所附说明图展示了层状结构，但不是零售包装实拍图。",
+    },
+    productImage: "/products/huabao-incootine-aero-pouch-infographic.png",
+    imageSource: userProvidedSource("aero-infographic-image", "Project-owner-supplied INCOOTINE AERO Pouch infographic", "/products/huabao-incootine-aero-pouch-infographic.png", "Infographic, not a retail pack photo. It depicts nonwoven fabric / nicotine film / nonwoven fabric. Example strengths and flavours on the image are not treated as verified variants. | 中文：说明图，并非零售包装实拍；图示结构为无纺布／尼古丁膜／无纺布。图中强度与口味示例未作为已核实规格录入。"),
+    sources: [
+      userProvidedSource("aero-owner-description", "Project-owner-provided NF2.0 / AERO product description", undefined, "The project owner describes NF2.0, also called AERO, as a gel film sheet covered by nonwoven fabric. | 中文：项目提供者描述 NF2.0（又称 AERO）为以无纺布覆盖凝胶薄片的口含薄膜袋。"),
+      userProvidedSource("aero-infographic", "Project-owner-supplied INCOOTINE AERO Pouch infographic", "/products/huabao-incootine-aero-pouch-infographic.png", "The infographic labels the product AERO Pouch and depicts the layered structure. Example flavour and strength lists are incomplete marketing claims and have not been independently verified. | 中文：说明图标注 AERO Pouch 并展示层状结构；图中的口味和强度示例为不完整宣传信息，尚未独立核实。"),
+      huabaoContextSource,
+    ],
+    verificationStatus: "pending",
+    specifications: { kind: "pouch", pouchMaterial: "Nonwoven fabric layers shown in supplied infographic; exact materials and construction unverified | 中文：所附说明图显示无纺布层；具体材料与结构待核实" },
+  },
+  {
+    id: "huabao-incootine-mo-gel-pouch",
+    slug: "huabao-incootine-mo-gel-pouch",
+    productName: "INCOOTINE MO Gel Pouch",
+    brandId: "incootine",
+    series: "MO",
+    categoryId: "nicotine-pouches",
+    formatId: "pouch",
+    physicalFormDetails: { shape: "other", unitization: "pre-portioned" },
+    manufacturerId: "huabao-research-institute-reported",
+    markets: [],
+    status: "unknown",
+    shortDescription: "Described as a nicotine pouch combining nicotine particles and gel fragments; the supplied infographic is illustrative and not retail-packaging photography.",
+    localizedShortDescription: {
+      en: "Described as a nicotine pouch combining nicotine particles and gel fragments; the supplied infographic is illustrative and not retail-packaging photography.",
+      zh: "据描述，为尼古丁颗粒与凝胶碎片混合的尼古丁袋；所附说明图为示意图，并非零售包装实拍图。",
+    },
+    productImage: "/products/huabao-incootine-gel-pouch-infographic.png",
+    imageSource: userProvidedSource("gel-pouch-infographic-image", "Project-owner-supplied INCOOTINE Gel Pouch infographic", "/products/huabao-incootine-gel-pouch-infographic.png", "Infographic, not a retail pack photo. Product structure and examples are attributed to the supplied image; manufacturing location, regulatory claims, and listed variants have not been independently verified. | 中文：说明图，并非零售包装实拍；产品结构与示例信息来自所附图片，生产地点、监管声明及所列规格尚未独立核实。"),
+    sources: [
+      userProvidedSource("mo-owner-description", "Project-owner-provided MO product description", undefined, "The project owner describes MO as a nicotine gel pouch combining nicotine particles and gel fragments. | 中文：项目提供者描述 MO 为尼古丁颗粒与凝胶碎片混合的尼古丁凝胶袋。"),
+      userProvidedSource("gel-pouch-infographic", "Project-owner-supplied INCOOTINE Gel Pouch infographic", "/products/huabao-incootine-gel-pouch-infographic.png", "The infographic describes gel-shard nicotine pouches and displays example strengths and flavours. It also contains production and regulatory claims; none are independently verified or recorded as facts here. | 中文：说明图描述含凝胶碎片的尼古丁袋，并列出强度和口味示例。图片还含生产地及监管声明，均未独立核实，因此未作为事实录入。"),
+      huabaoContextSource,
+    ],
+    verificationStatus: "pending",
+    specifications: { kind: "pouch" },
+  },
+];
+
+const productRecords: Product[] = [...zynProducts, ...zynUltraProducts, ...zynSwissProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts, ...huabaoProducts];
+
+export const products: Product[] = productRecords.map((product) => {
+  if (product.brandId === "zyn" && product.markets.includes("switzerland")) {
+    return {
+      ...product,
+      manufacturerId: "swedish-match-ab",
+      parentCompany: "Swedish Match AB",
+      countryOfOrigin: "Scandinavia (the Swiss FAQ does not name a specific country)",
+      sources: [...product.sources, officialSource("manufacturer-location", "ZYN Switzerland official FAQ", "https://www.zyn.com/ch/en/faq/nicotine-pouches-zyn", "The FAQ says ZYN is produced in Swedish Match factories in Scandinavia. / 官网 FAQ 说明 ZYN 在斯堪的纳维亚的 Swedish Match 工厂生产。")],
+    };
+  }
+  if (product.brandId === "zyn") {
+    return {
+      ...product,
+      manufacturerId: "swedish-match-north-america",
+      parentCompany: "Swedish Match North America LLC",
+      countryOfOrigin: "United States or Sweden (production site varies by batch)",
+      sources: [...product.sources, officialSource("manufacturer-location", "ZYN U.S. official FAQ", "https://us.zyn.com/zyn-ultra-11mg-nicotine-pouches/", "The FAQ says ZYN is produced at Swedish Match factories in Kentucky and Sweden; the package-specific site is not identified here. / 官网 FAQ 说明 ZYN 在 Swedish Match 位于肯塔基州和瑞典的工厂生产；此处无法据此确定单罐产地。")],
+    };
+  }
+  if (product.brandId === "nicorette") {
+    const manufacturerReference = nicoretteManufacturerReferences[product.id];
+    return {
+      ...product,
+      manufacturerId: "mcneil-ab",
+      parentCompany: "Kenvue UK Limited",
+      countryOfOrigin: "Sweden",
+      sources: [...product.sources, manufacturerSource(
+        "manufacturer-location",
+        `${manufacturerReference?.productName ?? "Nicorette U.K. product"} patient leaflet`,
+        manufacturerReference?.url ?? "https://www.medicines.org.uk/emc/ingredient/2036",
+        "The product leaflet names McNeil AB, Helsingborg, Sweden as manufacturer and McNeil Products Ltd as the U.K. product-licence holder. / 该产品说明书将瑞典赫尔辛堡 McNeil AB 列为生产商，并将 McNeil Products Ltd 列为英国产品许可持有人。",
+      )],
+    };
+  }
+  if (product.brandId === "velo") {
+    return {
+      ...product,
+      manufacturerId: "bat-velo-sites",
+      parentCompany: "British American Tobacco p.l.c.",
+      countryOfOrigin: "Hungary, Sweden or Italy (varies by package code)",
+      sources: [...product.sources, officialSource("manufacturer-location", "VELO U.K. official manufacturing-location page", "https://www.velo.com/en-gb/pages/velo-packaging", "The official page maps package-code prefixes to BAT manufacturing facilities in Pécs, Hungary; Malmö, Sweden; and Trieste, Italy. / 官网按包装代码前缀列出匈牙利佩奇、瑞典马尔默和意大利的里雅斯特生产厂。")],
+    };
+  }
+  if (["general", "grov", "kaliber", "kapten"].includes(product.brandId)) {
+    return {
+      ...product,
+      manufacturerId: "swedish-match-ab",
+      parentCompany: "Philip Morris International (PMI)",
+      countryOfOrigin: "Sweden",
+      sources: [...product.sources, manufacturerSource("manufacturer-location", "Swedish Match official company information", "https://www.swedishmatch.com/Our-business/", "Swedish Match states that it develops and manufactures snus, and identifies its company as Swedish Match AB. / Swedish Match 官网说明其研发并生产 snus，企业主体为 Swedish Match AB。")],
+    };
+  }
+  return product;
+});
 
 export const brands: Brand[] = [
+  {
+    id: "incootine",
+    slug: "incootine",
+    name: "INCOOTINE",
+    manufacturerIds: ["huabao-research-institute-reported"],
+    localizedDescription: {
+      en: "Name shown on project-owner-supplied Huabao product infographics. The brand ownership, full portfolio and specific product records remain pending independent verification.",
+      zh: "项目提供者提交的华宝产品说明图上出现的名称；品牌归属、完整产品组合及具体产品记录仍待独立核实。",
+    },
+    categoryIds: ["nicotine-films", "nicotine-pouches"],
+    formatIds: ["film", "pouch"],
+    sources: [
+      userProvidedSource("incootine-owner-attribution", "Project-owner attribution of INCOOTINE to Huabao Research Institute", undefined, "The supplied AERO and Gel Pouch infographics display HUABAO / INCOOTINE. The relationship between the named institute, Huabao International Holdings Limited, the brand, and the reported NF1.0 concept remains unverified. | 中文：所附 AERO 与 Gel Pouch 说明图显示 HUABAO / INCOOTINE；研究院、华宝国际控股有限公司、该品牌及 NF1.0 产品概念之间的关系仍待核实。"),
+      huabaoContextSource,
+    ],
+    verificationStatus: "pending",
+  },
   {
     id: "zyn",
     slug: "zyn",
     name: "ZYN",
-    parentCompany: "Swedish Match North America LLC",
+    parentCompany: "Swedish Match (a Philip Morris International subsidiary)",
+    manufacturerIds: ["swedish-match-north-america", "swedish-match-ab"],
+    countryOfOrigin: "United States and Scandinavia; exact production site varies by market and package",
     officialWebsite: "https://us.zyn.com/all-products/",
     localizedDescription: { en: "Nicotine pouch varieties documented from ZYN's U.S. and Swiss official product pages.", zh: "依据 ZYN 美国与瑞士官网产品页整理的尼古丁袋品种。" },
     categoryIds: ["nicotine-pouches"],
     formatIds: ["pouch"],
     marketIds: ["united-states", "switzerland"],
-    sources: [officialSource("official-brand-profile", "ZYN U.S. official website", "https://us.zyn.com/about-zyn/"), officialSource("official-brand-profile-ch", "ZYN Switzerland official website", "https://www.zyn.com/ch/de/")],
+    sources: [officialSource("official-brand-profile", "ZYN U.S. official website", "https://us.zyn.com/about-zyn/"), officialSource("official-brand-profile-ch", "ZYN Switzerland official website", "https://www.zyn.com/ch/de/"), officialSource("official-company-profile", "Swedish Match official company information", "https://www.swedishmatch.com/Our-business/")],
     lastVerified: accessedAt,
   },
   {
     id: "nicorette",
     slug: "nicorette",
     name: "Nicorette",
+    parentCompany: "Kenvue UK Limited",
+    manufacturerIds: ["mcneil-ab"],
     officialWebsite: "https://www.nicorette.co.uk/products",
     localizedDescription: { en: "U.K. nicotine replacement products in gum, lozenge and sublingual tablet forms.", zh: "英国市场的尼古丁替代产品，包含口香糖、含片和舌下片剂。" },
     categoryIds: ["nicotine-gum-confectionery", "nicotine-lozenges-solids"],
     formatIds: ["gum", "lozenge", "tablet"],
     marketIds: ["united-kingdom"],
-    sources: [officialSource("official-brand-profile", "Nicorette U.K. official product range", "https://www.nicorette.co.uk/products")],
+    sources: [officialSource("official-brand-profile", "Nicorette U.K. official product range", "https://www.nicorette.co.uk/products"), officialSource("official-brand-owner", "Nicorette U.K. official FAQ", "https://www.nicorette.co.uk/useful-information/faq")],
     lastVerified: accessedAt,
   },
   {
     id: "velo",
     slug: "velo",
     name: "VELO",
+    parentCompany: "British American Tobacco p.l.c.",
+    manufacturerIds: ["bat-velo-sites"],
     officialWebsite: "https://www.velo.com/en-gb/collections/our-products",
     localizedDescription: { en: "U.K. nicotine pouch varieties documented from VELO's official product pages.", zh: "依据 VELO 英国官网产品页整理的尼古丁袋品种。" },
     categoryIds: ["nicotine-pouches"],
     formatIds: ["pouch"],
     marketIds: ["united-kingdom"],
-    sources: [officialSource("official-brand-profile", "VELO U.K. official product range", "https://www.velo.com/en-gb/collections/our-products")],
+    sources: [officialSource("official-brand-profile", "VELO U.K. official product range", "https://www.velo.com/en-gb/collections/our-products"), officialSource("official-parent-company", "British American Tobacco official VELO profile", "https://www.bat.com/brands-and-innovation/velo")],
     lastVerified: accessedAt,
   },
   {
     id: "general",
     slug: "general",
     name: "General",
+    parentCompany: "Philip Morris International (PMI)",
+    manufacturerIds: ["swedish-match-ab"],
+    countryOfOrigin: "Sweden",
     officialWebsite: "https://www.swedishmatch.se/kop-snus/general/",
     localizedDescription: { en: "Swedish Match's General snus range, with product records tied to individual official pages.", zh: "Swedish Match 的 General 口含烟系列；产品记录逐款关联官方商品页。" },
     categoryIds: ["oral-smokeless-tobacco"],
@@ -448,6 +720,9 @@ export const brands: Brand[] = [
     id: "grov",
     slug: "grov",
     name: "Grov",
+    parentCompany: "Philip Morris International (PMI)",
+    manufacturerIds: ["swedish-match-ab"],
+    countryOfOrigin: "Sweden",
     officialWebsite: "https://www.swedishmatch.se/kop-snus/grov/",
     localizedDescription: { en: "Swedish Match's Grov oral smokeless tobacco range, documented from individual official product pages.", zh: "Swedish Match 的 Grov 口腔无烟烟草系列，依据各款官方商品页记录。" },
     categoryIds: ["oral-smokeless-tobacco"],
@@ -460,6 +735,9 @@ export const brands: Brand[] = [
     id: "kaliber",
     slug: "kaliber",
     name: "Kaliber",
+    parentCompany: "Philip Morris International (PMI)",
+    manufacturerIds: ["swedish-match-ab"],
+    countryOfOrigin: "Sweden",
     officialWebsite: "https://www.swedishmatch.se/kop-snus/kaliber/",
     localizedDescription: { en: "Swedish Match's Kaliber oral smokeless tobacco range, documented from individual official product pages.", zh: "Swedish Match 的 Kaliber 口腔无烟烟草系列，依据各款官方商品页记录。" },
     categoryIds: ["oral-smokeless-tobacco"],
@@ -472,6 +750,9 @@ export const brands: Brand[] = [
     id: "kapten",
     slug: "kapten",
     name: "Kapten",
+    parentCompany: "Philip Morris International (PMI)",
+    manufacturerIds: ["swedish-match-ab"],
+    countryOfOrigin: "Sweden",
     officialWebsite: "https://www.swedishmatch.se/kop-snus/kapten/",
     localizedDescription: { en: "Swedish Match's Kapten oral smokeless tobacco range, documented from individual official product pages.", zh: "Swedish Match 的 Kapten 口腔无烟烟草系列，依据各款官方商品页记录。" },
     categoryIds: ["oral-smokeless-tobacco"],
@@ -482,7 +763,49 @@ export const brands: Brand[] = [
   },
 ];
 
-export const manufacturers: Manufacturer[] = [];
+export const manufacturers: Manufacturer[] = [
+  {
+    id: "huabao-research-institute-reported",
+    slug: "huabao-research-institute-reported",
+    name: "Huabao Research Institute (reported; legal entity and manufacturing site unverified)",
+    sources: [
+      userProvidedSource("huabao-institute-owner-attribution", "Project-owner attribution to Huabao Research Institute", undefined, "Recorded as reported by the project owner. The exact legal manufacturer and factory for NF1.0, NF2.0/AERO, and MO have not been independently confirmed. | 中文：据项目提供者信息记录；NF1.0、NF2.0/AERO 与 MO 的具体法律制造商及工厂尚未独立确认。"),
+      huabaoContextSource,
+    ],
+  },
+  {
+    id: "swedish-match-north-america",
+    slug: "swedish-match-north-america",
+    name: "Swedish Match North America LLC",
+    country: "United States",
+    officialWebsite: "https://us.zyn.com/",
+    sources: [manufacturerSource("manufacturer-profile", "ZYN U.S. official website", "https://us.zyn.com/zyn-ultra-11mg-nicotine-pouches/", "The site identifies Swedish Match North America LLC and says ZYN is produced at Swedish Match factories in Kentucky and Sweden.")],
+  },
+  {
+    id: "swedish-match-ab",
+    slug: "swedish-match-ab",
+    name: "Swedish Match AB",
+    country: "Sweden",
+    officialWebsite: "https://www.swedishmatch.com/",
+    sources: [manufacturerSource("manufacturer-profile", "Swedish Match official company information", "https://www.swedishmatch.com/Our-business/", "Swedish Match identifies itself as a manufacturer of snus and a subsidiary of Philip Morris International.")],
+  },
+  {
+    id: "mcneil-ab",
+    slug: "mcneil-ab",
+    name: "McNeil AB",
+    country: "Sweden",
+    officialWebsite: "https://www.medicines.org.uk/emc/ingredient/2036",
+    sources: [manufacturerSource("manufacturer-profile", "U.K. Nicorette patient leaflets", "https://www.medicines.org.uk/emc/files/pil.9438.pdf", "The leaflet names McNeil AB, Helsingborg, Sweden as manufacturer; McNeil Products Ltd is the U.K. product-licence holder.")],
+  },
+  {
+    id: "bat-velo-sites",
+    slug: "bat-velo-sites",
+    name: "British American Tobacco (manufacturing site varies by package code)",
+    country: "Hungary, Sweden or Italy",
+    officialWebsite: "https://www.velo.com/en-gb/pages/velo-packaging",
+    sources: [manufacturerSource("manufacturer-profile", "VELO U.K. official manufacturing-location page", "https://www.velo.com/en-gb/pages/velo-packaging", "The official page lists BAT facilities in Pécs, Malmö and Trieste and explains how package-code prefixes identify the site.")],
+  },
+];
 
 export const markets: Market[] = [
   { id: "united-states", slug: "united-states", name: { en: "United States", zh: "美国" }, region: "North America", countryCode: "US" },

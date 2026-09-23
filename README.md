@@ -1,6 +1,6 @@
 # Global Oral Nicotine Product Database / 全球口腔尼古丁产品数据库
 
-V1.0 is a local research website framework for oral nicotine and oral smokeless tobacco products. The formal product, brand, manufacturer and market datasets are intentionally empty. **No real products were researched or entered in this phase.** This is not an e-commerce site.
+V1.5 is a source-linked research website for oral nicotine and oral smokeless tobacco products. It includes verified and pending product records; uncertain fields are clearly marked. This is not an e-commerce site.
 
 ## Stack
 
@@ -81,10 +81,10 @@ Physical specifications are a discriminated union selected by `specifications.ki
 4. Keep official product images linked to an `imageSource`; do not create fictional packaging or imagery.
 5. Keep non-oral inhaled cigarettes, vapes, heated tobacco sticks and waterpipe products outside this database.
 
-## V1 interface status
+## V1.5 interface status
 
-Search, filtering, sorting, grid/list controls, taxonomy navigation, category and format detail pages, brand and market shells, a product detail template and a neutral comparison table are built. With zero formal records, the interface shows intentional empty states. The comparison slots, brand profiles, country records, regulatory notes and product content will become useful once verified records are added.
+Search, filtering, sorting, grid/list controls, taxonomy navigation, category and format detail pages, brand and market profiles, product records and a neutral comparison table are available. Records that are not fully verified are marked pending.
 
 ## Suggested next phase
 
-After reviewing V1, establish a small evidence-backed entry workflow and record validation checklist, then add a limited set of verified products across different formats to test the model. Database migration can follow once the content workflow is stable. Do not add records without the project owner's authorization for that phase.
+After reviewing V1.5, continue expanding source-backed product records across formats and markets. Database migration can follow once the content workflow is stable. Do not add records without the project owner's authorization.
