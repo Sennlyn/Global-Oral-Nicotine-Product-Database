@@ -1,7 +1,350 @@
-import type { Brand, Manufacturer, Market, Product } from "@/types/catalog";
+import type { Brand, Manufacturer, Market, Product, Source } from "@/types/catalog";
 
-// V1 is intentionally empty. Verified records will be entered in a later phase.
-export const products: Product[] = [];
-export const brands: Brand[] = [];
+const accessedAt = "2026-09-23";
+
+function officialSource(id: string, sourceName: string, sourceUrl: string, notes?: string): Source {
+  return { id, sourceName, sourceType: "official-brand", sourceUrl, accessedAt, verifiedAt: accessedAt, notes };
+}
+
+const zynCatalogs = {
+  "1.5": {
+    url: "https://us.zyn.com/zyn-1-5mg-nicotine-pouches/",
+    imageDirectory: "1.5mg",
+    imagePrefix: "20260604_flagship_",
+    imageSuffix: "-15mg-15p_straight.png",
+    filePrefix: "zyn-us-20260604-flagship-",
+  },
+  "3": {
+    url: "https://us.zyn.com/zyn-3mg-nicotine-pouches/",
+    imageDirectory: "3mg-and-6mg",
+    imagePrefix: "zyn_",
+    imageSuffix: "_3_straight_bright.png",
+    filePrefix: "zyn-us-",
+  },
+  "6": {
+    url: "https://us.zyn.com/zyn-6mg-nicotine-pouches/",
+    imageDirectory: "3mg-and-6mg",
+    imagePrefix: "zyn_",
+    imageSuffix: "_6_straight_bright.png",
+    filePrefix: "zyn-us-",
+  },
+} as const;
+
+const zynFlavors = [
+  { name: "Cool Mint", key: "coolmint", imageKey: "coolmint", flavorCategory: "mint" },
+  { name: "Peppermint", key: "peppermint", imageKey: "peppermint", flavorCategory: "mint" },
+  { name: "Wintergreen", key: "wintergreen", imageKey: "wintergreen", flavorCategory: "mint" },
+  { name: "Spearmint", key: "spearmint", imageKey: "spearmint", flavorCategory: "mint" },
+  { name: "Cinnamon", key: "cinnamon", imageKey: "cinnamon", flavorCategory: "spice" },
+  { name: "Coffee", key: "coffee", imageKey: "coffee", flavorCategory: "coffee" },
+  { name: "Citrus", key: "citrus", imageKey: "citrus", flavorCategory: "citrus" },
+  { name: "Menthol", key: "menthol", imageKey: "menthol", flavorCategory: "mint" },
+  { name: "Smooth", key: "smooth", imageKey: "smooth", flavorCategory: "unflavored" },
+  { name: "Chill", key: "chill", imageKey: "chill", flavorCategory: "unflavored" },
+  { name: "Black Cherry", key: "black-cherry", imageKey: "blk-cherry", sourceKey: "blk_cherry", newLaunch: true, flavorCategory: "fruit" },
+  { name: "Peach", key: "peach", imageKey: "peach", sourceKey: "peach", newLaunch: true, flavorCategory: "fruit" },
+  { name: "Dragonberry", key: "dragonberry", imageKey: "dragon-berry", sourceKey: "dragon_berry", newLaunch: true, flavorCategory: "fruit" },
+] as const;
+
+const lowStrengthZynFlavors = zynFlavors.slice(0, 10);
+
+function makeZynProduct(
+  flavor: (typeof zynFlavors)[number],
+  strength: 1.5 | 3 | 6,
+): Product {
+  const catalog = zynCatalogs[String(strength) as keyof typeof zynCatalogs];
+  const slug = `zyn-us-${flavor.key}-${String(strength).replace(".", "-")}mg`;
+  const imageAsset = strength === 1.5
+    ? `${catalog.imagePrefix}${flavor.imageKey}${catalog.imageSuffix}`
+    : `${catalog.imagePrefix}${"sourceKey" in flavor ? flavor.sourceKey : flavor.imageKey}${catalog.imageSuffix}`;
+  const imageDirectory = strength !== 1.5 && "newLaunch" in flavor && flavor.newLaunch
+    ? "2026-new-flavors-launch"
+    : catalog.imageDirectory;
+  const imageSourceUrl = `https://us.zyn.com/globalassets/products/${imageDirectory}/${imageAsset}?width=${strength === 6 && ["citrus", "coffee", "peach", "dragon-berry"].includes(flavor.imageKey) ? 600 : 945}`;
+  const imageFile = strength === 1.5
+    ? `${catalog.filePrefix}${flavor.imageKey}-1.5mg.png`
+    : `${catalog.filePrefix}${flavor.imageKey}-${strength}mg.png`;
+  const officialName = `ZYN ${flavor.name} ${strength} mg`;
+  const listingSource = officialSource(
+    "official-catalog",
+    "ZYN U.S. official product catalog",
+    catalog.url,
+    `Official catalog names ${officialName}; the product image is matched to the flavor and strength shown in the catalog. / 官方目录列出该口味与强度；图片文件与目录中的对应包装相匹配。`,
+  );
+  const detailsSource = officialSource(
+    "official-product-details",
+    "ZYN U.S. official product information / FAQ",
+    "https://us.zyn.com/questions/",
+    "The official FAQ documents nicotine salt form and other product-level details. / 官网 FAQ 记录尼古丁盐形式及其他产品信息。",
+  );
+  const imageSource = officialSource(
+    "official-product-image",
+    "ZYN U.S. official package image",
+    imageSourceUrl,
+    `Official package image for ${officialName}. / ${officialName} 的官方包装图。`,
+  );
+
+  return {
+    id: slug,
+    slug,
+    productName: officialName,
+    brandId: "zyn",
+    categoryId: "nicotine-pouches",
+    formatId: "pouch",
+    markets: ["united-states"],
+    status: "active",
+    shortDescription: `${strength} mg of nicotine per pouch; 15 pouches per can.`,
+    localizedShortDescription: {
+      en: `${strength} mg of nicotine per pouch; 15 pouches per can.`,
+      zh: `每袋含尼古丁 ${strength} 毫克；每罐 15 袋。`,
+    },
+    productImage: `/products/${imageFile}`,
+    imageSource,
+    officialWebsite: catalog.url,
+    flavor: { name: flavor.name, category: flavor.flavorCategory },
+    nicotine: {
+      nicotineStrength: `${strength} mg per pouch`,
+      nicotineStrengthMg: strength,
+      nicotinePerUnit: strength,
+      nicotineForm: "Nicotine bitartrate dihydrate",
+    },
+    deliveryRoute: ["gingival", "buccal"],
+    productTechnology: ["pouch-matrix"],
+    specifications: { kind: "pouch", portionsPerCan: 15 },
+    sources: [listingSource, detailsSource],
+    verificationStatus: "verified",
+    lastVerified: accessedAt,
+  };
+}
+
+const zynProducts: Product[] = [
+  ...lowStrengthZynFlavors.map((flavor) => makeZynProduct(flavor, 1.5)),
+  ...zynFlavors.map((flavor) => makeZynProduct(flavor, 3)),
+  ...zynFlavors.map((flavor) => makeZynProduct(flavor, 6)),
+];
+
+const nicoretteProducts: Product[] = [
+  {
+    id: "nicorette-uk-fresh-mint-gum-2mg-105",
+    slug: "nicorette-uk-fresh-mint-gum-2mg-105",
+    productName: "Nicorette Fresh Mint Gum 2 mg (105 pieces)",
+    brandId: "nicorette",
+    categoryId: "nicotine-gum-confectionery",
+    formatId: "gum",
+    markets: ["united-kingdom"],
+    status: "active",
+    localizedShortDescription: { en: "Medicinal nicotine gum; 2 mg per piece, 105 pieces.", zh: "英国市场的药用尼古丁口香糖；每片 2 毫克，每盒 105 片。" },
+    productImage: "/products/nicorette-uk-fresh-mint-gum-2mg-105.webp",
+    imageSource: officialSource("official-product-image", "Nicorette U.K. official product image", "https://images.ctfassets.net/gx4uyacaj0xz/4XQXbRVPl3Vy09ieh2FYuM/79815a465b1071772dd73fd907288ec2/NIC_EU_UK_5010123717841_90720901_458607_GUM_FRSHMNT_2MG_105ct_000_TIF.WEBP", "The package image is for Fresh Mint Gum, 2 mg, 105 pieces. / 对应 Fresh Mint 2 毫克、105 片装。"),
+    officialWebsite: "https://www.nicorette.co.uk/products/nicorette-gum-fresh-mint-2mg-105",
+    flavor: { name: "Fresh Mint", category: "mint" },
+    nicotine: { nicotineStrength: "2 mg per piece", nicotineStrengthMg: 2, nicotinePerUnit: 2 },
+    deliveryRoute: ["chewing", "oral-mucosal"],
+    productTechnology: ["gum-base"],
+    specifications: { kind: "gum", piecesPerPack: 105 },
+    sources: [officialSource("official-product-page", "Nicorette U.K. official product page", "https://www.nicorette.co.uk/products/nicorette-gum-fresh-mint-2mg-105", "Product name, nicotine strength, format and 105-piece pack are listed on the product page. / 产品页列明名称、强度、剂型和 105 片装。")],
+    verificationStatus: "verified",
+    lastVerified: accessedAt,
+  },
+  {
+    id: "nicorette-uk-original-gum-2mg-105",
+    slug: "nicorette-uk-original-gum-2mg-105",
+    productName: "Nicorette Original Gum 2 mg (105 pieces)",
+    brandId: "nicorette",
+    categoryId: "nicotine-gum-confectionery",
+    formatId: "gum",
+    markets: ["united-kingdom"],
+    status: "active",
+    localizedShortDescription: { en: "Medicinal nicotine gum; 2 mg per piece, 105 pieces.", zh: "英国市场的药用尼古丁口香糖；每片 2 毫克，每盒 105 片。" },
+    productImage: "/products/nicorette-uk-original-gum-2mg-105.webp",
+    imageSource: officialSource("official-product-image", "Nicorette U.K. official product image", "https://images.ctfassets.net/gx4uyacaj0xz/3nZ7CT0phjSgWxrYdGt0f4/234a3794d69da8a6871f140048e500a3/NIC_EMEA_UK_3574660413052_90691301_GUM_CLASSIC_2MG_105ct_000_TIF.WEBP", "The package image is for Original Gum, 2 mg, 105 pieces. / 对应 Original 2 毫克、105 片装。"),
+    officialWebsite: "https://www.nicorette.co.uk/products/nicorette-gum-original-2mg-105",
+    flavor: { name: "Original", category: "original" },
+    nicotine: { nicotineStrength: "2 mg per piece", nicotineStrengthMg: 2, nicotinePerUnit: 2 },
+    deliveryRoute: ["chewing", "oral-mucosal"],
+    productTechnology: ["gum-base"],
+    specifications: { kind: "gum", piecesPerPack: 105 },
+    sources: [officialSource("official-product-page", "Nicorette U.K. official product page", "https://www.nicorette.co.uk/products/nicorette-gum-original-2mg-105", "Product name, nicotine strength, format and 105-piece pack are listed on the product page. / 产品页列明名称、强度、剂型和 105 片装。")],
+    verificationStatus: "verified",
+    lastVerified: accessedAt,
+  },
+  {
+    id: "nicorette-uk-cools-lozenge-2mg-40",
+    slug: "nicorette-uk-cools-lozenge-2mg-40",
+    productName: "Nicorette Cools Icy Mint Lozenge 2 mg (40 pieces)",
+    brandId: "nicorette",
+    categoryId: "nicotine-lozenges-solids",
+    formatId: "lozenge",
+    markets: ["united-kingdom"],
+    status: "active",
+    localizedShortDescription: { en: "Medicinal nicotine lozenge; 2 mg per lozenge, 40 pieces.", zh: "英国市场的药用尼古丁含片；每片 2 毫克，每盒 40 片。" },
+    productImage: "/products/nicorette-uk-cools-lozenge-2mg-40.webp",
+    imageSource: officialSource("official-product-image", "Nicorette U.K. official product image", "https://images.ctfassets.net/gx4uyacaj0xz/QHLPYmTclK81zMbIDfuke/70a59e954960f0b6e314b000dc7fcdc8/NIC_EU_UK_3574661775128_90717000_495001_CO_LOZENGE_MINT_2MG_40ct_000_TIF.WEBP", "The package image is for Cools Icy Mint Lozenge, 2 mg, 40 pieces. / 对应 Cools Icy Mint 2 毫克、40 片装。"),
+    officialWebsite: "https://www.nicorette.co.uk/products/nicorette-lozenge-icy-white-2mg-40",
+    flavor: { name: "Icy Mint", category: "mint" },
+    nicotine: { nicotineStrength: "2 mg per lozenge", nicotineStrengthMg: 2, nicotinePerUnit: 2 },
+    deliveryRoute: ["oral-dissolution", "oral-mucosal"],
+    productTechnology: ["lozenge-matrix"],
+    specifications: { kind: "lozenge", piecesPerPack: 40 },
+    sources: [officialSource("official-product-page", "Nicorette U.K. official product page", "https://www.nicorette.co.uk/products/nicorette-lozenge-icy-white-2mg-40", "Product page identifies the 2 mg Cools Icy Mint lozenge and 40-piece pack. / 产品页列明 2 毫克 Cools Icy Mint 含片及 40 片装。")],
+    verificationStatus: "verified",
+    lastVerified: accessedAt,
+  },
+  {
+    id: "nicorette-uk-fruit-lozenge-2mg-40",
+    slug: "nicorette-uk-fruit-lozenge-2mg-40",
+    productName: "Nicorette Fruit Lozenge 2 mg (40 pieces)",
+    brandId: "nicorette",
+    categoryId: "nicotine-lozenges-solids",
+    formatId: "lozenge",
+    markets: ["united-kingdom"],
+    status: "active",
+    localizedShortDescription: { en: "Medicinal nicotine lozenge; 2 mg per lozenge, 40 pieces.", zh: "英国市场的药用尼古丁含片；每片 2 毫克，每盒 40 片。" },
+    productImage: "/products/nicorette-uk-fruit-lozenge-2mg-40.png",
+    imageSource: officialSource("official-product-image", "Nicorette U.K. official product image", "https://images.ctfassets.net/gx4uyacaj0xz/5EdQtfiKU66sXoVuiO4NpC/3880a2c6d49a781ce1b2110a396b863f/Lozenge_2mg_Fruit_40ct_GB-removebg-preview.png", "The package image is for Fruit Lozenge, 2 mg, 40 pieces. / 对应 Fruit 2 毫克、40 片装。"),
+    officialWebsite: "https://www.nicorette.co.uk/products/nicorette-lozenge-fruit-2mg-40",
+    flavor: { name: "Fruit", category: "fruit" },
+    nicotine: { nicotineStrength: "2 mg per lozenge", nicotineStrengthMg: 2, nicotinePerUnit: 2 },
+    deliveryRoute: ["oral-dissolution", "oral-mucosal"],
+    productTechnology: ["lozenge-matrix"],
+    specifications: { kind: "lozenge", piecesPerPack: 40 },
+    sources: [officialSource("official-product-page", "Nicorette U.K. official product page", "https://www.nicorette.co.uk/products/nicorette-lozenge-fruit-2mg-40", "Product page identifies the 2 mg Fruit lozenge and 40-piece pack. / 产品页列明 2 毫克 Fruit 含片及 40 片装。")],
+    verificationStatus: "verified",
+    lastVerified: accessedAt,
+  },
+  {
+    id: "nicorette-uk-microtab-2mg-100",
+    slug: "nicorette-uk-microtab-2mg-100",
+    productName: "Nicorette Microtab Sublingual Tablet 2 mg (100 tablets)",
+    brandId: "nicorette",
+    categoryId: "nicotine-lozenges-solids",
+    formatId: "tablet",
+    markets: ["united-kingdom"],
+    status: "active",
+    localizedShortDescription: { en: "Medicinal sublingual nicotine tablet; 2 mg per tablet, 100 tablets.", zh: "英国市场的药用舌下尼古丁片；每片 2 毫克，每盒 100 片。" },
+    productImage: "/products/nicorette-uk-microtab-2mg-100.webp",
+    imageSource: officialSource("official-product-image", "Nicorette U.K. official product image", "https://images.ctfassets.net/gx4uyacaj0xz/4Q24qsaKKDyLHz77SJgOYH/4bae4e9302aca935af191b202b3abb21/441310_Nicorette_Microtab_2mg_100CT_PNG.WEBP", "The package image is for Microtab 2 mg, 100 tablets. / 对应 Microtab 2 毫克、100 片装。"),
+    officialWebsite: "https://www.nicorette.co.uk/products/nicorette-microtab-2mg-100",
+    nicotine: { nicotineStrength: "2 mg per tablet", nicotineStrengthMg: 2, nicotinePerUnit: 2 },
+    deliveryRoute: ["sublingual", "oral-dissolution"],
+    productTechnology: ["compressed-tablet"],
+    specifications: { kind: "tablet" },
+    sources: [officialSource("official-product-page", "Nicorette U.K. official product page", "https://www.nicorette.co.uk/products/nicorette-microtab-2mg-100", "Product page identifies a 2 mg sublingual tablet and the 100-tablet pack. / 产品页列明 2 毫克舌下片及 100 片装。")],
+    verificationStatus: "verified",
+    lastVerified: accessedAt,
+  },
+];
+
+const veloProducts: Product[] = [
+  {
+    id: "velo-uk-smooth-papaya-8mg",
+    slug: "velo-uk-smooth-papaya-8mg",
+    productName: "VELO Smooth Papaya 8 mg",
+    brandId: "velo",
+    categoryId: "nicotine-pouches",
+    formatId: "pouch",
+    markets: ["united-kingdom"],
+    status: "active",
+    localizedShortDescription: { en: "Slim nicotine pouch; 8 mg nicotine per pouch, 20 pouches per can.", zh: "纤细型尼古丁袋；每袋含尼古丁 8 毫克，每罐 20 袋。" },
+    productImage: "/products/velo-uk-smooth-papaya-8mg.jpg",
+    imageSource: officialSource("official-product-image", "VELO U.K. official product image", "https://gb.velo.com/cdn/shop/files/Gallery01_47a2414f-4f39-401b-acd3-6bedb5a37768.jpg?height=1000&v=1784725269&width=1000", "The official product page identifies this image as VELO Smooth Papaya. / VELO 官方商品页将此图片标注为 Smooth Papaya。"),
+    officialWebsite: "https://www.velo.com/en-gb/products/smooth-papaya",
+    flavor: { name: "Smooth Papaya", category: "fruit" },
+    nicotine: { nicotineStrength: "8 mg per pouch", nicotineStrengthMg: 8, nicotinePerUnit: 8 },
+    tobaccoFree: true,
+    deliveryRoute: ["gingival", "buccal"],
+    productTechnology: ["pouch-matrix"],
+    specifications: { kind: "pouch", portionsPerCan: 20, pouchSize: "Slim" },
+    sources: [officialSource("official-product-page", "VELO U.K. official product page", "https://www.velo.com/en-gb/products/smooth-papaya", "The product page identifies Smooth Papaya, 8 mg, and Slim format. The official FAQ specifies 20 pouches for Slim cans. / 商品页列明 Smooth Papaya、8 毫克和 Slim 袋型；官网 FAQ 说明 Slim 罐装为 20 袋。")],
+    verificationStatus: "verified",
+    lastVerified: accessedAt,
+  },
+];
+
+const swedishSnusProducts: Product[] = [
+  {
+    id: "general-sweden-white-portion",
+    slug: "general-sweden-white-portion",
+    productName: "General White Portion",
+    brandId: "general",
+    categoryId: "oral-smokeless-tobacco",
+    formatId: "pouch",
+    markets: ["sweden"],
+    status: "active",
+    localizedShortDescription: { en: "White-portion oral smokeless tobacco; 24 portions per can, 21.6 g net weight.", zh: "白色袋装口腔烟草；每罐 24 份，净重 21.6 克。" },
+    productImage: "/products/general-sweden-white-portion.webp",
+    imageSource: officialSource("official-product-image", "Swedish Match official product image", "https://swm-nordics.cdn-norce.tech/a924c956-45b8-4ec9-97fa-9155781b423b.jpg?f=webp&h=900&q=90&w=900", "The image is labeled General White Portion on the official Swedish Match product page. / Swedish Match 官方商品页将图片标注为 General White Portion。"),
+    officialWebsite: "https://www.swedishmatch.se/kop-snus/general/general-white-portion-v105904/",
+    flavor: { name: "Tobacco-like, Bergamot", category: "tobacco and citrus" },
+    containsTobacco: true,
+    tobaccoFree: false,
+    deliveryRoute: ["gingival", "buccal"],
+    productTechnology: ["tobacco-matrix"],
+    specifications: { kind: "tobacco", portionsPerCan: 24, netWeightG: 21.6, moisture: "53.4%", ph: 8.6, tobaccoType: "Snus", format: "White Portion" },
+    sources: [officialSource("official-product-page", "Swedish Match official product page", "https://www.swedishmatch.se/kop-snus/general/general-white-portion-v105904/", "The page lists General White Portion, 24 portions, net weight 21.6 g, moisture 53.4%, pH 8.6, tobacco-containing ingredients, and current online availability. / 页面列明 General White Portion、每罐 24 份、净重 21.6 克、水分 53.4%、pH 8.6、含烟草成分及当前在线库存状态。")],
+    verificationStatus: "verified",
+    lastVerified: accessedAt,
+  },
+];
+
+export const products: Product[] = [...zynProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts];
+
+export const brands: Brand[] = [
+  {
+    id: "zyn",
+    slug: "zyn",
+    name: "ZYN",
+    parentCompany: "Swedish Match North America LLC",
+    officialWebsite: "https://us.zyn.com/all-products/",
+    localizedDescription: { en: "U.S. nicotine pouch varieties documented from ZYN's official product pages.", zh: "依据 ZYN 美国官网产品页整理的尼古丁袋品种。" },
+    categoryIds: ["nicotine-pouches"],
+    formatIds: ["pouch"],
+    marketIds: ["united-states"],
+    sources: [officialSource("official-brand-profile", "ZYN U.S. official website", "https://us.zyn.com/about-zyn/")],
+    lastVerified: accessedAt,
+  },
+  {
+    id: "nicorette",
+    slug: "nicorette",
+    name: "Nicorette",
+    officialWebsite: "https://www.nicorette.co.uk/products",
+    localizedDescription: { en: "U.K. nicotine replacement products in gum, lozenge and sublingual tablet forms.", zh: "英国市场的尼古丁替代产品，包含口香糖、含片和舌下片剂。" },
+    categoryIds: ["nicotine-gum-confectionery", "nicotine-lozenges-solids"],
+    formatIds: ["gum", "lozenge", "tablet"],
+    marketIds: ["united-kingdom"],
+    sources: [officialSource("official-brand-profile", "Nicorette U.K. official product range", "https://www.nicorette.co.uk/products")],
+    lastVerified: accessedAt,
+  },
+  {
+    id: "velo",
+    slug: "velo",
+    name: "VELO",
+    officialWebsite: "https://www.velo.com/en-gb/collections/our-products",
+    localizedDescription: { en: "U.K. nicotine pouch varieties documented from VELO's official product pages.", zh: "依据 VELO 英国官网产品页整理的尼古丁袋品种。" },
+    categoryIds: ["nicotine-pouches"],
+    formatIds: ["pouch"],
+    marketIds: ["united-kingdom"],
+    sources: [officialSource("official-brand-profile", "VELO U.K. official product range", "https://www.velo.com/en-gb/collections/our-products")],
+    lastVerified: accessedAt,
+  },
+  {
+    id: "general",
+    slug: "general",
+    name: "General",
+    officialWebsite: "https://www.swedishmatch.se/kop-snus/general/",
+    localizedDescription: { en: "Swedish Match's General snus range, with product records tied to individual official pages.", zh: "Swedish Match 的 General 口含烟系列；产品记录逐款关联官方商品页。" },
+    categoryIds: ["oral-smokeless-tobacco"],
+    formatIds: ["pouch"],
+    marketIds: ["sweden"],
+    sources: [officialSource("official-brand-profile", "Swedish Match General product range", "https://www.swedishmatch.se/kop-snus/general/")],
+    lastVerified: accessedAt,
+  },
+];
+
 export const manufacturers: Manufacturer[] = [];
-export const markets: Market[] = [];
+
+export const markets: Market[] = [
+  { id: "united-states", slug: "united-states", name: { en: "United States", zh: "美国" }, region: "North America", countryCode: "US" },
+  { id: "united-kingdom", slug: "united-kingdom", name: { en: "United Kingdom", zh: "英国" }, region: "Europe", countryCode: "GB" },
+  { id: "sweden", slug: "sweden", name: { en: "Sweden", zh: "瑞典" }, region: "Europe", countryCode: "SE" },
+];

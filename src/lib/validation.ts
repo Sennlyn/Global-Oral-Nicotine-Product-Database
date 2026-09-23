@@ -12,9 +12,11 @@ export function validateVerifiedProduct(product: Product): string[] {
   if (product.verificationStatus === "verified") {
     if (!product.sources.length) errors.push("Verified products need at least one traceable source.");
     if (!product.lastVerified) errors.push("Verified products need a verification date.");
+    if (!product.productImage || !product.imageSource) errors.push("Verified products need a matched product image and a traceable image source.");
   }
   for (const source of product.sources) {
     if (!source.sourceName || !source.accessedAt || !/^https?:\/\//.test(source.sourceUrl)) errors.push(`Source ${source.id} is incomplete.`);
   }
+  if (product.imageSource && (!product.imageSource.sourceName || !product.imageSource.accessedAt || !/^https?:\/\//.test(product.imageSource.sourceUrl))) errors.push("The image source is incomplete.");
   return errors;
 }

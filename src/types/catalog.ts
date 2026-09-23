@@ -70,6 +70,7 @@ export interface Brand {
   countryOfOrigin?: string;
   officialWebsite?: string;
   description?: string;
+  localizedDescription?: LocalizedText;
   categoryIds?: string[];
   formatIds?: string[];
   marketIds?: string[];
@@ -214,6 +215,7 @@ export interface Product {
   status: ProductStatus;
   description?: string;
   shortDescription?: string;
+  localizedShortDescription?: LocalizedText;
   productImage?: string;
   imageSource?: Source;
   officialWebsite?: string;
