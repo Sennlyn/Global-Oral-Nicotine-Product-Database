@@ -63,6 +63,7 @@ export interface PhysicalFormDetails {
 export interface Brand {
   id: string;
   slug: string;
+  legacySlugs?: string[];
   name: string;
   logo?: string;
   parentCompany?: string;
@@ -202,6 +203,7 @@ export type ProductSpecification = PouchSpecification | FilmSpecification | GumS
 export interface Product {
   id: string;
   slug: string;
+  legacySlugs?: string[];
   productName: string;
   brandId: string;
   series?: string;
