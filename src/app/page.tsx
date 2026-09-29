@@ -13,7 +13,7 @@ const overviewCards = [
     icon: Database,
     number: "01",
     title: "Product catalogue",
-    description: "Browse individual oral nicotine and oral smokeless tobacco product records, with source and review status shown on each record.",
+    description: "Browse source-linked oral nicotine and smokeless tobacco products, with market status assessed separately for each country.",
     action: "Explore products",
     kind: "catalog",
   },
@@ -64,6 +64,33 @@ const newsItems = [
   },
 ];
 
+const timelineItems = [
+  {
+    year: "1822",
+    title: "Ettan is established",
+    description: "Swedish Match's company history identifies 1822 as the creation of the Ettan snus brand.",
+    source: "https://www.swedishmatch.com/globalassets/reports/annual-reports/2005_annualreport_en.pdf",
+  },
+  {
+    year: "1973",
+    title: "Portion snus arrives",
+    description: "Swedish Match dates the first portion-packed snus product to its 1973 launch in Sweden.",
+    source: "https://www.swedishmatch.com/globalassets/reports/annual-reports/2021_swedishmatchannualreport_interactive_en.pdf",
+  },
+  {
+    year: "1984",
+    title: "Flavored portions expand",
+    description: "Catch launched with a licorice flavor, which Swedish Match describes as the first non-traditional snus flavor.",
+    source: "https://www.swedishmatch.com/globalassets/reports/2009_annualreport_en.pdf",
+  },
+  {
+    year: "2025",
+    title: "U.S. pouch authorization begins",
+    description: "The FDA authorized its first 20 nicotine pouch products through the U.S. premarket tobacco application pathway.",
+    source: "https://www.fda.gov/news-events/press-announcements/fda-authorizes-marketing-20-zyn-nicotine-pouch-products-after-extensive-scientific-review",
+  },
+];
+
 export default function Home() {
   const { locale } = useLanguage();
   const marketsWithProducts = markets.filter((market) => products.some((product) => product.markets.includes(market.slug)));
@@ -78,9 +105,9 @@ export default function Home() {
       <section className="overview-hero">
         <div className="container overview-hero-grid">
           <div className="overview-copy">
-            <p className="overview-eyebrow"><span className="live-dot" />{tr(locale, "GLOBAL ORAL NICOTINE DATABASE")}<span className="overview-version">V1.5</span></p>
+            <p className="overview-eyebrow"><span className="live-dot" />{tr(locale, "GLOBAL ORAL NICOTINE DATABASE")}<span className="overview-version">V1.9</span></p>
             <h1 className={locale === "zh" ? "overview-title-zh" : undefined}>
-              {locale === "zh" ? <><span>全球口腔尼古丁产品</span><em>数据库。</em></> : <>{tr(locale, "A clearer view of")} <em>{tr(locale, "oral nicotine.")}</em></>}
+              {locale === "zh" ? <><span>全球口腔尼古丁产品</span><em>数据库</em></> : <>{tr(locale, "A clearer view of")} <em>{tr(locale, "oral nicotine.")}</em></>}
             </h1>
             <p className="overview-lede">{tr(locale, "A research database bringing together oral nicotine and smokeless tobacco products in a structured, source-aware catalog.")}</p>
             <p className="overview-sublede">{tr(locale, "Explore real product records, understand how they are classified, and follow documented details back to their sources.")}</p>
@@ -96,7 +123,7 @@ export default function Home() {
 
       <section className="overview-metrics" aria-label={tr(locale, "Catalog at a glance")}>
         <div className="container overview-metrics-inner">
-          <div className="overview-metrics-label"><span>{tr(locale, "CATALOG AT A GLANCE")}</span><p>{tr(locale, "Records can have different review states. Open an entry to see its status and sources.")}</p></div>
+          <div className="overview-metrics-label"><span>{tr(locale, "CATALOG AT A GLANCE")}</span><p>{tr(locale, "Market status is assessed for each product and country. Open a record to see its evidence and lifecycle.")}</p></div>
           <div className="overview-metrics-grid">
             {metrics.map((metric) => <div className="overview-metric" key={metric.label}><metric.icon size={18} strokeWidth={1.6} /><strong>{String(metric.value).padStart(2, "0")}</strong><span>{tr(locale, metric.label)}</span></div>)}
           </div>
@@ -120,6 +147,23 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="overview-timeline">
+        <div className="container">
+          <div className="overview-section-heading">
+            <div><p className="eyebrow">{tr(locale, "A HISTORY OF ORAL PRODUCT FORMATS")}</p><h2>{tr(locale, "From loose snus to portion pouches")}</h2></div>
+            <p>{tr(locale, "A short, source-linked timeline of format changes and a regulatory milestone.")}</p>
+          </div>
+          <div className="overview-timeline-track">
+            {timelineItems.map((item) => <article className="overview-timeline-item" key={item.year}>
+              <time>{item.year}</time>
+              <h3>{tr(locale, item.title)}</h3>
+              <p>{tr(locale, item.description)}</p>
+              <a href={item.source} target="_blank" rel="noreferrer">{tr(locale, "Read source")} ↗</a>
+            </article>)}
+          </div>
+        </div>
+      </section>
+
       <section className="overview-explore section container">
         <div className="overview-section-heading">
           <div><p className="eyebrow">{tr(locale, "START WITH THE OVERVIEW")}</p><h2>{tr(locale, "Explore the database")}</h2></div>
@@ -137,7 +181,7 @@ export default function Home() {
       <section className="overview-evidence">
         <div className="container overview-evidence-inner">
           <div className="overview-evidence-icon"><ShieldCheck size={24} strokeWidth={1.5} /></div>
-          <div className="overview-evidence-copy"><p className="overview-evidence-eyebrow">{tr(locale, "RESEARCH BUILT AROUND EVIDENCE")}</p><h2>{tr(locale, "Know what is documented.")}</h2><p>{tr(locale, "Each product record shows its available sources and verification status. Unconfirmed details remain marked for review.")}</p></div>
+          <div className="overview-evidence-copy"><p className="overview-evidence-eyebrow">{tr(locale, "RESEARCH BUILT AROUND EVIDENCE")}</p><h2>{tr(locale, "Know what is documented.")}</h2><p>{tr(locale, "Every product record shows its sources, product lifecycle and country-specific listing evidence.")}</p></div>
           <Link href="/about" className="overview-evidence-link">{tr(locale, "Read the methodology")}<ArrowUpRight size={17} /></Link>
         </div>
       </section>

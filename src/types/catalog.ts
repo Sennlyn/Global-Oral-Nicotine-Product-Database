@@ -1,6 +1,7 @@
 export type LocalizedText = { en: string; zh: string };
 export type VerificationStatus = "verified" | "pending";
 export type ProductStatus = "active" | "discontinued" | "unknown";
+export type MarketListingStatus = "marketed" | "pending";
 export type SourceType = "official-brand" | "manufacturer" | "regulator" | "government" | "scientific" | "industry" | "retail-reference" | "user-provided" | "other";
 export type NicotineSource = "tobacco-derived" | "synthetic" | "tobacco-material" | "unknown" | "other";
 export type DeliveryRoute = "buccal" | "gingival" | "sublingual" | "oral-dissolution" | "chewing" | "oral-mucosal" | "mixed" | "other";
@@ -68,6 +69,8 @@ export interface Brand {
   logo?: string;
   parentCompany?: string;
   manufacturerIds?: string[];
+  /** Brand's country of affiliation, distinct from product manufacture and sales markets. */
+  brandCountry?: string;
   countryOfOrigin?: string;
   officialWebsite?: string;
   description?: string;
@@ -95,8 +98,16 @@ export interface Market {
   name: LocalizedText;
   region?: string;
   countryCode?: string;
-  regulatoryNotes?: string;
+  regulatoryNotes?: string | LocalizedText;
   regulatorySources?: Source[];
+}
+
+export interface ProductMarketListing {
+  marketId: string;
+  status: MarketListingStatus;
+  officialProductSource?: Source;
+  regulatorySource?: Source;
+  notes: LocalizedText;
 }
 
 export interface Flavor {
@@ -215,6 +226,7 @@ export interface Product {
   parentCompany?: string;
   countryOfOrigin?: string;
   markets: string[];
+  marketListings?: ProductMarketListing[];
   status: ProductStatus;
   description?: string;
   shortDescription?: string;

@@ -2,6 +2,7 @@ import { brands, manufacturers, products } from "@/data/products";
 import { resolveCategoryId } from "@/data/categories";
 import { resolveFormatId } from "@/data/formats";
 import type { Product, ProductSpecification } from "@/types/catalog";
+import { productMatchesMarketListingStatus } from "@/lib/market-listings";
 import { tr, type Locale } from "@/lib/i18n";
 
 export type ProductQuery = {
@@ -19,6 +20,7 @@ export type ProductQuery = {
   tobaccoFree?: string;
   deliveryRoute?: string;
   status?: string;
+  marketStatus?: "marketed" | "pending";
   sort?: string;
 };
 
@@ -41,7 +43,8 @@ export function searchProducts(filters: ProductQuery, records: Product[] = produ
       (!filters.containsTobacco || String(product.containsTobacco) === filters.containsTobacco) &&
       (!filters.tobaccoFree || String(product.tobaccoFree) === filters.tobaccoFree) &&
       (!filters.deliveryRoute || product.deliveryRoute?.includes(filters.deliveryRoute as NonNullable<Product["deliveryRoute"]>[number])) &&
-      (!filters.status || product.status === filters.status);
+      (!filters.status || product.status === filters.status) &&
+      (!filters.marketStatus || productMatchesMarketListingStatus(product, filters.marketStatus, filters.market));
   });
   return matches.sort((a, b) => filters.sort === "name-desc" ? b.productName.localeCompare(a.productName) : a.productName.localeCompare(b.productName));
 }

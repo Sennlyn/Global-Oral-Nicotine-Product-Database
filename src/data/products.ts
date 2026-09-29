@@ -1,6 +1,7 @@
-import type { Brand, Manufacturer, Market, Product, Source } from "@/types/catalog";
+import type { Brand, LocalizedText, Manufacturer, Market, Product, ProductMarketListing, Source } from "@/types/catalog";
 
 const accessedAt = "2026-09-23";
+const researchAccessedAt = "2026-09-29";
 
 function officialSource(id: string, sourceName: string, sourceUrl: string, notes?: string): Source {
   return { id, sourceName, sourceType: "official-brand", sourceUrl, accessedAt, verifiedAt: accessedAt, notes };
@@ -12,6 +13,26 @@ function manufacturerSource(id: string, sourceName: string, sourceUrl: string, n
 
 function userProvidedSource(id: string, sourceName: string, sourceUrl?: string, notes?: string): Source {
   return { id, sourceName, sourceType: "user-provided", sourceUrl, accessedAt, notes };
+}
+
+function regulatorSource(id: string, sourceName: string, sourceUrl: string, notes?: string): Source {
+  return { id, sourceName, sourceType: "regulator", sourceUrl, accessedAt, verifiedAt: accessedAt, notes };
+}
+
+function retailReferenceSource(id: string, sourceName: string, sourceUrl: string, notes?: string): Source {
+  return { id, sourceName, sourceType: "retail-reference", sourceUrl, accessedAt, verifiedAt: accessedAt, notes };
+}
+
+function currentOfficialSource(id: string, sourceName: string, sourceUrl: string, notes?: string): Source {
+  return { id, sourceName, sourceType: "official-brand", sourceUrl, accessedAt: researchAccessedAt, verifiedAt: researchAccessedAt, notes };
+}
+
+function currentRegulatorSource(id: string, sourceName: string, sourceUrl: string, notes?: string): Source {
+  return { id, sourceName, sourceType: "regulator", sourceUrl, accessedAt: researchAccessedAt, verifiedAt: researchAccessedAt, notes };
+}
+
+function currentRetailReferenceSource(id: string, sourceName: string, sourceUrl: string, notes?: string): Source {
+  return { id, sourceName, sourceType: "retail-reference", sourceUrl, accessedAt: researchAccessedAt, verifiedAt: researchAccessedAt, notes };
 }
 
 const nicoretteManufacturerReferences: Record<string, { url: string; productName: string }> = {
@@ -494,6 +515,75 @@ const swedishSnusProducts: Product[] = [
   },
 ];
 
+const onPlusMarketAnnouncement = currentOfficialSource(
+  "on-plus-national-retail-expansion",
+  "Altria announcement: on! PLUS national retail availability",
+  "https://investor.altria.com/press-releases/news-details/2026/on-PLUS-Expands-Nationwide-Retail-Availability/default.aspx",
+  "Names the six FDA-authorized on! PLUS variants and reports nationwide U.S. retail expansion beginning March 2026. / 列出六款获 FDA 授权的 on! PLUS 产品，并说明 2026 年 3 月起在美国扩大零售供应。",
+);
+
+const onPlusFDAAuthorization = currentRegulatorSource(
+  "fda-on-plus-authorized-list",
+  "FDA authorized nicotine pouch products list",
+  "https://www.fda.gov/tobacco-products/market-and-distribute-tobacco-product/nicotine-pouch-products-authorized-fda",
+  "FDA states that its current list contains the only nicotine pouch products that may lawfully be sold in the United States. / FDA 说明当前清单所列产品是唯一可在美国合法销售的尼古丁袋产品。",
+);
+
+const onPlusFlavors = [
+  { flavor: "Mint", key: "mint", strength: 6, image: "on-plus-mint-6mg.png", retailer: "https://www.northerner.com/us/on-plus-mint-6mg", imageFile: "On%21Plus-Mint-6mg-01_yagz03.png" },
+  { flavor: "Mint", key: "mint", strength: 9, image: "on-plus-mint-9mg.png", retailer: "https://www.northerner.com/us/on-plus-mint-9mg", imageFile: "On%21Plus-Mint-9mg-01_o3dqyk.png" },
+  { flavor: "Tobacco", key: "tobacco", strength: 6, image: "on-plus-tobacco-6mg.png", retailer: "https://www.northerner.com/us/on-plus-tobacco-6mg", imageFile: "On%21Plus-TobaccoFlavor-6mg-01_nqyokx.png" },
+  { flavor: "Tobacco", key: "tobacco", strength: 9, image: "on-plus-tobacco-9mg.png", retailer: "https://www.northerner.com/us/on-plus-tobacco-9mg", imageFile: "On%21Plus-TobaccoFlavor-9mg-01_9r9d1v.png" },
+  { flavor: "Wintergreen", key: "wintergreen", strength: 6, image: "on-plus-wintergreen-6mg.png", retailer: "https://www.northerner.com/us/on-plus-wintergreen-6mg", imageFile: "On%21Plus-Wintergreen-6mg-01_x03bat.png" },
+  { flavor: "Wintergreen", key: "wintergreen", strength: 9, image: "on-plus-wintergreen-9mg.png", retailer: "https://www.northerner.com/us/on-plus-wintergreen-9mg", imageFile: "On%21Plus-Wintergreen-9mg-01_qfom49.png" },
+] as const;
+
+const onPlusProducts: Product[] = onPlusFlavors.map((item) => {
+  const productName = `on! PLUS ${item.flavor} ${item.strength} mg`;
+  const retailerSource = currentRetailReferenceSource(
+    "exact-package-image",
+    `Northerner exact-variant product page — ${productName}`,
+    item.retailer,
+    `The displayed can image matches the named flavor and strength; image file: ${item.imageFile}. Retailer image used because the official on! shop is age-gated. / 页面所示罐装图片与该口味、强度一致；图片文件：${item.imageFile}。官方 on! 商店有年龄验证，因此使用该零售页对应图片。`,
+  );
+  return {
+    id: `on-plus-${item.key}-${item.strength}mg`,
+    slug: `on-plus-${item.key}-${item.strength}mg`,
+    productName,
+    brandId: "on-plus",
+    series: "on! PLUS",
+    categoryId: "nicotine-pouches",
+    formatId: "pouch",
+    manufacturerId: "helix-innovations",
+    parentCompany: "Altria Group, Inc.",
+    markets: ["united-states"],
+    status: "active",
+    shortDescription: `${item.strength} mg nicotine pouch in ${item.flavor.toLowerCase()} flavor.`,
+    localizedShortDescription: {
+      en: `${item.strength} mg nicotine pouch in ${item.flavor.toLowerCase()} flavor; 14 pouches per can.`,
+      zh: `${item.flavor}口味，每袋含尼古丁 ${item.strength} 毫克；每罐 14 袋。`,
+    },
+    productImage: `/products/${item.image}`,
+    imageSource: retailerSource,
+    officialWebsite: onPlusMarketAnnouncement.sourceUrl,
+    flavor: { name: item.flavor },
+    nicotine: { nicotineStrength: `${item.strength} mg per pouch`, nicotineStrengthMg: item.strength, nicotinePerUnit: item.strength, nicotineSource: "tobacco-derived" },
+    containsTobacco: false,
+    tobaccoFree: true,
+    deliveryRoute: ["gingival", "buccal"],
+    productTechnology: ["pouch-matrix"],
+    specifications: { kind: "pouch", portionsPerCan: 14 },
+    sources: [
+      onPlusMarketAnnouncement,
+      onPlusFDAAuthorization,
+      currentOfficialSource("on-plus-brand-home", "on! official website", "https://www.onnicotine.com/"),
+      retailerSource,
+    ],
+    verificationStatus: "verified",
+    lastVerified: researchAccessedAt,
+  };
+});
+
 const huabaoContextSource = officialSource(
   "huabao-oral-tobacco-rd-context",
   "Huabao 2026 technology projects article",
@@ -586,9 +676,65 @@ const huabaoProducts: Product[] = [
   },
 ];
 
-const productRecords: Product[] = [...zynProducts, ...zynUltraProducts, ...zynSwissProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts, ...huabaoProducts];
+const productRecords: Product[] = [...zynProducts, ...zynUltraProducts, ...zynSwissProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts, ...onPlusProducts, ...huabaoProducts];
 
-export const products: Product[] = productRecords.map((product) => {
+const marketRegulatorySources: Record<string, Source> = {
+  "united-states": currentRegulatorSource(
+    "us-fda-pouch-market-list",
+    "FDA nicotine pouch authorization list",
+    "https://www.fda.gov/tobacco-products/market-and-distribute-tobacco-product/nicotine-pouch-products-authorized-fda",
+    "The FDA says only listed nicotine pouch products may lawfully be sold in the U.S. / FDA 说明只有该清单上的尼古丁袋产品可在美国合法销售。",
+  ),
+  "united-kingdom": currentRegulatorSource(
+    "uk-mhra-product-information",
+    "MHRA product information and marketing authorization service",
+    "https://www.gov.uk/guidance/find-product-information-about-medicines",
+    "The MHRA publishes product leaflets, product characteristics and marketing authorization information for U.K.-licensed medicines. / MHRA 发布英国许可药品的说明书、产品特性及上市许可信息。",
+  ),
+  sweden: currentRegulatorSource(
+    "sweden-public-health-product-list",
+    "Public Health Agency of Sweden notified nicotine product register",
+    "https://www.folkhalsomyndigheten.se/the-public-health-agency-of-sweden/living-conditions-and-lifestyle/andtg/legal-requirements/tobacco-free-nicotine-products/publicly-available-information-on-tobacco-free-nicotine-products/",
+    "The agency register covers notified tobacco-free nicotine products; tobacco-containing snus follows a different regulatory route. / 该机构公开清单收录已申报的无烟草尼古丁产品；含烟草 snus 适用不同监管路径。",
+  ),
+  switzerland: currentRegulatorSource(
+    "switzerland-bag-tabacinfo",
+    "Swiss Federal Office of Public Health Tabacinfo product notification guidance",
+    "https://www.bag.admin.ch/de/faq-produktmeldung-und-tabacinfo",
+    "The BAG requires digital product notifications for tobacco products; exact product notification evidence is needed for this database's marketed status. / BAG 要求烟草产品进行数字化产品申报；本数据库将具体产品申报依据作为已上市状态的核查证据。",
+  ),
+};
+
+const marketNamesBySlug: Record<string, LocalizedText> = {
+  "united-states": { en: "United States", zh: "美国" },
+  "united-kingdom": { en: "United Kingdom", zh: "英国" },
+  sweden: { en: "Sweden", zh: "瑞典" },
+  switzerland: { en: "Switzerland", zh: "瑞士" },
+};
+
+const fdaAuthorizedClassicFlavors = new Set([
+  "Chill", "Cinnamon", "Citrus", "Coffee", "Cool Mint", "Menthol", "Peppermint", "Smooth", "Spearmint", "Wintergreen",
+]);
+
+function hasMarketAuthorization(product: Product, marketId: string): boolean {
+  if (marketId === "united-states") {
+    if (product.brandId === "on-plus") return true;
+    const strength = product.nicotine?.nicotineStrengthMg;
+    return product.brandId === "zyn"
+      && !product.productName.startsWith("ZYN Ultra")
+      && (strength === 3 || strength === 6)
+      && fdaAuthorizedClassicFlavors.has(product.flavor?.name ?? "");
+  }
+  if (marketId === "united-kingdom") return product.brandId === "nicorette";
+  return false;
+}
+
+function officialProductEvidence(product: Product): Source | undefined {
+  return product.sources.find((source) => source.sourceUrl && ["official-brand", "manufacturer"].includes(source.sourceType))
+    ?? product.sources.find((source) => Boolean(source.sourceUrl));
+}
+
+const productRecordsWithManufacturerData: Product[] = productRecords.map((product) => {
   if (product.brandId === "zyn" && product.markets.includes("switzerland")) {
     return {
       ...product,
@@ -643,24 +789,63 @@ export const products: Product[] = productRecords.map((product) => {
   return product;
 });
 
+export const products: Product[] = productRecordsWithManufacturerData.map((product) => ({
+  ...product,
+  marketListings: product.markets.map((marketId): ProductMarketListing => {
+    const marketed = hasMarketAuthorization(product, marketId);
+    const marketName = marketNamesBySlug[marketId];
+    const officialProductSource = officialProductEvidence(product);
+    const regulatorySource = marketRegulatorySources[marketId];
+    const notes = marketed
+      ? marketId === "united-states"
+        ? { en: "The exact product name and nicotine strength appear on the FDA authorized list; the manufacturer separately confirms U.S. retail availability.", zh: "FDA 授权清单列出了完全对应的产品名称与尼古丁强度；制造商另有美国零售供应公告。" }
+        : { en: "The official U.K. product information and current MHRA medicine-authorization records support sale as a licensed nicotine-replacement medicine.", zh: "英国官方产品资料及 MHRA 药品许可资料支持其作为已许可尼古丁替代药品销售。" }
+      : {
+          en: `A qualifying government listing or sale authorization was not confirmed for this exact product in ${marketName?.en ?? marketId}. The product and lifecycle record is retained for research.`,
+          zh: `尚未确认该产品在${marketName?.zh ?? marketId}具有符合本数据库标准的政府清单记录或销售许可依据；仍保留产品与生命周期资料供研究。`,
+        };
+    return { marketId, status: marketed ? "marketed" : "pending", officialProductSource, regulatorySource, notes };
+  }),
+}));
+
 export const brands: Brand[] = [
   {
     id: "huabao",
     slug: "huabao",
     legacySlugs: ["incootine"],
     name: "HUABAO",
+    brandCountry: "China",
+    countryOfOrigin: "China",
     manufacturerIds: ["huabao-research-institute-reported"],
     localizedDescription: {
-      en: "The supplied product diagrams show a HUABAO logo and generic AERO Pouch / Gel Pouch labels; they do not name INCOOTINE. Public Huabao materials discuss oral-tobacco research but do not verify these products or establish HUABAO as their consumer brand or manufacturer. Attribution remains pending.",
-      zh: "用户提供的说明图显示 HUABAO 标识及 AERO Pouch / Gel Pouch 通用名称，未出现 INCOOTINE。华宝公开资料提及口含烟研发，但没有核实这些具体产品，也未证明 HUABAO 是其商品品牌或制造商；归属待核实。",
+      en: "HUABAO is recorded as the brand, with China as its brand country, based on project-owner information and the supplied HUABAO product diagrams. The exact legal manufacturer, production location and sales markets for the described products remain unconfirmed.",
+      zh: "依据项目提供者信息及所附 HUABAO 产品图，品牌记录为 HUABAO，品牌所属国为中国。相关产品的具体法律制造商、生产地点与销售市场仍待核实。",
     },
     categoryIds: ["nicotine-films", "nicotine-pouches"],
     formatIds: ["film", "pouch"],
     sources: [
-      userProvidedSource("huabao-mark-owner-attribution", "Project-owner-supplied HUABAO-mark infographics and reported Huabao Research Institute attribution", undefined, "The supplied AERO and Gel Pouch infographics display a HUABAO logo and generic product titles; neither image says INCOOTINE. The product-brand status of the logo and its relationship to Huabao Research Institute remain unverified. | 中文：所附 AERO 与 Gel Pouch 说明图显示 HUABAO 标识及通用产品名称，均未出现 INCOOTINE。该标识是否为商品品牌及其与华宝研究院的关系仍待核实。"),
+      userProvidedSource("huabao-brand-country", "Project-owner identification of HUABAO as the brand and China as its brand country", undefined, "The project owner directly identifies the brand as HUABAO and its country as China. This does not establish any product's manufacturing location or sales market. | 中文：项目提供者确认品牌名为 HUABAO、品牌所属国为中国；这不能证明任何产品的生产地点或销售市场。"),
+      userProvidedSource("huabao-mark-owner-attribution", "Project-owner-supplied HUABAO-mark product infographics and Huabao Research Institute attribution", undefined, "The supplied AERO and Gel Pouch infographics display the HUABAO brand. The project owner attributes the work to Huabao Research Institute; the exact legal manufacturer and production site remain unconfirmed. | 中文：所附 AERO 与 Gel Pouch 说明图显示 HUABAO 品牌。项目提供者称相关研发来自华宝研究院，但具体法律制造商与生产地点仍待核实。"),
       huabaoContextSource,
     ],
     verificationStatus: "pending",
+  },
+  {
+    id: "on-plus",
+    slug: "on-plus",
+    name: "on! PLUS",
+    parentCompany: "Altria Group, Inc.",
+    manufacturerIds: ["helix-innovations"],
+    officialWebsite: "https://www.onnicotine.com/",
+    localizedDescription: {
+      en: "Helix Innovations' oral nicotine pouch line. This database currently records six U.S. variants named in the FDA authorization and the manufacturer's nationwide retail notice.",
+      zh: "Helix Innovations 的口含尼古丁袋系列。本数据库当前收录 FDA 授权清单及制造商全美零售公告中列出的六款美国规格。",
+    },
+    categoryIds: ["nicotine-pouches"],
+    formatIds: ["pouch"],
+    marketIds: ["united-states"],
+    sources: [onPlusMarketAnnouncement, onPlusFDAAuthorization, currentOfficialSource("official-on-brand", "on! official website", "https://www.onnicotine.com/")],
+    lastVerified: researchAccessedAt,
   },
   {
     id: "zyn",
@@ -769,6 +954,17 @@ export const brands: Brand[] = [
 
 export const manufacturers: Manufacturer[] = [
   {
+    id: "helix-innovations",
+    slug: "helix-innovations",
+    name: "Helix Innovations LLC",
+    country: "United States",
+    officialWebsite: "https://www.altria.com/about-altria/At_A_Glance/corporate-fact-sheet",
+    sources: [
+      currentOfficialSource("helix-product-maker", "Altria corporate fact sheet: Helix Innovations", "https://www.altria.com/about-altria/At_A_Glance/corporate-fact-sheet", "Altria identifies Helix as its oral nicotine pouch operating company; the FDA names Helix Innovations LLC as the on! PLUS manufacturer. / Altria 将 Helix 列为其口含尼古丁袋业务主体；FDA 列明 Helix Innovations LLC 为 on! PLUS 制造商。"),
+      onPlusFDAAuthorization,
+    ],
+  },
+  {
     id: "huabao-research-institute-reported",
     slug: "huabao-research-institute-reported",
     name: "Huabao Research Institute (reported; legal entity and manufacturing site unverified)",
@@ -812,8 +1008,24 @@ export const manufacturers: Manufacturer[] = [
 ];
 
 export const markets: Market[] = [
-  { id: "united-states", slug: "united-states", name: { en: "United States", zh: "美国" }, region: "North America", countryCode: "US" },
-  { id: "united-kingdom", slug: "united-kingdom", name: { en: "United Kingdom", zh: "英国" }, region: "Europe", countryCode: "GB" },
-  { id: "sweden", slug: "sweden", name: { en: "Sweden", zh: "瑞典" }, region: "Europe", countryCode: "SE" },
-  { id: "switzerland", slug: "switzerland", name: { en: "Switzerland", zh: "瑞士" }, region: "Europe", countryCode: "CH" },
+  {
+    id: "united-states", slug: "united-states", name: { en: "United States", zh: "美国" }, region: "North America", countryCode: "US",
+    regulatoryNotes: { en: "For nicotine pouches, the FDA says only products on its authorized list may be lawfully sold. A listed product still needs exact product and manufacturer evidence.", zh: "对于尼古丁袋，FDA 说明只有其授权清单上的产品可在美国合法销售；仍需核对具体产品名称和制造商。" },
+    regulatorySources: [marketRegulatorySources["united-states"]],
+  },
+  {
+    id: "united-kingdom", slug: "united-kingdom", name: { en: "United Kingdom", zh: "英国" }, region: "Europe", countryCode: "GB",
+    regulatoryNotes: { en: "Nicotine replacement medicines require a U.K. marketing authorization. Product records are checked against the licensed product information and MHRA service.", zh: "尼古丁替代药品须取得英国上市许可。产品记录依据许可产品资料及 MHRA 服务核对。" },
+    regulatorySources: [marketRegulatorySources["united-kingdom"]],
+  },
+  {
+    id: "sweden", slug: "sweden", name: { en: "Sweden", zh: "瑞典" }, region: "Europe", countryCode: "SE",
+    regulatoryNotes: { en: "Tobacco-free nicotine products must be notified to the Public Health Agency before they can be placed on the Swedish market. Tobacco snus follows a separate route.", zh: "无烟草尼古丁产品进入瑞典市场前须向瑞典公共卫生局申报；含烟草 snus 适用另一套监管路径。" },
+    regulatorySources: [marketRegulatorySources.sweden],
+  },
+  {
+    id: "switzerland", slug: "switzerland", name: { en: "Switzerland", zh: "瑞士" }, region: "Europe", countryCode: "CH",
+    regulatoryNotes: { en: "Swiss product notification and applicable tobacco and nicotine product rules must be checked for each exact product. A brand's Swiss website alone is not treated as sufficient evidence.", zh: "瑞士要求按具体产品核对产品申报及适用的烟草、尼古丁产品规定；仅有品牌瑞士官网不足以作为上市依据。" },
+    regulatorySources: [marketRegulatorySources.switzerland],
+  },
 ];

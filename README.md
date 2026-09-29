@@ -1,6 +1,6 @@
 # Global Oral Nicotine Product Database / 全球口腔尼古丁产品数据库
 
-V1.5 is a source-linked research website for oral nicotine and oral smokeless tobacco products. It includes verified and pending product records; uncertain fields are clearly marked. This is not an e-commerce site.
+V1.9 is a source-linked research website for oral nicotine and oral smokeless tobacco products. Each product-country pair records its market status separately; uncertain details are clearly marked. This is not an e-commerce site.
 
 ## Stack
 
@@ -28,7 +28,7 @@ pnpm start
 
 ## Language selection
 
-Use the **EN / 中文** selector beside Search in the header to switch the entire interface between English and Simplified Chinese. The selection is saved in a cookie, so it persists across page navigation and reloads. Switching languages keeps the current page and any product search or filter parameters. The page language and metadata also follow the selection. Proper names and established technical abbreviations can remain in their original form.
+Use the **EN / 中文** selector beside Search in the header to switch the interface between English and Simplified Chinese. The selection is saved in browser storage and persists across page navigation and reloads. Switching languages keeps the current page and any product search or filter parameters. The page language and metadata also follow the selection. Proper names and established technical abbreviations can remain in their original form.
 
 In this Windows Codex workspace, `pnpm` may not be on `PATH`. Use the bundled executable directly from PowerShell if needed:
 
@@ -42,7 +42,7 @@ In this Windows Codex workspace, `pnpm` may not be on `PATH`. Use the bundled ex
 src/
   app/            App Router pages and global CSS
   components/     layout, categories, formats, products and reusable UI
-  data/           category and format taxonomy, regions, empty formal datasets
+  data/           product catalog, category and format taxonomy, regions
   lib/            search/filter and future record validation helpers
   types/          catalog TypeScript model
 ```
@@ -59,32 +59,32 @@ src/
 
 **Physical Form** (11): Pouch, Oral Film, Lozenge, Tablet, Hard Candy, Gum, Gummy, Bead / Pellet, Granule, Powder and Compacted Block. The browse page groups these by physical structure: flexible carriers, formed solids, elastic and gel matrices, particulate systems and compacted masses.
 
-Physical form is independent from product category. Each future product record has one primary physical form; its shape, unitization, use mode, commercial presentation and flavour are separate fields. “Portion” and “loose” are unitization values, “chew” is a use mode, and “mint” is a flavour or commercial presentation rather than a physical form.
+Physical form is independent from product category. Each product record has one primary physical form; its shape, unitization, use mode, commercial presentation and flavour are separate fields. “Portion” and “loose” are unitization values, “chew” is a use mode, and “mint” is a flavour or commercial presentation rather than a physical form.
 
 The original nineteen entries are preserved in `legacyFormatDefinitions` for traceability. Exact structural aliases (such as Strip → Oral Film and Bead → Bead / Pellet) resolve to an active physical form. Ambiguous former entries redirect to the formats overview so a future source-backed record can be classified from its actual structure.
 
-The original ten category definitions remain in `originalCategories` for traceability. `categoryIdAliases` maps their IDs to the six active categories, and old category URLs redirect to the corresponding new page. Formal product records are still empty, so no real product records were moved or removed.
+The original ten category definitions remain in `originalCategories` for traceability. `categoryIdAliases` maps their IDs to the six active categories, and old category URLs redirect to the corresponding new page. The current catalog contains 72 source-linked product records.
 
-The original ten category definitions remain in `originalCategories` for traceability. `categoryIdAliases` maps their IDs to the six active categories, and old category URLs redirect to the corresponding new page. Formal product records are still empty, so no real product records were moved or removed.
+Existing product records remain in the catalog while category aliases resolve legacy category IDs to the six active categories. No product record is deleted as part of taxonomy updates.
 
 ## Product model
 
-`src/types/catalog.ts` defines `Product`, `Brand`, `Manufacturer`, `Market`, `Source`, `Flavor` and `NicotineSpecification`. A product has stable IDs/slugs, brand and manufacturer references, independent category and primary physical-form references, markets, optional descriptive attributes, source links, verification status and last verification date. `physicalFormDetails` keeps structural shape, unitization, use mode and commercial presentation separate from category and flavour. Unknown attributes are optional rather than invented.
+`src/types/catalog.ts` defines `Product`, `Brand`, `Manufacturer`, `Market`, `Source`, `Flavor` and `NicotineSpecification`. A product has stable IDs/slugs, brand and manufacturer references, independent category and primary physical-form references, market links, country-specific listing evidence, a separate lifecycle field, source links and review dates. `Brand.brandCountry` is separate from product manufacturing location and sales markets. `physicalFormDetails` keeps structural shape, unitization, use mode and commercial presentation separate from category and flavour. Unknown attributes are optional rather than invented.
 
 Physical specifications are a discriminated union selected by `specifications.kind`: `pouch`, `film`, `gum`, `lozenge`, `tablet`, `candy`, `particulate`, `plug`, `tobacco` or `other`. Each variant has its own optional technical fields. `SpecificationTable` renders only fields present in that product's selected variant. The `other` variant provides an extension point for new formats.
 
 ## Authenticity and future entry policy
 
 1. Add a real product only after checking credible, traceable sources. Record the URL, source type, access date and verification date.
-2. Keep unverified or unknown values blank or explicitly pending. Do not infer nicotine origin, tobacco content, strength, manufacturer, market status or regulatory details from a category label.
-3. Use `validateVerifiedProduct()` before publishing a verified record. Resolve contradictory or unsupported data first.
+2. Keep unsupported or unknown values blank or explicitly unconfirmed. Assess listing status for each product and country; do not infer nicotine origin, tobacco content, strength, manufacturer, market status or regulatory details from a category label.
+3. Use `validateVerifiedProduct()` for record-completeness checks. It is an internal validation helper; public listing status is determined independently for each product-country pair.
 4. Keep official product images linked to an `imageSource`; do not create fictional packaging or imagery.
 5. Keep non-oral inhaled cigarettes, vapes, heated tobacco sticks and waterpipe products outside this database.
 
-## V1.5 interface status
+## V1.9 interface status
 
-Search, filtering, sorting, grid/list controls, taxonomy navigation, category and format detail pages, brand and market profiles, product records and a neutral comparison table are available. Records that are not fully verified are marked pending.
+Search, filtering, sorting, grid/list controls, taxonomy navigation, category and format detail pages, brand and market profiles, product records, country-specific listing status and a neutral comparison table are available. “Not on market” includes pre-market, withdrawn and historical records; lifecycle remains a separate field.
 
 ## Suggested next phase
 
-After reviewing V1.5, continue expanding source-backed product records across formats and markets. Database migration can follow once the content workflow is stable. Do not add records without the project owner's authorization.
+After reviewing V1.9, continue expanding source-backed product records across formats and markets. Database migration can follow once the content workflow is stable. New records must be supported by traceable sources and an exact product-image match.

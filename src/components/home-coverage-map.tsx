@@ -1,16 +1,17 @@
-import { markets, products } from "@/data/products";
-import { tr, type Locale } from "@/lib/i18n";
+"use client";
 
-const mapPoints: Record<string, {
-  longitude: number;
-  latitude: number;
-  labelX: number;
-  labelY: number;
-}> = {
-  "united-states": { longitude: -98.5, latitude: 39.8, labelX: 190, labelY: 92 },
-  "united-kingdom": { longitude: -2.5, latitude: 54, labelX: 480, labelY: 76 },
-  sweden: { longitude: 15, latitude: 62, labelX: 640, labelY: 41 },
-  switzerland: { longitude: 8.2, latitude: 46.8, labelX: 625, labelY: 139 },
+import Link from "next/link";
+import { useState } from "react";
+import { markets, products } from "@/data/products";
+import { getMarketListing } from "@/lib/market-listings";
+import { tr, type Locale } from "@/lib/i18n";
+import { publicAssetPath } from "@/lib/public-path";
+
+const mapPoints: Record<string, { longitude: number; latitude: number; align: "left" | "right" }> = {
+  "united-states": { longitude: -98.5, latitude: 39.8, align: "left" },
+  "united-kingdom": { longitude: -2.5, latitude: 54, align: "right" },
+  sweden: { longitude: 15, latitude: 62, align: "right" },
+  switzerland: { longitude: 8.2, latitude: 46.8, align: "right" },
 };
 
 const project = (longitude: number, latitude: number) => ({
@@ -19,10 +20,11 @@ const project = (longitude: number, latitude: number) => ({
 });
 
 export function HomeCoverageMap({ locale }: { locale: Locale }) {
+  const [activeMarket, setActiveMarket] = useState<string | null>(null);
   const coveredMarkets = markets.flatMap((market) => {
     const point = mapPoints[market.slug];
-    const productCount = products.filter((product) => product.markets.includes(market.slug)).length;
-    return point && productCount > 0 ? [{ market, point, productCount }] : [];
+    const records = products.filter((product) => product.markets.includes(market.slug));
+    return point && records.length > 0 ? [{ market, point, records }] : [];
   });
 
   return (
@@ -36,45 +38,48 @@ export function HomeCoverageMap({ locale }: { locale: Locale }) {
         <span>{String(coveredMarkets.length).padStart(2, "0")} {tr(locale, "MARKETS")}</span>
       </div>
 
-      <div className="coverage-map-frame" aria-hidden="true">
-        <div className="coverage-map-canvas">
-          <svg className="coverage-pin-layer" viewBox="0 0 1080 540" preserveAspectRatio="none">
-            {coveredMarkets.map(({ market, point }, index) => {
-              const location = project(point.longitude, point.latitude);
-              const number = String(index + 1).padStart(2, "0");
-              return (
-                <g key={market.slug}>
-                  <path
-                    d={`M${location.x.toFixed(1)},${location.y.toFixed(1)} L${point.labelX},${point.labelY}`}
-                    className="coverage-pin-line"
-                  />
-                  <circle cx={location.x} cy={location.y} r="9" className="coverage-pin-location" />
-                  <circle cx={point.labelX} cy={point.labelY} r="18" className="coverage-pin-number" />
-                  <text x={point.labelX} y={point.labelY + 5} textAnchor="middle" className="coverage-pin-text">{number}</text>
-                </g>
-              );
-            })}
-          </svg>
+      <div className="coverage-map-frame">
+        <div className="coverage-map-canvas" style={{ backgroundImage: `url("${publicAssetPath("/world-map.svg")}")` }}>
+          {coveredMarkets.map(({ market, point, records }) => {
+            const location = project(point.longitude, point.latitude);
+            const listedCount = records.filter((product) => getMarketListing(product, market.slug)?.status === "marketed").length;
+            const pendingCount = records.length - listedCount;
+            const isOpen = activeMarket === market.slug;
+            const summary = `${market.name[locale]} · ${records.length} ${tr(locale, "records")} · ${listedCount} ${tr(locale, "Listed")} · ${pendingCount} ${tr(locale, "Not on market")}`;
+            return (
+              <div
+                className={`coverage-marker coverage-marker-${point.align}`}
+                key={market.slug}
+                style={{ left: `${location.x / 10.8}%`, top: `${location.y / 5.4}%` }}
+              >
+                <button
+                  className="coverage-marker-dot"
+                  type="button"
+                  aria-label={summary}
+                  aria-expanded={isOpen}
+                  aria-controls={`coverage-tooltip-${market.slug}`}
+                  onClick={() => setActiveMarket(isOpen ? null : market.slug)}
+                />
+                <div
+                  id={`coverage-tooltip-${market.slug}`}
+                  className={`coverage-tooltip${isOpen ? " is-open" : ""}`}
+                  role="region"
+                  aria-label={market.name[locale]}
+                >
+                  <strong>{market.name[locale]}</strong>
+                  <span>{records.length} {tr(locale, "records")}</span>
+                  <span>{listedCount} {tr(locale, "Listed")} · {pendingCount} {tr(locale, "Not on market")}</span>
+                  <Link href={`/markets/${market.slug}`}>{tr(locale, "Open market profile")} ↗</Link>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      <div className="coverage-market-key" role="list" aria-label={tr(locale, "Markets with product records")}>
-        {coveredMarkets.map(({ market, productCount }, index) => (
-          <div className="coverage-market-key-item" role="listitem" key={market.slug}>
-            <span className="coverage-market-number">{String(index + 1).padStart(2, "0")}</span>
-            <span className="coverage-market-name">{market.name[locale]}</span>
-            <span className="coverage-market-count">{productCount} {tr(locale, "records")}</span>
-          </div>
-        ))}
-      </div>
-
       <div className="overview-art-footer coverage-footer">
-        <span><i />{tr(locale, "MARKERS FOLLOW PRODUCT MARKET RECORDS")}</span>
-        <a
-          href="https://www.naturalearthdata.com/downloads/110m-cultural-vectors/"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <span><i />{tr(locale, "Hover, focus or tap a marker for market details")}</span>
+        <a href="https://www.naturalearthdata.com/downloads/110m-cultural-vectors/" target="_blank" rel="noreferrer">
           {tr(locale, "Map data: Natural Earth")}
         </a>
       </div>
