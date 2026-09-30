@@ -5,8 +5,8 @@ import { tr } from "@/lib/i18n";
 import { useLanguage } from "@/components/layout/language-provider";
 
 const groups = [
-  { title: "Basic information", fields: ["Brand", "Product name", "Series", "Manufacturer", "Parent company", "Country of origin", "Markets", "Official website", "Product lifecycle", "Market listing status"] },
-  { title: "Classification", fields: ["Product category", "Subcategory", "Product format", "Form shape", "Unitization", "Use mode", "Commercial presentation", "Delivery route", "Contains tobacco", "Tobacco-free", "Nicotine source", "Product technology"] },
+  { title: "Basic information", fields: ["Brand", "Product name", "Series", "Manufacturer", "Parent company / group", "Country of origin", "Manufacturing location basis", "Markets", "Official website", "Product lifecycle", "Market listing status"] },
+  { title: "Classification", fields: ["Product category", "Subcategory", "Product format", "Form shape", "Unitization", "Use mode", "Commercial presentation", "Delivery route", "Contains tobacco", "Nicotine source", "Product technology"] },
   { title: "Nicotine information", fields: ["Nicotine strength", "Nicotine per unit", "Nicotine per gram", "Total nicotine", "Nicotine form", "Strength label"] },
   { title: "Flavor & sensory", fields: ["Flavor", "Flavor category", "Cooling", "Sweetness", "Sensory notes"] },
   { title: "Dynamic specifications", fields: ["Pouch, film, gum, lozenge, tablet, confectionery, particulate, compacted block or tobacco fields are selected by specification kind."] },

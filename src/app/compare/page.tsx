@@ -7,14 +7,14 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { EmptyState } from "@/components/ui/empty-state";
 import { categories, resolveCategoryId } from "@/data/categories";
 import { formats, resolveFormatId } from "@/data/formats";
-import { brands, markets, products } from "@/data/products";
-import { specificationRows } from "@/lib/catalog";
+import { brands, manufacturers, markets, products } from "@/data/products";
+import { containsTobacco, nicotineStrengthLabel, specificationRows } from "@/lib/catalog";
 import { tr } from "@/lib/i18n";
 import { useLanguage } from "@/components/layout/language-provider";
 import type { Product } from "@/types/catalog";
 import { getMarketListingStatus, marketListingLabel } from "@/lib/market-listings";
 
-const fields = ["Brand", "Product", "Product category", "Product format", "Nicotine strength", "Nicotine per unit", "Contains tobacco", "Nicotine source", "Flavor", "Unit weight", "Country of origin", "Markets", "Market listing status", "Delivery route", "Product lifecycle"];
+const fields = ["Brand", "Manufacturer", "Parent company / group", "Product", "Product category", "Subcategory", "Product format", "Form shape", "Unitization", "Use mode", "Nicotine strength", "Nicotine per unit", "Nicotine per gram", "Nominal total per pack", "Nicotine form", "Contains tobacco", "Nicotine source", "Flavor", "Flavor category", "Cooling", "Sweetness", "Unit weight", "Brand country", "Country of origin", "Manufacturing location basis", "Markets", "Market listing status", "Delivery route", "Product lifecycle", "Historical sample period", "Historical nicotine · mg/g wet", "Historical measured pH", "Historical moisture · %"];
 
 function productValue(product: Product, field: string, locale: "en" | "zh"): string {
   const category = categories.find((item) => item.id === resolveCategoryId(product.categoryId));
@@ -22,22 +22,40 @@ function productValue(product: Product, field: string, locale: "en" | "zh"): str
   const brand = brands.find((item) => item.id === product.brandId);
   const values: Record<string, string | undefined> = {
     Brand: brand?.name,
+    Manufacturer: tr(locale, manufacturers.find(item => item.id === product.manufacturerId)?.name ?? "Not documented in reviewed sources"),
+    "Parent company / group": product.parentCompany ? tr(locale, product.parentCompany) : undefined,
+    "Manufacturing location basis": product.countryOfOriginBasis?.[locale],
     Product: product.productName,
     "Product category": category?.name[locale],
+    Subcategory: tr(locale, product.subcategory ?? "Not documented in reviewed sources"),
     "Product format": format?.name[locale],
-    "Nicotine strength": product.nicotine?.nicotineStrength,
-    "Nicotine per unit": product.nicotine?.nicotinePerUnit === undefined ? undefined : `${product.nicotine.nicotinePerUnit} mg`,
-    "Contains tobacco": product.containsTobacco === undefined ? undefined : tr(locale, product.containsTobacco ? "Yes" : "No"),
+    "Form shape": product.physicalFormDetails?.shape ? tr(locale, product.physicalFormDetails.shape) : undefined,
+    Unitization: product.physicalFormDetails?.unitization ? tr(locale, product.physicalFormDetails.unitization) : undefined,
+    "Use mode": product.physicalFormDetails?.useMode ? tr(locale, product.physicalFormDetails.useMode) : undefined,
+    "Nicotine strength": nicotineStrengthLabel(product, locale),
+    "Nicotine per gram": product.nicotine?.nicotinePerGram === undefined ? undefined : String(product.nicotine.nicotinePerGram) + " mg/g",
+    "Nominal total per pack": product.nicotine?.totalNicotine === undefined ? undefined : String(product.nicotine.totalNicotine) + " mg",
+    "Nicotine form": product.nicotine?.nicotineForm ? tr(locale,product.nicotine.nicotineForm) : undefined,
+    "Nicotine per unit": product.nicotine?.nicotinePerUnit === undefined ? product.physicalFormDetails?.unitization === "loose" ? tr(locale,"Not applicable: loose product has no fixed portion") : undefined : `${product.nicotine.nicotinePerUnit} mg`,
+    "Contains tobacco": containsTobacco(product) === undefined ? undefined : tr(locale, containsTobacco(product) ? "Yes" : "No"),
     "Nicotine source": product.nicotine?.nicotineSource ? tr(locale, product.nicotine.nicotineSource.replaceAll("-", " ")) : undefined,
-    Flavor: product.flavor?.name,
+    Flavor: product.flavor?.name ? tr(locale,product.flavor.name) : undefined,
+    "Flavor category": product.flavor?.category ? tr(locale, product.flavor.category) : undefined,
+    Cooling: product.flavor?.cooling === undefined ? undefined : tr(locale, product.flavor.cooling ? "Yes" : "No"),
+    Sweetness: product.flavor?.sweetness ? tr(locale, product.flavor.sweetness) : undefined,
     "Unit weight": product.specifications.unitWeightMg === undefined ? undefined : `${product.specifications.unitWeightMg} mg`,
-    "Country of origin": product.countryOfOrigin,
+    "Country of origin": product.countryOfOrigin ? tr(locale,product.countryOfOrigin) : undefined,
+    "Brand country": tr(locale, brands.find((item) => item.id === product.brandId)?.brandCountry ?? "Not documented in reviewed sources"),
     Markets: product.markets.map((slug) => markets.find((market) => market.slug === slug)?.name[locale] ?? slug).join(", ") || tr(locale, "No market confirmed"),
     "Market listing status": product.markets.map((slug) => `${markets.find((market) => market.slug === slug)?.name[locale] ?? slug}: ${marketListingLabel(locale, getMarketListingStatus(product, slug))}`).join("; ") || marketListingLabel(locale, "pending"),
     "Delivery route": product.deliveryRoute?.map((route) => tr(locale, route.replaceAll("-", " "))).join(", "),
-    "Product lifecycle": tr(locale, product.status),
+    "Product lifecycle": product.status === "unknown" ? tr(locale, "Product lifecycle unknown") : tr(locale, product.status),
+    "Historical sample period": product.historicalMeasurements?.samplePeriod[locale],
+    "Historical nicotine · mg/g wet": product.historicalMeasurements ? product.historicalMeasurements.nicotineMgPerGWet + " mg/g" : undefined,
+    "Historical measured pH": product.historicalMeasurements ? String(product.historicalMeasurements.ph) : undefined,
+    "Historical moisture · %": product.historicalMeasurements ? product.historicalMeasurements.moisturePercent + " %" : undefined,
   };
-  return values[field] || "—";
+  return values[field] || tr(locale, "Not documented in reviewed sources");
 }
 
 export default function ComparePage() {

@@ -153,14 +153,18 @@ export default function Home() {
             <div><p className="eyebrow">{tr(locale, "A HISTORY OF ORAL PRODUCT FORMATS")}</p><h2>{tr(locale, "From loose snus to portion pouches")}</h2></div>
             <p>{tr(locale, "A short, source-linked timeline of format changes and a regulatory milestone.")}</p>
           </div>
-          <div className="overview-timeline-track">
-            {timelineItems.map((item) => <article className="overview-timeline-item" key={item.year}>
-              <time>{item.year}</time>
+          <div className="overview-timeline-scroll" tabIndex={0} role="region" aria-label={tr(locale, "Oral product milestones")}>
+          <ol className="overview-timeline-track">
+            {timelineItems.map((item) => <li className="overview-timeline-item" key={item.year}>
+              <time dateTime={item.year}>{item.year}</time>
+              <span className="overview-timeline-node" aria-hidden="true" />
               <h3>{tr(locale, item.title)}</h3>
               <p>{tr(locale, item.description)}</p>
               <a href={item.source} target="_blank" rel="noreferrer">{tr(locale, "Read source")} ↗</a>
-            </article>)}
+            </li>)}
+          </ol>
           </div>
+          <p className="overview-timeline-hint">{tr(locale, "Scroll to explore the milestones")} <span aria-hidden="true">↔</span></p>
         </div>
       </section>
 

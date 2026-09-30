@@ -54,10 +54,10 @@ export const categories: Category[] = [
     name: { en: "Oral Smokeless Tobacco", zh: "口腔无烟烟草" },
     description: { en: "Snus and other oral smokeless tobacco products.", zh: "收录瑞典式口含烟及其他口腔无烟烟草产品。" },
     introduction: { en: "Snus remains an identifiable subcategory alongside moist snuff, dip, chewing tobacco and other oral tobacco forms. Loose, portion and pouch formats are recorded independently; tobacco composition requires product-level evidence.", zh: "将瑞典式口含烟作为可识别的二级分类，并收录湿鼻烟、蘸用烟、嚼烟等其他口腔烟草形态。散装、份装与袋装形态独立记录；具体烟草组成须依据产品级来源核实。" },
-    icon: "tobacco", typicalFormats: ["pouch", "plug"],
+    icon: "tobacco", typicalFormats: ["pouch", "loose", "plug", "tablet", "film", "stick"],
     typicalRoutes: ["gingival", "buccal", "chewing", "oral-mucosal"],
     keyParameters: ["Portion weight", "Moisture", "Tobacco type", "Net weight"],
-    subcategories: ["Snus", "Moist Snuff", "Dip", "Chewing Tobacco", "Tobacco Pouch", "Plug Tobacco", "Twist Tobacco"],
+    subcategories: ["Snus", "Moist Snuff", "Dip", "Chewing Tobacco", "Tobacco Pouch", "Plug Tobacco", "Twist Tobacco", "Dissolvable Tobacco", "Tobacco-coated Stick"],
   },
   { ...originalCategories[9], typicalFormats: [] },
 ];

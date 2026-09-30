@@ -1,10 +1,1 @@
-export function OralNicotineMark({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 40 40" fill="none" aria-hidden="true">
-      <rect x="2.75" y="2.75" width="34.5" height="34.5" rx="9" stroke="currentColor" strokeWidth="1.7" />
-      <path d="M13 12.5h14a2.5 2.5 0 0 1 2.5 2.5v12.5a2.5 2.5 0 0 1-2.5 2.5H13a2.5 2.5 0 0 1-2.5-2.5V15a2.5 2.5 0 0 1 2.5-2.5Z" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M13 17.5h14M17 22.5h6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-      <circle cx="20" cy="27" r="1.25" fill="currentColor" />
-    </svg>
-  );
-}
+export function OralNicotineMark({className}:{className?:string}) {return <svg className={className} viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M31.8 7.9A17 17 0 1 0 36.7 23" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/><path d="M11 15.2 23.8 10c2.1-.8 3.5.1 4.2 2.2l3.3 10.2c.6 1.9-.2 3.4-2.1 4.2l-12.8 5.2c-2.1.8-3.6-.1-4.2-2.2L8.9 19.4c-.6-1.9.2-3.4 2.1-4.2Z" fill="currentColor" fillOpacity=".09" stroke="currentColor" strokeWidth="1.9"/><path d="m12 18 13.3-5.4M15 28l13.3-5.4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><path d="m17 22 5-2" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"/><circle cx="34" cy="10" r="3" fill="currentColor"/></svg>;}

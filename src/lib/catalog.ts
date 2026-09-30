@@ -21,29 +21,44 @@ export type ProductQuery = {
   deliveryRoute?: string;
   status?: string;
   marketStatus?: "marketed" | "pending";
+  recordKind?: "current" | "historical";
   sort?: string;
 };
+
+// Keep legacy tobaccoFree data and links compatible with one visible attribute.
+export function containsTobacco(product: Product): boolean | undefined {
+  return product.containsTobacco ?? (product.tobaccoFree === undefined ? undefined : !product.tobaccoFree);
+}
+
+export function nicotineStrengthLabel(product: Product, locale: Locale): string | undefined {
+  const mg = product.nicotine?.nicotineStrengthMg;
+  if (mg === undefined || locale === "en") return product.nicotine?.nicotineStrength;
+  const kind = product.specifications.kind;
+  const unit = kind === "gum" ? "片" : kind === "lozenge" ? "含片" : kind === "tablet" ? "片" : product.formatId === "film" ? "膜片" : product.formatId === "stick" ? "支" : "袋";
+  return "每" + unit + " " + mg + " 毫克";
+}
 
 export function searchProducts(filters: ProductQuery, records: Product[] = products): Product[] {
   const q = filters.query?.trim().toLowerCase();
   const matches = records.filter((product) => {
     const brand = brands.find((item) => item.id === product.brandId)?.name ?? "";
     const manufacturer = manufacturers.find((item) => item.id === product.manufacturerId)?.name ?? product.manufacturerId ?? "";
-    const searchable = [product.productName, brand, product.series, manufacturer, product.categoryId, product.formatId, product.countryOfOrigin, product.flavor?.name, ...product.markets].filter(Boolean).join(" ").toLowerCase();
+    const searchable = [product.productName, ...(product.historicalNames ?? []), brand, product.series, manufacturer, tr("zh", manufacturer), product.categoryId, product.subcategory, product.formatId, product.recordContext?.en, product.recordContext?.zh, product.countryOfOrigin, product.flavor?.name, ...product.markets].filter(Boolean).join(" ").toLowerCase();
     return (!q || searchable.includes(q)) &&
       (!filters.category || resolveCategoryId(product.categoryId) === resolveCategoryId(filters.category)) &&
       (!filters.format || resolveFormatId(product.formatId) === resolveFormatId(filters.format)) &&
       (!filters.brand || product.brandId === filters.brand) &&
-      (!filters.manufacturer || product.manufacturerId === filters.manufacturer || manufacturer.toLowerCase().includes(filters.manufacturer.trim().toLowerCase())) &&
+      (!filters.manufacturer || product.manufacturerId === filters.manufacturer || [manufacturer, tr("zh", manufacturer)].join(" ").toLowerCase().includes(filters.manufacturer.trim().toLowerCase())) &&
       (!filters.country || product.countryOfOrigin === filters.country) &&
       (!filters.market || product.markets.includes(filters.market)) &&
       (!filters.flavor || product.flavor?.name === filters.flavor) &&
       (!filters.strength || product.nicotine?.nicotineStrength?.toLowerCase().includes(filters.strength.toLowerCase()) || String(product.nicotine?.nicotineStrengthMg ?? "").includes(filters.strength)) &&
       (!filters.nicotineSource || product.nicotine?.nicotineSource === filters.nicotineSource) &&
-      (!filters.containsTobacco || String(product.containsTobacco) === filters.containsTobacco) &&
-      (!filters.tobaccoFree || String(product.tobaccoFree) === filters.tobaccoFree) &&
+      (!filters.containsTobacco || String(containsTobacco(product)) === filters.containsTobacco) &&
+      (!filters.tobaccoFree || (containsTobacco(product) !== undefined && String(!containsTobacco(product)) === filters.tobaccoFree)) &&
       (!filters.deliveryRoute || product.deliveryRoute?.includes(filters.deliveryRoute as NonNullable<Product["deliveryRoute"]>[number])) &&
       (!filters.status || product.status === filters.status) &&
+      (!filters.recordKind || (product.recordKind ?? "current") === filters.recordKind) &&
       (!filters.marketStatus || productMatchesMarketListingStatus(product, filters.marketStatus, filters.market));
   });
   return matches.sort((a, b) => filters.sort === "name-desc" ? b.productName.localeCompare(a.productName) : a.productName.localeCompare(b.productName));
@@ -60,8 +75,8 @@ export function specificationRows(spec: ProductSpecification, locale: Locale = "
   return Object.entries(spec)
     .filter(([key, value]) => key !== "kind" && value !== undefined && value !== null)
     .map(([key, value]) => {
-      const rawValue = typeof value === "object" ? JSON.stringify(value) : typeof value === "boolean" ? tr(locale,value ? "Yes" : "No") : String(value);
+      const rawValue = Array.isArray(value) ? value.map((item) => tr(locale, String(item))).join(", ") : typeof value === "boolean" ? tr(locale,value ? "Yes" : "No") : String(value);
       const [englishValue, chineseValue] = rawValue.split(" | 中文：", 2);
-      return { label: tr(locale,labels[key] ?? key), value: locale === "zh" ? chineseValue ?? englishValue : englishValue };
+      return { label: tr(locale,labels[key] ?? key), value: locale === "zh" ? chineseValue ?? tr(locale, englishValue) : englishValue };
     });
 }

@@ -7,7 +7,7 @@ export type NicotineSource = "tobacco-derived" | "synthetic" | "tobacco-material
 export type DeliveryRoute = "buccal" | "gingival" | "sublingual" | "oral-dissolution" | "chewing" | "oral-mucosal" | "mixed" | "other";
 export type ProductTechnology = "pouch-matrix" | "polymer-film" | "hydrogel-film" | "compressed-tablet" | "lozenge-matrix" | "gum-base" | "candy-matrix" | "tobacco-matrix" | "powder-system" | "other";
 export type FormatGroupId = "flexible-carrier" | "formed-solid" | "elastic-gel" | "particulate" | "compacted-mass";
-export type PhysicalFormShape = "strip" | "sheet" | "spherical" | "pearl" | "other";
+export type PhysicalFormShape = "strip" | "sheet" | "spherical" | "pearl" | "oval" | "rectangular-pouch" | "loose-cut" | "stick" | "other";
 export type Unitization = "pre-portioned" | "loose";
 export type OralUseMode = "placement" | "dissolution" | "chewing" | "other";
 
@@ -71,6 +71,7 @@ export interface Brand {
   manufacturerIds?: string[];
   /** Brand's country of affiliation, distinct from product manufacture and sales markets. */
   brandCountry?: string;
+  brandCountryBasis?: LocalizedText;
   countryOfOrigin?: string;
   officialWebsite?: string;
   description?: string;
@@ -173,6 +174,7 @@ export interface LozengeSpecification extends BaseSpecification {
 }
 export interface TabletSpecification extends BaseSpecification {
   kind: "tablet";
+  piecesPerPack?: number;
   tabletWeightMg?: number;
   tabletSizeMm?: number;
   disintegrationTimeMin?: number;
@@ -212,6 +214,21 @@ export interface OtherSpecification extends BaseSpecification {
 export type ProductSpecification = PouchSpecification | FilmSpecification | GumSpecification | LozengeSpecification | TabletSpecification | CandySpecification | ParticulateSpecification | PlugSpecification | TobaccoSpecification | OtherSpecification;
 
 export interface Product {
+  /** Exact variant measurements from dated research, separate from current pack specifications. */
+  historicalMeasurements?: {
+    samplePeriod: LocalizedText;
+    nicotineMgPerGWet: number;
+    ph: number;
+    moisturePercent: number;
+    notes: LocalizedText;
+    source: Source;
+  };
+  researchNotes?: LocalizedText;
+  calculationNotes?: LocalizedText;
+  /** Period-specific evidence; historical names are searchable aliases, not separate duplicate products. */
+  historicalNames?: string[];
+  recordContext?: LocalizedText;
+  recordKind?: "current" | "historical";
   id: string;
   slug: string;
   legacySlugs?: string[];
@@ -225,6 +242,7 @@ export interface Product {
   manufacturerId?: string;
   parentCompany?: string;
   countryOfOrigin?: string;
+  countryOfOriginBasis?: LocalizedText;
   markets: string[];
   marketListings?: ProductMarketListing[];
   status: ProductStatus;
@@ -232,6 +250,8 @@ export interface Product {
   shortDescription?: string;
   localizedShortDescription?: LocalizedText;
   productImage?: string;
+  /** Frame one identified product within an unchanged archival photograph. All coordinates are source pixels. */
+  imageRegion?: { x: number; y: number; width: number; height: number; sourceWidth: number; sourceHeight: number };
   imageSource?: Source;
   officialWebsite?: string;
   flavor?: Flavor;

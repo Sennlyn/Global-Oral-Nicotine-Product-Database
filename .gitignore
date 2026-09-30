@@ -1,5 +1,6 @@
 node_modules/
 .next/
+.next-preview/
 .next-gh-pages-build/
 .next-gh-pages-build-*/
 .next-gh-pages-dev-final/
@@ -16,3 +17,6 @@ build/
 next-env.d.ts
 .DS_Store
 *.log
+scripts/research/*.pdf
+scripts/research/*.html
+scripts/research/report-images/

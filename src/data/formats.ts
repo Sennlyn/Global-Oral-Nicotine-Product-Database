@@ -47,7 +47,7 @@ export const formatGroups: FormatGroup[] = [
   { id: "flexible-carrier", name: { en: "Flexible carriers", zh: "柔性载体" }, description: { en: "Flexible structures that carry material in a pouch or film.", zh: "以袋体或薄膜承载内容物的柔性结构。" } },
   { id: "formed-solid", name: { en: "Formed solids", zh: "成型固体" }, description: { en: "Discrete solid units distinguished by their physical matrix and construction.", zh: "按物理基质与成型方式区分的独立固体单元。" } },
   { id: "elastic-gel", name: { en: "Elastic and gel matrices", zh: "弹性与凝胶基质" }, description: { en: "Elastic or gelled material structures.", zh: "具有弹性或凝胶结构的基质。" } },
-  { id: "particulate", name: { en: "Particulate systems", zh: "微粒体系" }, description: { en: "Products composed of discrete small particles or powder.", zh: "由离散微粒、颗粒或粉末构成的体系。" } },
+  { id: "particulate", name: { en: "Loose and particulate materials", zh: "散料与微粒体系" }, description: { en: "Loose cut leaves, granules, small particles or powder.", zh: "散装切碎烟叶、颗粒、微粒或粉末构成的体系。" } },
   { id: "compacted-mass", name: { en: "Compacted masses", zh: "压制块状物" }, description: { en: "Material compacted into a stable block-shaped mass.", zh: "经压制形成稳定块状实体的材料。" } },
 ];
 
@@ -66,6 +66,8 @@ const physicalForm = (groupId: FormatGroupId, slug: string, name: LocalizedText,
  * categories, flavour, unitization and oral use mode.
  */
 export const formats: ProductFormat[] = [
+  physicalForm("particulate", "loose", { en: "Loose Cut Tobacco", zh: "散装切碎烟草" }, { en: "Non-portioned cut or shredded tobacco, including moist snuff and loose-leaf chew. A retail bag is packaging, not an oral pouch.", zh: "未经预分装的切碎烟草，涵盖口用湿鼻烟和散叶嚼烟。外包装袋不等于放入口腔的口含袋。" }, { en: "Loose fine-cut, long-cut or shredded leaf material", zh: "散装细切、长切或碎叶材料" }, ["Net weight", "Moisture", "Tobacco type"]),
+  physicalForm("formed-solid", "stick", { en: "Oral Stick", zh: "口用棒／条" }, { en: "An elongated oral solid. Some historical tobacco sticks dissolve; others retain a toothpick core, recorded separately for each product.", zh: "细长的口用固体。部分历史烟草棒可溶解，另一些保留牙签芯，须逐款记录。" }, { en: "Elongated formed solid or coated support", zh: "细长成型固体或涂覆载体" }, ["Unit weight", "Dimensions", "Dissolution time"]),
   physicalForm("flexible-carrier", "pouch", { en: "Pouch", zh: "袋装" }, { en: "A permeable pouch that contains a fill.", zh: "由透气袋材包裹填充物的独立单元。" }, { en: "Filled permeable pouch", zh: "填充式透气袋" }, ["Pouch size", "Fill weight", "Pouch material"]),
   physicalForm("flexible-carrier", "film", { en: "Oral Film", zh: "口腔膜" }, { en: "A thin, flexible sheet designed for oral use.", zh: "用于口腔使用的薄而柔性的膜状结构。" }, { en: "Thin polymer or other matrix sheet", zh: "聚合物或其他基质薄片" }, ["Film dimensions", "Film thickness", "Film material"]),
   physicalForm("formed-solid", "lozenge", { en: "Lozenge", zh: "含化锭" }, { en: "A formed solid designed to dissolve gradually in the mouth.", zh: "设计为在口腔内逐渐溶解的成型固体。" }, { en: "Solid dissolving matrix", zh: "固体溶解基质" }, ["Unit weight", "Lozenge dimensions", "Dissolution time"]),

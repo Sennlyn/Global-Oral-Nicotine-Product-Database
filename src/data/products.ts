@@ -1,4 +1,6 @@
 import type { Brand, LocalizedText, Manufacturer, Market, Product, ProductMarketListing, Source } from "@/types/catalog";
+import { enrichBrand, enrichProduct } from "./catalog-enrichment";
+import { traditionalBrands, traditionalManufacturers, traditionalProducts } from "./traditional-products";
 
 const accessedAt = "2026-09-23";
 const researchAccessedAt = "2026-09-29";
@@ -591,6 +593,19 @@ const huabaoContextSource = officialSource(
   "Huabao says it is advancing oral-tobacco formulation, release-mechanism and controlled-release-carrier research. This article does not name NF1.0, NF2.0/AERO or MO and does not verify their specifications, commercial status, or manufacturer attribution. | 中文：华宝公开资料提到口含烟制剂、释放机理及控释载体研究，但未提及 NF1.0、NF2.0/AERO 或 MO，也未核实这些产品的规格、上市状态或制造商归属。",
 );
 
+const huabaoManufacturerName = "Shenzhen Huabao Collaborative Innovation Technology Research Institute Co., Ltd.";
+const huabaoGroup = "Huabao International Holdings Limited (group affiliation; direct parent not established)";
+const huabaoManufacturerAttribution: Source = {
+  ...userProvidedSource("huabao-legal-manufacturer-owner", "Project-owner confirmation of HUABAO legal manufacturer", undefined,
+    "The project owner identifies 深圳华宝协同创新技术研究院有限公司 as manufacturer of NF1.0, NF2.0/AERO and MO. The English name is a translation. Factory locations and market authorization are separate matters. | 中文：项目提供者确认 NF1.0、NF2.0/AERO 和 MO 的制造商为深圳华宝协同创新技术研究院有限公司；英文名称为译名。具体工厂地点及市场许可另行核查。"),
+  accessedAt: "2026-09-30",
+};
+const huabaoGroupSource: Source = {
+  ...officialSource("huabao-legal-entity-group", "Huabao International: NGP business and affiliated companies", "https://www.hbglobal.com/tobacco-raw-materials-and-materials-industry/",
+    "The group website lists 深圳华宝协同创新技术研究院有限公司 among its NGP enterprises. This supports group affiliation, not the immediate legal shareholder or the factory of a specific product. | 中文：集团官网将深圳华宝协同创新技术研究院有限公司列为旗下 NGP 企业，支持集团归属；不据此确定直接法律股东或具体产品工厂。"),
+  accessedAt: "2026-09-30", verifiedAt: "2026-09-30",
+};
+
 const huabaoProducts: Product[] = [
   {
     id: "huabao-incootine-nf1-oral-film",
@@ -612,7 +627,7 @@ const huabaoProducts: Product[] = [
       zh: "据项目提供者描述，为一张凝胶膜片；对应实物图及产品级规格尚未独立核实。",
     },
     sources: [
-      userProvidedSource("nf1-owner-description", "Project-owner-provided NF1.0 product description", undefined, "The project owner describes NF1.0 as a single oral gel film sheet. Nicotine strength, film composition, dimensions, release behavior, product availability, and exact manufacturer remain unverified. | 中文：项目提供者描述 NF1.0 为一张口含凝胶膜片；尼古丁强度、膜片组成与尺寸、释放特性、产品供应情况及具体制造商仍待核实。"),
+      userProvidedSource("nf1-owner-description", "Project-owner-provided NF1.0 product description", undefined, "The project owner describes NF1.0 as a single oral gel film sheet. Nicotine strength, film composition, dimensions, release behavior and product availability remain unverified. Manufacturer identification is recorded in the separate legal-manufacturer source. | 中文：项目提供者描述 NF1.0 为一张口含凝胶膜片；尼古丁强度、膜片组成与尺寸、释放特性及产品供应情况仍待核实。制造商名称见独立的法律制造商确认来源。"),
       huabaoContextSource,
     ],
     verificationStatus: "pending",
@@ -676,7 +691,7 @@ const huabaoProducts: Product[] = [
   },
 ];
 
-const productRecords: Product[] = [...zynProducts, ...zynUltraProducts, ...zynSwissProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts, ...onPlusProducts, ...huabaoProducts];
+const productRecords: Product[] = [...zynProducts, ...zynUltraProducts, ...zynSwissProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts, ...onPlusProducts, ...huabaoProducts, ...traditionalProducts];
 
 const marketRegulatorySources: Record<string, Source> = {
   "united-states": currentRegulatorSource(
@@ -731,10 +746,27 @@ function hasMarketAuthorization(product: Product, marketId: string): boolean {
 
 function officialProductEvidence(product: Product): Source | undefined {
   return product.sources.find((source) => source.sourceUrl && ["official-brand", "manufacturer"].includes(source.sourceType))
-    ?? product.sources.find((source) => Boolean(source.sourceUrl));
+    ;
 }
 
 const productRecordsWithManufacturerData: Product[] = productRecords.map((product) => {
+  if (product.brandId === "huabao") {
+    const isMO = product.series === "MO";
+    return {
+      ...product,
+      parentCompany: huabaoGroup,
+      countryOfOrigin: isMO ? "Indonesia (reported)" : undefined,
+      countryOfOriginBasis: isMO ? {
+        en: "The supplied MO Gel Pouch infographic states that manufacturing takes place at Huabao's NGP facility in Indonesia. Recorded as a manufacturer claim in owner-supplied material; the exact factory and batch have not been independently confirmed. It does not establish FDA product authorization or a sales market.",
+        zh: "所附 MO Gel Pouch 说明图称产品在华宝印尼 NGP 工厂生产。此处按项目提供者提交材料中的厂家声明记录；具体工厂及批次尚未独立确认，也不构成 FDA 产品上市许可或销售市场依据。",
+      } : {
+        en: "The identified manufacturer is a Shenzhen company; no reviewed source identifies the production country or factory of this specific product. The MO infographic's Indonesia claim is not applied to NF1.0 or NF2.0/AERO.",
+        zh: "已确认的制造商名称为深圳公司，但所查资料未载明本款产品的生产国家或工厂。MO 说明图中的印尼产地声明不套用到 NF1.0 或 NF2.0/AERO。",
+      },
+      sources: [...product.sources, huabaoManufacturerAttribution, huabaoGroupSource],
+      lastVerified: "2026-09-30",
+    };
+  }
   if (product.brandId === "zyn" && product.markets.includes("switzerland")) {
     return {
       ...product,
@@ -789,13 +821,13 @@ const productRecordsWithManufacturerData: Product[] = productRecords.map((produc
   return product;
 });
 
-export const products: Product[] = productRecordsWithManufacturerData.map((product) => ({
+export const products: Product[] = productRecordsWithManufacturerData.map(enrichProduct).map((product) => ({
   ...product,
-  marketListings: product.markets.map((marketId): ProductMarketListing => {
+  marketListings: product.marketListings ?? product.markets.map((marketId): ProductMarketListing => {
     const marketed = hasMarketAuthorization(product, marketId);
     const marketName = marketNamesBySlug[marketId];
     const officialProductSource = officialProductEvidence(product);
-    const regulatorySource = marketRegulatorySources[marketId];
+    const regulatorySource = product.containsTobacco && marketId === "united-states" ? product.sources.find(source=>source.id === "fda-smokeless-scope") : marketRegulatorySources[marketId];
     const notes = marketed
       ? marketId === "united-states"
         ? { en: "The exact product name and nicotine strength appear on the FDA authorized list; the manufacturer separately confirms U.S. retail availability.", zh: "FDA 授权清单列出了完全对应的产品名称与尼古丁强度；制造商另有美国零售供应公告。" }
@@ -808,24 +840,27 @@ export const products: Product[] = productRecordsWithManufacturerData.map((produ
   }),
 }));
 
-export const brands: Brand[] = [
+const brandRecords: Brand[] = [
   {
     id: "huabao",
     slug: "huabao",
     legacySlugs: ["incootine"],
     name: "HUABAO",
+    parentCompany: huabaoGroup,
     brandCountry: "China",
     countryOfOrigin: "China",
     manufacturerIds: ["huabao-research-institute-reported"],
     localizedDescription: {
-      en: "HUABAO is recorded as the brand, with China as its brand country, based on project-owner information and the supplied HUABAO product diagrams. The exact legal manufacturer, production location and sales markets for the described products remain unconfirmed.",
-      zh: "依据项目提供者信息及所附 HUABAO 产品图，品牌记录为 HUABAO，品牌所属国为中国。相关产品的具体法律制造商、生产地点与销售市场仍待核实。",
+      en: "HUABAO is recorded as a Chinese brand. The project owner identifies Shenzhen Huabao Collaborative Innovation Technology Research Institute Co., Ltd. as manufacturer of NF1.0, NF2.0/AERO and MO; Huabao International's website lists the company among its NGP enterprises. Manufacturing locations are recorded separately for each product, and no sales market is inferred from brand country.",
+      zh: "HUABAO 品牌归属中国。项目提供者确认 NF1.0、NF2.0/AERO 和 MO 的制造商为深圳华宝协同创新技术研究院有限公司；华宝国际官网将该公司列为旗下 NGP 企业。各款产品的生产地分别记录，不根据品牌所属国推断销售市场。",
     },
     categoryIds: ["nicotine-films", "nicotine-pouches"],
     formatIds: ["film", "pouch"],
     sources: [
       userProvidedSource("huabao-brand-country", "Project-owner identification of HUABAO as the brand and China as its brand country", undefined, "The project owner directly identifies the brand as HUABAO and its country as China. This does not establish any product's manufacturing location or sales market. | 中文：项目提供者确认品牌名为 HUABAO、品牌所属国为中国；这不能证明任何产品的生产地点或销售市场。"),
-      userProvidedSource("huabao-mark-owner-attribution", "Project-owner-supplied HUABAO-mark product infographics and Huabao Research Institute attribution", undefined, "The supplied AERO and Gel Pouch infographics display the HUABAO brand. The project owner attributes the work to Huabao Research Institute; the exact legal manufacturer and production site remain unconfirmed. | 中文：所附 AERO 与 Gel Pouch 说明图显示 HUABAO 品牌。项目提供者称相关研发来自华宝研究院，但具体法律制造商与生产地点仍待核实。"),
+      userProvidedSource("huabao-mark-owner-attribution", "Project-owner-supplied HUABAO-mark product infographics and Huabao Research Institute attribution", undefined, "The supplied AERO and Gel Pouch infographics display the HUABAO brand. The project's later manufacturer correction is recorded separately; production sites require product-specific evidence. | 中文：所附 AERO 与 Gel Pouch 说明图显示 HUABAO 品牌；项目提供者后续对制造商全称的更正另行记录，生产地点须有对应产品依据。"),
+      huabaoManufacturerAttribution,
+      huabaoGroupSource,
       huabaoContextSource,
     ],
     verificationStatus: "pending",
@@ -952,7 +987,10 @@ export const brands: Brand[] = [
   },
 ];
 
+export const brands: Brand[] = [...brandRecords, ...traditionalBrands].map(enrichBrand);
+
 export const manufacturers: Manufacturer[] = [
+  ...traditionalManufacturers,
   {
     id: "helix-innovations",
     slug: "helix-innovations",
@@ -967,9 +1005,12 @@ export const manufacturers: Manufacturer[] = [
   {
     id: "huabao-research-institute-reported",
     slug: "huabao-research-institute-reported",
-    name: "Huabao Research Institute (reported; legal entity and manufacturing site unverified)",
+    name: huabaoManufacturerName,
+    country: "China",
+    officialWebsite: "https://www.hbglobal.com/tobacco-raw-materials-and-materials-industry/",
     sources: [
-      userProvidedSource("huabao-institute-owner-attribution", "Project-owner attribution to Huabao Research Institute", undefined, "Recorded as reported by the project owner. The exact legal manufacturer and factory for NF1.0, NF2.0/AERO, and MO have not been independently confirmed. | 中文：据项目提供者信息记录；NF1.0、NF2.0/AERO 与 MO 的具体法律制造商及工厂尚未独立确认。"),
+      huabaoManufacturerAttribution,
+      huabaoGroupSource,
       huabaoContextSource,
     ],
   },
