@@ -1,0 +1,2173 @@
+{
+  "reviewedAt": "2026-10-09",
+  "products": 747,
+  "brands": 77,
+  "families": 418,
+  "imageLinkedRecords": 451,
+  "referenceImageRecords": 42,
+  "missingVariantImages": 296,
+  "familiesWithImage": 348,
+  "notes": "Image linkage and identity matching are not a guarantee of third-party asset delivery. Exact doses retain their own records. Missing historical packaging is not replaced with invented images. This research does not claim global or historical completeness.",
+  "byBrand": [
+    {
+      "brandId": "huabao",
+      "name": "HUABAO",
+      "products": 3,
+      "imageLinked": 2,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "huabao-incootine-nf1-oral-film",
+          "name": "NF1.0 Oral Nicotine Film (reported)",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "on-plus",
+      "name": "on! PLUS",
+      "products": 9,
+      "imageLinked": 9,
+      "referenceImages": 0,
+      "missingImages": []
+    },
+    {
+      "brandId": "zyn",
+      "name": "ZYN",
+      "products": 53,
+      "imageLinked": 53,
+      "referenceImages": 0,
+      "missingImages": []
+    },
+    {
+      "brandId": "nicorette",
+      "name": "Nicorette",
+      "products": 19,
+      "imageLinked": 9,
+      "referenceImages": 3,
+      "missingImages": [
+        {
+          "id": "nicorette-cools-lozenge-2-mg-80-lozenges",
+          "name": "Nicorette Cools Lozenge 2 mg (80 lozenges)",
+          "recordKind": "current"
+        },
+        {
+          "id": "nicorette-fruit-lozenge-2-mg-80-lozenges",
+          "name": "Nicorette Fruit Lozenge 2 mg (80 lozenges)",
+          "recordKind": "current"
+        },
+        {
+          "id": "nicorette-cools-lozenge-2-mg-160-lozenges",
+          "name": "Nicorette Cools Lozenge 2 mg (160 lozenges)",
+          "recordKind": "current"
+        },
+        {
+          "id": "nicorette-fruit-lozenge-2-mg-160-lozenges",
+          "name": "Nicorette Fruit Lozenge 2 mg (160 lozenges)",
+          "recordKind": "current"
+        },
+        {
+          "id": "nicorette-fruitfusion-gum-2-mg-210-pieces",
+          "name": "Nicorette Fruitfusion Gum 2 mg (210 pieces)",
+          "recordKind": "current"
+        },
+        {
+          "id": "nicorette-freshmint-gum-2-mg-210-pieces",
+          "name": "Nicorette Freshmint Gum 2 mg (210 pieces)",
+          "recordKind": "current"
+        },
+        {
+          "id": "nicorette-freshmint-gum-4-mg",
+          "name": "Nicorette Freshmint Gum 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "nicorette-fruitfusion-gum-4-mg",
+          "name": "Nicorette Fruitfusion Gum 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "nicorette-cools-lozenge-4-mg",
+          "name": "Nicorette Cools Lozenge 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "nicorette-fruit-lozenge-4-mg",
+          "name": "Nicorette Fruit Lozenge 4 mg",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "velo",
+      "name": "VELO",
+      "products": 113,
+      "imageLinked": 62,
+      "referenceImages": 12,
+      "missingImages": [
+        {
+          "id": "velo-bright-spearmint-4-mg",
+          "name": "VELO Bright Spearmint 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-bright-spearmint-8-mg",
+          "name": "VELO Bright Spearmint 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-bright-spearmint-14-mg",
+          "name": "VELO Bright Spearmint 14 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-strawberry-ice-6-mg",
+          "name": "VELO Strawberry Ice 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-purple-grape-4-mg",
+          "name": "VELO Purple Grape 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-purple-grape-8-mg",
+          "name": "VELO Purple Grape 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-freezing-peppermint-14-mg",
+          "name": "VELO Freezing Peppermint 14 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-freezing-peppermint-17-mg",
+          "name": "VELO Freezing Peppermint 17 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-peach-ice-6-mg",
+          "name": "VELO Peach Ice 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-tropical-ice-6-mg",
+          "name": "VELO Tropical Ice 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-crispy-peppermint-6-mg",
+          "name": "VELO Crispy Peppermint 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-ruby-berry-4-mg",
+          "name": "VELO Ruby Berry 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-ruby-berry-6-mg",
+          "name": "VELO Ruby Berry 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-ruby-berry-14-mg",
+          "name": "VELO Ruby Berry 14 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-ruby-berry-17-mg",
+          "name": "VELO Ruby Berry 17 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-tropical-mango-6-mg",
+          "name": "VELO Tropical Mango 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-tangy-lime-4-mg",
+          "name": "VELO Tangy Lime 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-cherry-ice-6-mg",
+          "name": "VELO Cherry Ice 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-icy-berries-14-mg",
+          "name": "VELO Icy Berries 14 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-icy-berries-17-mg",
+          "name": "VELO Icy Berries 17 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-peppermint-storm-11-mg",
+          "name": "VELO Peppermint Storm 11 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-peppermint-storm-17-mg",
+          "name": "VELO Peppermint Storm 17 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-wintry-watermelon-14-mg",
+          "name": "VELO Wintry Watermelon 14 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-wintry-watermelon-17-mg",
+          "name": "VELO Wintry Watermelon 17 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-mango-flame-10-mg",
+          "name": "VELO Mango Flame 10 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-orange-spark-10-mg",
+          "name": "VELO Orange Spark 10 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-mystery-collection-1-8-mg",
+          "name": "VELO Mystery Collection 1 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-mystery-collection-2-8-mg",
+          "name": "VELO Mystery Collection 2 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-mystery-collection-3-8-mg",
+          "name": "VELO Mystery Collection 3 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-usa-spearmint-7-mg",
+          "name": "VELO USA Spearmint 7 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-watermelon-chill-3-mg",
+          "name": "VELO PLUS Watermelon Chill 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-watermelon-chill-9-mg",
+          "name": "VELO PLUS Watermelon Chill 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-mint-9-mg",
+          "name": "VELO PLUS Mint 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-peppermint-3-mg",
+          "name": "VELO PLUS Peppermint 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-spearmint-3-mg",
+          "name": "VELO PLUS Spearmint 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-wintergreen-9-mg",
+          "name": "VELO PLUS Wintergreen 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-citrus-chill-9-mg",
+          "name": "VELO PLUS Citrus Chill 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-wild-berry-3-mg",
+          "name": "VELO PLUS Wild Berry 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-wild-berry-9-mg",
+          "name": "VELO PLUS Wild Berry 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-cappuccino-3-mg",
+          "name": "VELO PLUS Cappuccino 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-cappuccino-9-mg",
+          "name": "VELO PLUS Cappuccino 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-smooth-tobacco-3-mg",
+          "name": "VELO PLUS Smooth Tobacco 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-smooth-tobacco-6-mg",
+          "name": "VELO PLUS Smooth Tobacco 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-plus-smooth-tobacco-9-mg",
+          "name": "VELO PLUS Smooth Tobacco 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-max-wintergreen-12-mg",
+          "name": "VELO MAX Wintergreen 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-max-cool-mint-12-mg",
+          "name": "VELO MAX Cool Mint 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-polar-mint-10-mg",
+          "name": "VELO Polar Mint 10 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-polar-mint-14-mg",
+          "name": "VELO Polar Mint 14 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-polar-mint-17-mg",
+          "name": "VELO Polar Mint 17 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-purple-grape-10-mg",
+          "name": "VELO Purple Grape 10 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "velo-freezing-peppermint-10-mg",
+          "name": "VELO Freezing Peppermint 10 mg",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "general",
+      "name": "General",
+      "products": 3,
+      "imageLinked": 3,
+      "referenceImages": 0,
+      "missingImages": []
+    },
+    {
+      "brandId": "grov",
+      "name": "Grov",
+      "products": 4,
+      "imageLinked": 4,
+      "referenceImages": 1,
+      "missingImages": []
+    },
+    {
+      "brandId": "kaliber",
+      "name": "Kaliber",
+      "products": 3,
+      "imageLinked": 3,
+      "referenceImages": 1,
+      "missingImages": []
+    },
+    {
+      "brandId": "kapten",
+      "name": "Kapten",
+      "products": 4,
+      "imageLinked": 4,
+      "referenceImages": 1,
+      "missingImages": []
+    },
+    {
+      "brandId": "copenhagen",
+      "name": "Copenhagen",
+      "products": 9,
+      "imageLinked": 9,
+      "referenceImages": 2,
+      "missingImages": []
+    },
+    {
+      "brandId": "americas-best-chew",
+      "name": "America's Best Chew",
+      "products": 2,
+      "imageLinked": 2,
+      "referenceImages": 0,
+      "missingImages": []
+    },
+    {
+      "brandId": "ariva",
+      "name": "Ariva",
+      "products": 5,
+      "imageLinked": 1,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "ariva-cinnamon",
+          "name": "Ariva Cinnamon",
+          "recordKind": "historical"
+        },
+        {
+          "id": "ariva-mint",
+          "name": "Ariva Mint",
+          "recordKind": "historical"
+        },
+        {
+          "id": "ariva-java",
+          "name": "Ariva Java",
+          "recordKind": "historical"
+        },
+        {
+          "id": "ariva-citrus",
+          "name": "Ariva Citrus",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "stonewall",
+      "name": "Stonewall",
+      "products": 3,
+      "imageLinked": 1,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "stonewall-natural",
+          "name": "Stonewall Natural",
+          "recordKind": "historical"
+        },
+        {
+          "id": "stonewall-wintergreen",
+          "name": "Stonewall Wintergreen",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "camel-oral",
+      "name": "Camel (historical oral tobacco)",
+      "products": 6,
+      "imageLinked": 6,
+      "referenceImages": 3,
+      "missingImages": []
+    },
+    {
+      "brandId": "marlboro-oral-us",
+      "name": "Marlboro (U.S. historical oral tobacco)",
+      "products": 5,
+      "imageLinked": 1,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "marlboro-snus-rich",
+          "name": "Marlboro Snus Rich",
+          "recordKind": "historical"
+        },
+        {
+          "id": "marlboro-snus-mild",
+          "name": "Marlboro Snus Mild",
+          "recordKind": "historical"
+        },
+        {
+          "id": "marlboro-snus-spice",
+          "name": "Marlboro Snus Spice",
+          "recordKind": "historical"
+        },
+        {
+          "id": "marlboro-snus-mint",
+          "name": "Marlboro Snus Mint",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "skoal",
+      "name": "Skoal",
+      "products": 4,
+      "imageLinked": 1,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "skoal-dry-regular",
+          "name": "Skoal Dry Regular",
+          "recordKind": "historical"
+        },
+        {
+          "id": "skoal-dry-cinnamon",
+          "name": "Skoal Dry Cinnamon",
+          "recordKind": "historical"
+        },
+        {
+          "id": "skoal-dry-menthol",
+          "name": "Skoal Dry Menthol",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "on",
+      "name": "on!",
+      "products": 21,
+      "imageLinked": 13,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "on-mint-4-mg",
+          "name": "on! Mint 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "on-original-2-mg",
+          "name": "on! Original 2 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "on-coffee-4-mg",
+          "name": "on! Coffee 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "on-wintergreen-2-mg",
+          "name": "on! Wintergreen 2 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "on-cinnamon-2-mg",
+          "name": "on! Cinnamon 2 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "on-cinnamon-4-mg",
+          "name": "on! Cinnamon 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "on-berry-2-mg",
+          "name": "on! Berry 2 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "on-berry-4-mg",
+          "name": "on! Berry 4 mg",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "rogue",
+      "name": "Rogue",
+      "products": 38,
+      "imageLinked": 21,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "rogue-wintergreen-3-mg",
+          "name": "Rogue Wintergreen 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-peppermint-3-mg",
+          "name": "Rogue Peppermint 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-spearmint-3-mg",
+          "name": "Rogue Spearmint 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-berry-3-mg",
+          "name": "Rogue Berry 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-mango-3-mg",
+          "name": "Rogue Mango 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-honey-lemon-3-mg",
+          "name": "Rogue Honey Lemon 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-original-6-mg",
+          "name": "Rogue Original 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-bold-3-mg",
+          "name": "Rogue Bold 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-smooth-3-mg",
+          "name": "Rogue Smooth 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-blue-raspberry-3-mg",
+          "name": "Rogue Blue Raspberry 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-max-wintergreen-12-mg",
+          "name": "Rogue Max Wintergreen 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-max-wintergreen-15-mg",
+          "name": "Rogue Max Wintergreen 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-max-spearmint-12-mg",
+          "name": "Rogue Max Spearmint 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-max-spearmint-15-mg",
+          "name": "Rogue Max Spearmint 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-max-citrus-12-mg",
+          "name": "Rogue Max Citrus 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-max-citrus-15-mg",
+          "name": "Rogue Max Citrus 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "rogue-max-blue-raspberry-15-mg",
+          "name": "Rogue Max Blue Raspberry 15 mg",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "lucy",
+      "name": "Lucy",
+      "products": 40,
+      "imageLinked": 18,
+      "referenceImages": 1,
+      "missingImages": [
+        {
+          "id": "lucy-mint-4-mg",
+          "name": "Lucy Mint 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-mint-12-mg",
+          "name": "Lucy Mint 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-wintergreen-8-mg",
+          "name": "Lucy Wintergreen 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-wintergreen-12-mg",
+          "name": "Lucy Wintergreen 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-cinnamon-4-mg",
+          "name": "Lucy Cinnamon 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-mango-12-mg",
+          "name": "Lucy Mango 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-breakers-mint-4-mg",
+          "name": "Lucy Breakers Mint 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-breakers-apple-cider-4-mg",
+          "name": "Lucy Breakers Apple Cider 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-breakers-berry-citrus-4-mg",
+          "name": "Lucy Breakers Berry Citrus 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-breakers-espresso-4-mg",
+          "name": "Lucy Breakers Espresso 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-breakers-mint-12-mg",
+          "name": "Lucy Breakers Mint 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-gum-berry-citrus-2-mg",
+          "name": "Lucy Gum Berry Citrus 2 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-gum-berry-citrus-6-mg",
+          "name": "Lucy Gum Berry Citrus 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-gum-mango-2-mg",
+          "name": "Lucy Gum Mango 2 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-gum-mango-6-mg",
+          "name": "Lucy Gum Mango 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-gum-mint-2-mg",
+          "name": "Lucy Gum Mint 2 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-gum-mint-4-mg",
+          "name": "Lucy Gum Mint 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-apple-ice-4-mg",
+          "name": "Lucy Apple Ice 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-apple-ice-8-mg",
+          "name": "Lucy Apple Ice 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-espresso-4-mg",
+          "name": "Lucy Espresso 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-espresso-8-mg",
+          "name": "Lucy Espresso 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "lucy-breakers-apple-ice-4-mg",
+          "name": "Lucy Breakers Apple Ice 4 mg",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "zone",
+      "name": "zone",
+      "products": 32,
+      "imageLinked": 14,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "zone-tobacco-9-mg",
+          "name": "zone Tobacco 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-wintergreen-9-mg",
+          "name": "zone Wintergreen 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-mint-9-mg",
+          "name": "zone Mint 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-spearmint-9-mg",
+          "name": "zone Spearmint 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-peppermint-9-mg",
+          "name": "zone Peppermint 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-dragonfruit-9-mg",
+          "name": "zone Dragonfruit 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-citrus-6-mg",
+          "name": "zone Citrus 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-chill-9-mg",
+          "name": "zone Chill 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-smooth-9-mg",
+          "name": "zone Smooth 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-white-9-mg",
+          "name": "zone White 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-jalapeno-lime-9-mg",
+          "name": "zone Jalapeño Lime 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-spicy-mango-9-mg",
+          "name": "zone Spicy Mango 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-spicy-strawberry-9-mg",
+          "name": "zone Spicy Strawberry 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-cranberry-9-mg",
+          "name": "zone Cranberry 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-dragonfruit-3-mg",
+          "name": "zone Dragonfruit 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-dragonfruit-12-mg",
+          "name": "zone Dragonfruit 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-wintergreen-3-mg",
+          "name": "zone Wintergreen 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "zone-wintergreen-12-mg",
+          "name": "zone Wintergreen 12 mg",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "fre",
+      "name": "FRE",
+      "products": 50,
+      "imageLinked": 23,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "fre-mint-9-mg",
+          "name": "FRE Mint 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-wintergreen-9-mg",
+          "name": "FRE Wintergreen 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-wintergreen-15-mg",
+          "name": "FRE Wintergreen 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-watermelon-9-mg",
+          "name": "FRE Watermelon 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-watermelon-12-mg",
+          "name": "FRE Watermelon 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-watermelon-15-mg",
+          "name": "FRE Watermelon 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-lush-3-mg",
+          "name": "FRE Lush 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-lush-9-mg",
+          "name": "FRE Lush 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-lush-12-mg",
+          "name": "FRE Lush 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-sweet-9-mg",
+          "name": "FRE Sweet 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-original-6-mg",
+          "name": "FRE Original 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-watermelon-mega-pack-3-mg",
+          "name": "FRE Watermelon Mega Pack 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-watermelon-mega-pack-9-mg",
+          "name": "FRE Watermelon Mega Pack 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-watermelon-mega-pack-12-mg",
+          "name": "FRE Watermelon Mega Pack 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-watermelon-mega-pack-15-mg",
+          "name": "FRE Watermelon Mega Pack 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-mint-mega-pack-3-mg",
+          "name": "FRE Mint Mega Pack 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-mint-mega-pack-9-mg",
+          "name": "FRE Mint Mega Pack 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-mint-mega-pack-12-mg",
+          "name": "FRE Mint Mega Pack 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-mint-mega-pack-15-mg",
+          "name": "FRE Mint Mega Pack 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-lush-mega-pack-3-mg",
+          "name": "FRE Lush Mega Pack 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-lush-mega-pack-6-mg",
+          "name": "FRE Lush Mega Pack 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-lush-mega-pack-9-mg",
+          "name": "FRE Lush Mega Pack 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-lush-mega-pack-15-mg",
+          "name": "FRE Lush Mega Pack 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-wintergreen-mega-pack-3-mg",
+          "name": "FRE Wintergreen Mega Pack 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-wintergreen-mega-pack-9-mg",
+          "name": "FRE Wintergreen Mega Pack 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-wintergreen-mega-pack-12-mg",
+          "name": "FRE Wintergreen Mega Pack 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "fre-wintergreen-mega-pack-15-mg",
+          "name": "FRE Wintergreen Mega Pack 15 mg",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "alp",
+      "name": "ALP",
+      "products": 25,
+      "imageLinked": 11,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "alp-chilled-mint-3-mg",
+          "name": "ALP Chilled Mint 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-chilled-mint-9-mg",
+          "name": "ALP Chilled Mint 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-mountain-wintergreen-9-mg",
+          "name": "ALP Mountain Wintergreen 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-refreshing-chill-9-mg",
+          "name": "ALP Refreshing Chill 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-tropical-fruit-3-mg",
+          "name": "ALP Tropical Fruit 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-tropical-fruit-9-mg",
+          "name": "ALP Tropical Fruit 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-sweet-nectar-9-mg",
+          "name": "ALP Sweet Nectar 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-spearmint-3-mg",
+          "name": "ALP Spearmint 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-classic-3-mg",
+          "name": "ALP Classic 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-classic-9-mg",
+          "name": "ALP Classic 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-tropical-fruit-12-mg",
+          "name": "ALP Tropical Fruit 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-sweet-nectar-12-mg",
+          "name": "ALP Sweet Nectar 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-spearmint-12-mg",
+          "name": "ALP Spearmint 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "alp-classic-12-mg",
+          "name": "ALP Classic 12 mg",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "grizzly-pouches",
+      "name": "Grizzly Nicotine Pouches",
+      "products": 12,
+      "imageLinked": 4,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "grizzly-nicotine-pouches-mint-12-mg",
+          "name": "Grizzly Nicotine Pouches Mint 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "grizzly-nicotine-pouches-wintergreen-9-mg",
+          "name": "Grizzly Nicotine Pouches Wintergreen 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "grizzly-nicotine-pouches-wintergreen-12-mg",
+          "name": "Grizzly Nicotine Pouches Wintergreen 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "grizzly-nicotine-pouches-wintergreen-15-mg",
+          "name": "Grizzly Nicotine Pouches Wintergreen 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "grizzly-nicotine-pouches-original-9-mg",
+          "name": "Grizzly Nicotine Pouches Original 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "grizzly-nicotine-pouches-original-12-mg",
+          "name": "Grizzly Nicotine Pouches Original 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "grizzly-nicotine-pouches-original-15-mg",
+          "name": "Grizzly Nicotine Pouches Original 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "grizzly-nicotine-pouches-southern-12-mg",
+          "name": "Grizzly Nicotine Pouches Southern 12 mg",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "nordic-spirit",
+      "name": "Nordic Spirit",
+      "products": 31,
+      "imageLinked": 17,
+      "referenceImages": 4,
+      "missingImages": [
+        {
+          "id": "nordic-spirit-icy-peppermint-max",
+          "name": "Nordic Spirit Icy Peppermint Max",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-sweet-mint-mini-mellow",
+          "name": "Nordic Spirit Sweet Mint Mini Mellow",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-raspberry-mini-mellow",
+          "name": "Nordic Spirit Raspberry Mini Mellow",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-icy-strawberry-strong",
+          "name": "Nordic Spirit Icy Strawberry Strong",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-raspberry-strong",
+          "name": "Nordic Spirit Raspberry Strong",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-forest-berries-regular",
+          "name": "Nordic Spirit Forest Berries Regular",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-spearmint-x-strong",
+          "name": "Nordic Spirit Spearmint X-Strong",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-mint-x-strong",
+          "name": "Nordic Spirit Mint X-Strong",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-dark-fizz-strong",
+          "name": "Nordic Spirit Dark Fizz Strong",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-frosty-mint-strong",
+          "name": "Nordic Spirit Frosty Mint Strong",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-frosty-berry-max",
+          "name": "Nordic Spirit Frosty Berry Max",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-frosty-mint-x-strong",
+          "name": "Nordic Spirit Frosty Mint X-Strong",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-blueberry-strong",
+          "name": "Nordic Spirit Blueberry Strong",
+          "recordKind": "current"
+        },
+        {
+          "id": "nordic-spirit-frosty-berry-strong",
+          "name": "Nordic Spirit Frosty Berry Strong",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "loop",
+      "name": "LOOP",
+      "products": 37,
+      "imageLinked": 35,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "loop-licorice-raspberry-strong",
+          "name": "LOOP Licorice Raspberry Strong",
+          "recordKind": "current"
+        },
+        {
+          "id": "loop-ice-cool-mint-hyper-strong",
+          "name": "LOOP Ice Cool Mint Hyper Strong",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "klint",
+      "name": "KLINT",
+      "products": 28,
+      "imageLinked": 28,
+      "referenceImages": 1,
+      "missingImages": []
+    },
+    {
+      "brandId": "nicotinell",
+      "name": "Nicotinell",
+      "products": 6,
+      "imageLinked": 5,
+      "referenceImages": 5,
+      "missingImages": [
+        {
+          "id": "nicotinell-mint-lozenge-2-mg",
+          "name": "Nicotinell Mint Lozenge 2 mg",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "taboka",
+      "name": "Taboka",
+      "products": 2,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "taboka-original",
+          "name": "Taboka Original",
+          "recordKind": "historical"
+        },
+        {
+          "id": "taboka-green",
+          "name": "Taboka Green",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "niquitin",
+      "name": "NiQuitin",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "niquitin-strips-mint-2-5-mg",
+          "name": "NiQuitin Strips Mint 2.5 mg",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "oliver-twist",
+      "name": "Oliver Twist",
+      "products": 8,
+      "imageLinked": 8,
+      "referenceImages": 7,
+      "missingImages": []
+    },
+    {
+      "brandId": "pixotine",
+      "name": "Pixotine",
+      "products": 4,
+      "imageLinked": 4,
+      "referenceImages": 0,
+      "missingImages": []
+    },
+    {
+      "brandId": "ace",
+      "name": "ACE",
+      "products": 16,
+      "imageLinked": 16,
+      "referenceImages": 0,
+      "missingImages": []
+    },
+    {
+      "brandId": "skruf-superwhite",
+      "name": "Skruf Superwhite",
+      "products": 15,
+      "imageLinked": 14,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "skruf-superwhite-no-60-fresh-mint-4-mini",
+          "name": "Skruf Superwhite No.60 Fresh Mint 4 Mini",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "apres",
+      "name": "Après",
+      "products": 30,
+      "imageLinked": 26,
+      "referenceImages": 1,
+      "missingImages": [
+        {
+          "id": "apre-s-no-10-tangerine-spritz-extra-strong",
+          "name": "Après No.10 Tangerine Spritz Extra Strong",
+          "recordKind": "current"
+        },
+        {
+          "id": "apre-s-no-3-lemon-curd",
+          "name": "Après No.3 Lemon Curd",
+          "recordKind": "current"
+        },
+        {
+          "id": "apre-s-no-1-menthol-hype-r-strong",
+          "name": "Après No.1 Menthol Hypèr Strong",
+          "recordKind": "current"
+        },
+        {
+          "id": "apre-s-no-3-lemon-curd-extra-strong",
+          "name": "Après No.3 Lemon Curd Extra Strong",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "thor",
+      "name": "Thor",
+      "products": 8,
+      "imageLinked": 7,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "thor-nordic-freeze-strong",
+          "name": "THOR Nordic Freeze Strong",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "gai-chap",
+      "name": "Gai Chap",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "gai-chap",
+          "name": "Gai Chap",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "om-special-pandharpuri",
+      "name": "Om Special Pandharpuri",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "om-special-pandharpuri",
+          "name": "Om Special Pandharpuri",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "chaini-khaini",
+      "name": "Chaini Khaini",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "chaini-khaini",
+          "name": "Chaini Khaini",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "miraj",
+      "name": "Miraj Khaini",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "miraj-khaini",
+          "name": "Miraj Khaini",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "vimal",
+      "name": "Vimal",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "vimal-pan-masala-with-companion-tobacco",
+          "name": "Vimal Pan Masala with Companion Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "ekka",
+      "name": "Ekka",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "ekka-gutkha-like-tobacco",
+          "name": "Ekka Gutkha-like Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "kamath-hathi-chhap",
+      "name": "Kamath Hathi Chhap",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "kamath-hathi-chhap-plain-chewing-tobacco",
+          "name": "Kamath Hathi Chhap Plain Chewing Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "aasha-jyoti",
+      "name": "Aasha Jyoti",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "aasha-jyoti-plain-chewing-tobacco",
+          "name": "Aasha Jyoti Plain Chewing Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "no-555",
+      "name": "No 555",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "no-555-plain-chewing-tobacco",
+          "name": "No 555 Plain Chewing Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "mrugaraj",
+      "name": "Mrugaraj",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "mrugaraj-plain-chewing-tobacco",
+          "name": "Mrugaraj Plain Chewing Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "veer",
+      "name": "Veer",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "veer-plain-chewing-tobacco",
+          "name": "Veer Plain Chewing Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "no-777",
+      "name": "No 777",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "no-777-plain-chewing-tobacco",
+          "name": "No 777 Plain Chewing Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "pandharpuri-sandeep",
+      "name": "Pandharpuri Sandeep",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "pandharpuri-sandeep-plain-chewing-tobacco",
+          "name": "Pandharpuri Sandeep Plain Chewing Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "kalaa",
+      "name": "Kalaa",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "kalaa-plain-chewing-tobacco",
+          "name": "Kalaa Plain Chewing Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "barika",
+      "name": "Barika",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "barika-plain-chewing-tobacco",
+          "name": "Barika Plain Chewing Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "jagata",
+      "name": "Jagata",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "jagata-plain-chewing-tobacco",
+          "name": "Jagata Plain Chewing Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "kuber",
+      "name": "Kuber Khaini",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "kuber-khaini",
+          "name": "Kuber Khaini",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "dhariwal-special-tobacco",
+      "name": "Dhariwal Special Tobacco Khaini",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "dhariwal-special-tobacco-khaini",
+          "name": "Dhariwal Special Tobacco Khaini",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "shikhar",
+      "name": "Shikhar",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "shikhar-gutkha-gutkha-like-tobacco",
+          "name": "Shikhar Gutkha / Gutkha-like Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "goa",
+      "name": "Goa",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "goa-gutkha-gutkha-like-tobacco",
+          "name": "Goa Gutkha / Gutkha-like Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "kolhapuri",
+      "name": "Kolhapuri",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "kolhapuri-gutkha-gutkha-like-tobacco",
+          "name": "Kolhapuri Gutkha / Gutkha-like Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "sagar",
+      "name": "Sagar",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "sagar-gutkha-gutkha-like-tobacco",
+          "name": "Sagar Gutkha / Gutkha-like Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "4k",
+      "name": "4K",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "4k-gutkha-gutkha-like-tobacco",
+          "name": "4K Gutkha / Gutkha-like Tobacco",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "rmd",
+      "name": "RMD",
+      "products": 2,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "rmd-gutkha-gutkha-like-tobacco",
+          "name": "RMD Gutkha / Gutkha-like Tobacco",
+          "recordKind": "historical"
+        },
+        {
+          "id": "rmd-companion-tobacco-for-pan-masala",
+          "name": "RMD Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "rajanigandha",
+      "name": "Rajanigandha",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "rajanigandha-companion-tobacco-for-pan-masala",
+          "name": "Rajanigandha Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "raj-niwas",
+      "name": "Raj Niwas",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "raj-niwas-companion-tobacco-for-pan-masala",
+          "name": "Raj Niwas Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "rajashree",
+      "name": "Rajashree",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "rajashree-companion-tobacco-for-pan-masala",
+          "name": "Rajashree Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "musafir",
+      "name": "Musafir",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "musafir-companion-tobacco-for-pan-masala",
+          "name": "Musafir Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "tansen-blue",
+      "name": "Tansen Blue",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "tansen-blue-companion-tobacco-for-pan-masala",
+          "name": "Tansen Blue Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "jafri",
+      "name": "Jafri",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "jafri-companion-tobacco-for-pan-masala",
+          "name": "Jafri Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "shudh-plus",
+      "name": "Shudh Plus",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "shudh-plus-companion-tobacco-for-pan-masala",
+          "name": "Shudh Plus Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "pan-bahar",
+      "name": "Pan Bahar",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "pan-bahar-companion-tobacco-for-pan-masala",
+          "name": "Pan Bahar Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "cash-gold",
+      "name": "Cash Gold",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "cash-gold-companion-tobacco-for-pan-masala",
+          "name": "Cash Gold Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "pukar",
+      "name": "Pukar",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "pukar-companion-tobacco-for-pan-masala",
+          "name": "Pukar Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "kamala-pasand",
+      "name": "Kamala Pasand",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "kamala-pasand-companion-tobacco-for-pan-masala",
+          "name": "Kamala Pasand Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "rokada",
+      "name": "Rokada",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "rokada-companion-tobacco-for-pan-masala",
+          "name": "Rokada Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "hot",
+      "name": "Hot",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "hot-companion-tobacco-for-pan-masala",
+          "name": "Hot Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "banarasi-ashik",
+      "name": "Banarasi Ashik",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "banarasi-ashik-companion-tobacco-for-pan-masala",
+          "name": "Banarasi Ashik Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "vilasa",
+      "name": "Vilasa",
+      "products": 1,
+      "imageLinked": 0,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "vilasa-companion-tobacco-for-pan-masala",
+          "name": "Vilasa Companion Tobacco for Pan Masala",
+          "recordKind": "historical"
+        }
+      ]
+    },
+    {
+      "brandId": "clew",
+      "name": "CLEW",
+      "products": 30,
+      "imageLinked": 6,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "clew-blueberry-3-mg",
+          "name": "CLEW Blueberry 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-blueberry-9-mg",
+          "name": "CLEW Blueberry 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-blueberry-12-mg",
+          "name": "CLEW Blueberry 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-blueberry-15-mg",
+          "name": "CLEW Blueberry 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-wintergreen-3-mg",
+          "name": "CLEW Wintergreen 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-wintergreen-9-mg",
+          "name": "CLEW Wintergreen 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-wintergreen-12-mg",
+          "name": "CLEW Wintergreen 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-wintergreen-15-mg",
+          "name": "CLEW Wintergreen 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-cool-mint-3-mg",
+          "name": "CLEW Cool Mint 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-cool-mint-9-mg",
+          "name": "CLEW Cool Mint 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-cool-mint-12-mg",
+          "name": "CLEW Cool Mint 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-cool-mint-15-mg",
+          "name": "CLEW Cool Mint 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-spearmint-3-mg",
+          "name": "CLEW Spearmint 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-spearmint-9-mg",
+          "name": "CLEW Spearmint 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-spearmint-12-mg",
+          "name": "CLEW Spearmint 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-spearmint-15-mg",
+          "name": "CLEW Spearmint 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-citrus-3-mg",
+          "name": "CLEW Citrus 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-citrus-9-mg",
+          "name": "CLEW Citrus 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-citrus-12-mg",
+          "name": "CLEW Citrus 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-citrus-15-mg",
+          "name": "CLEW Citrus 15 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-original-3-mg",
+          "name": "CLEW Original 3 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-original-9-mg",
+          "name": "CLEW Original 9 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-original-12-mg",
+          "name": "CLEW Original 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "clew-original-15-mg",
+          "name": "CLEW Original 15 mg",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "sesh",
+      "name": "Sesh+",
+      "products": 18,
+      "imageLinked": 6,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "sesh-mint-4-mg",
+          "name": "Sesh+ Mint 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "sesh-mint-8-mg",
+          "name": "Sesh+ Mint 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "sesh-wintergreen-4-mg",
+          "name": "Sesh+ Wintergreen 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "sesh-wintergreen-8-mg",
+          "name": "Sesh+ Wintergreen 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "sesh-mango-4-mg",
+          "name": "Sesh+ Mango 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "sesh-mango-8-mg",
+          "name": "Sesh+ Mango 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "sesh-cappuccino-4-mg",
+          "name": "Sesh+ Cappuccino 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "sesh-cappuccino-8-mg",
+          "name": "Sesh+ Cappuccino 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "sesh-clear-4-mg",
+          "name": "Sesh+ Clear 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "sesh-clear-8-mg",
+          "name": "Sesh+ Clear 8 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "sesh-raspberry-lemon-4-mg",
+          "name": "Sesh+ Raspberry Lemon 4 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "sesh-raspberry-lemon-8-mg",
+          "name": "Sesh+ Raspberry Lemon 8 mg",
+          "recordKind": "current"
+        }
+      ]
+    },
+    {
+      "brandId": "juice-head",
+      "name": "Juice Head",
+      "products": 10,
+      "imageLinked": 5,
+      "referenceImages": 0,
+      "missingImages": [
+        {
+          "id": "juice-head-watermelon-strawberry-mint-12-mg",
+          "name": "Juice Head Watermelon Strawberry Mint 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "juice-head-blueberry-lemon-mint-12-mg",
+          "name": "Juice Head Blueberry Lemon Mint 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "juice-head-raspberry-lemonade-mint-6-mg",
+          "name": "Juice Head Raspberry Lemonade Mint 6 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "juice-head-mango-strawberry-mint-12-mg",
+          "name": "Juice Head Mango Strawberry Mint 12 mg",
+          "recordKind": "current"
+        },
+        {
+          "id": "juice-head-peach-pineapple-mint-12-mg",
+          "name": "Juice Head Peach Pineapple Mint 12 mg",
+          "recordKind": "current"
+        }
+      ]
+    }
+  ]
+}

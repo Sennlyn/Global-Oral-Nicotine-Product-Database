@@ -23,6 +23,8 @@ export type ProductQuery = {
   marketStatus?: "marketed" | "pending";
   recordKind?: "current" | "historical";
   sort?: string;
+  display?: "families" | "variants";
+  imageStatus?: "exact" | "reference" | "missing";
 };
 
 // Keep legacy tobaccoFree data and links compatible with one visible attribute.
@@ -40,11 +42,13 @@ export function nicotineStrengthLabel(product: Product, locale: Locale): string 
 
 export function searchProducts(filters: ProductQuery, records: Product[] = products): Product[] {
   const q = filters.query?.trim().toLowerCase();
+  const numericStrength = filters.strength?.trim().match(/^(\d+(?:\.\d+)?)\s*(?:mg)?$/i);
   const matches = records.filter((product) => {
     const brand = brands.find((item) => item.id === product.brandId)?.name ?? "";
     const manufacturer = manufacturers.find((item) => item.id === product.manufacturerId)?.name ?? product.manufacturerId ?? "";
     const searchable = [product.productName, ...(product.historicalNames ?? []), brand, product.series, manufacturer, tr("zh", manufacturer), product.categoryId, product.subcategory, product.formatId, product.recordContext?.en, product.recordContext?.zh, product.countryOfOrigin, product.flavor?.name, ...product.markets].filter(Boolean).join(" ").toLowerCase();
     return (!q || searchable.includes(q)) &&
+      (!filters.imageStatus || (filters.imageStatus === "missing" ? !product.productImage : filters.imageStatus === "reference" ? !!product.imageMatch && product.imageMatch !== "exact-variant" : !!product.productImage && (!product.imageMatch || product.imageMatch === "exact-variant"))) &&
       (!filters.category || resolveCategoryId(product.categoryId) === resolveCategoryId(filters.category)) &&
       (!filters.format || resolveFormatId(product.formatId) === resolveFormatId(filters.format)) &&
       (!filters.brand || product.brandId === filters.brand) &&
@@ -52,7 +56,7 @@ export function searchProducts(filters: ProductQuery, records: Product[] = produ
       (!filters.country || product.countryOfOrigin === filters.country) &&
       (!filters.market || product.markets.includes(filters.market)) &&
       (!filters.flavor || product.flavor?.name === filters.flavor) &&
-      (!filters.strength || product.nicotine?.nicotineStrength?.toLowerCase().includes(filters.strength.toLowerCase()) || String(product.nicotine?.nicotineStrengthMg ?? "").includes(filters.strength)) &&
+      (!filters.strength || (numericStrength ? (product.nicotine?.nicotinePerUnit ?? product.nicotine?.nicotineStrengthMg) === Number(numericStrength[1]) : !!product.nicotine?.nicotineStrength?.toLowerCase().includes(filters.strength.toLowerCase()))) &&
       (!filters.nicotineSource || product.nicotine?.nicotineSource === filters.nicotineSource) &&
       (!filters.containsTobacco || String(containsTobacco(product)) === filters.containsTobacco) &&
       (!filters.tobaccoFree || (containsTobacco(product) !== undefined && String(!containsTobacco(product)) === filters.tobaccoFree)) &&

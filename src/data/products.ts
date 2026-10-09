@@ -2,6 +2,8 @@ import type { Brand, LocalizedText, Manufacturer, Market, Product, ProductMarket
 import { enrichBrand, enrichProduct } from "./catalog-enrichment";
 import { traditionalBrands, traditionalManufacturers, traditionalProducts } from "./traditional-products";
 import { expandedBrands, expandedProducts } from "./catalog-expansion";
+import { supplementalBrands, supplementalProducts } from "./catalog-supplement";
+import { attachProductImage } from "./product-images";
 
 const accessedAt = "2026-09-23";
 const researchAccessedAt = "2026-09-29";
@@ -692,7 +694,7 @@ const huabaoProducts: Product[] = [
   },
 ];
 
-const productRecords: Product[] = [...zynProducts, ...zynUltraProducts, ...zynSwissProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts, ...onPlusProducts, ...huabaoProducts, ...traditionalProducts, ...expandedProducts];
+const productRecords: Product[] = [...zynProducts, ...zynUltraProducts, ...zynSwissProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts, ...onPlusProducts, ...huabaoProducts, ...traditionalProducts, ...expandedProducts, ...supplementalProducts];
 
 const marketRegulatorySources: Record<string, Source> = {
   "united-states": currentRegulatorSource(
@@ -734,7 +736,7 @@ const fdaAuthorizedClassicFlavors = new Set([
 
 function hasMarketAuthorization(product: Product, marketId: string): boolean {
   if (marketId === "united-states") {
-    if (product.brandId === "on-plus") return true;
+    if (product.brandId === "on-plus") return (product.nicotine?.nicotineStrengthMg === 6 || product.nicotine?.nicotineStrengthMg === 9) && ["Mint", "Tobacco", "Wintergreen"].includes(product.flavor?.name ?? "");
     const strength = product.nicotine?.nicotineStrengthMg;
     return product.brandId === "zyn"
       && !product.productName.startsWith("ZYN Ultra")
@@ -812,7 +814,7 @@ const productRecordsWithManufacturerData: Product[] = productRecords.map((produc
       sources: [...product.sources, officialSource("manufacturer-location", "VELO U.K. official manufacturing-location page", "https://www.velo.com/en-gb/pages/velo-packaging", "The official page maps package-code prefixes to BAT manufacturing facilities in Pécs, Hungary; Malmö, Sweden; and Trieste, Italy. / 官网按包装代码前缀列出匈牙利佩奇、瑞典马尔默和意大利的里雅斯特生产厂。")],
     };
   }
-  if (["general", "grov", "kaliber", "kapten"].includes(product.brandId)) {
+  if (["general", "grov", "kaliber", "kapten"].includes(product.brandId) && !supplementalProducts.some(row => row.id === product.id)) {
     return {
       ...product,
       manufacturerId: "swedish-match-ab",
@@ -824,7 +826,7 @@ const productRecordsWithManufacturerData: Product[] = productRecords.map((produc
   return product;
 });
 
-export const products: Product[] = productRecordsWithManufacturerData.map(enrichProduct).map((product) => ({
+export const products: Product[] = productRecordsWithManufacturerData.map(enrichProduct).map(attachProductImage).map((product) => ({
   ...product,
   marketListings: product.marketListings ?? product.markets.map((marketId): ProductMarketListing => {
     const marketed = hasMarketAuthorization(product, marketId);
@@ -990,7 +992,7 @@ const brandRecords: Brand[] = [
   },
 ];
 
-export const brands: Brand[] = [...brandRecords, ...traditionalBrands, ...expandedBrands].map(enrichBrand).map(brand => {
+export const brands: Brand[] = [...brandRecords, ...traditionalBrands, ...expandedBrands, ...supplementalBrands].map(enrichBrand).map(brand => {
   const records = products.filter(product => product.brandId === brand.id);
   const knownSources = new Set(brand.sources.map(source => source.sourceUrl ?? source.id));
   const additionalSources: Source[] = [];

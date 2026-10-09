@@ -4,7 +4,8 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { EmptyState } from "@/components/ui/empty-state";
-import { ProductCard } from "@/components/products/product-card";
+import { ProductFamilyCard } from "@/components/products/product-family-card";
+import { groupProductFamilies } from "@/lib/product-families";
 import { ProductSources } from "@/components/products/product-sources";
 import { categories, resolveCategoryId } from "@/data/categories";
 import { formats, resolveFormatId } from "@/data/formats";
@@ -16,6 +17,7 @@ import type { Brand } from "@/types/catalog";
 export function BrandDetailClient({ brand }: { brand: Brand }) {
   const { locale } = useLanguage();
   const records = products.filter((product) => product.brandId === brand.id);
+  const families = groupProductFamilies(records);
   const marketNames = (brand.marketIds ?? []).map((id) => markets.find((market) => market.slug === id)?.name[locale] ?? id);
   const categoryNames = (brand.categoryIds ?? []).map((id) => categories.find((category) => category.id === resolveCategoryId(id))?.name[locale] ?? id);
   const formatNames = (brand.formatIds ?? []).map((id) => formats.find((format) => format.id === resolveFormatId(id))?.name[locale] ?? id);
@@ -30,8 +32,8 @@ export function BrandDetailClient({ brand }: { brand: Brand }) {
         {profileRows.map(([label, value]) => <div className="spec-row" key={label}><span>{tr(locale, label)}</span><strong>{value ? tr(locale,value) : tr(locale,"Not documented in reviewed sources")}</strong></div>)}
         <div className="spec-row"><span>{tr(locale, "Official website")}</span><strong>{brand.officialWebsite ? <a href={brand.officialWebsite} target="_blank" rel="noopener noreferrer">{brand.officialWebsite}</a> : tr(locale,"Not documented in reviewed sources")}</strong></div>
       </div></section>
-      <section className="content-panel"><div className="panel-title-row"><h2>{tr(locale, "Products")} · {records.length}</h2><Link href={`/products?brand=${brand.id}`} className="text-link">{tr(locale, "View all")} <ArrowUpRight size={16} /></Link></div>
-        {records.length ? <div className="product-grid">{records.slice(0, 12).map((product) => <ProductCard key={product.id} product={product} />)}</div> : <EmptyState title="No product records yet." description="Product records linked to this brand will appear here." />}
+      <section className="content-panel"><div className="panel-title-row"><h2>{tr(locale, "Products")} · {families.length} {locale === "zh" ? "款式" : "families"}<small className="family-record-count">{records.length} {locale === "zh" ? "规格" : "variants"}</small></h2><Link href={`/products?brand=${brand.id}`} className="text-link">{tr(locale, "View all")} <ArrowUpRight size={16} /></Link></div>
+        {records.length ? <div className="product-grid">{families.slice(0, 12).map((family) => <ProductFamilyCard key={family.id} family={family} />)}</div> : <EmptyState title="No product records yet." description="Product records linked to this brand will appear here." />}
       </section>
       <section className="content-panel"><h2>{tr(locale, "Brand sources")}</h2><ProductSources sources={brand.sources} /></section>
     </div>

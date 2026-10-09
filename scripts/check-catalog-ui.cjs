@@ -1,0 +1,32 @@
+/* Integration checks against a running static export. Requires Playwright and Chromium. */
+const assert=require('node:assert/strict');
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+(async()=>{
+ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_EXECUTABLE || undefined,headless:true,args:['--no-sandbox']});
+ const page=await browser.newPage({viewport:{width:1440,height:1000}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const root=process.env.CATALOG_PREVIEW_URL || 'http://127.0.0.1:8769/Global-Oral-Nicotine-Product-Database';
+ await page.route('https://**/*',route=>route.abort());
+ await page.goto(root+'/products/?brand=on-plus',{waitUntil:'domcontentloaded'});
+ await page.waitForSelector('.product-family-card');assert.equal(await page.locator('.product-family-card').count(),3);
+ const mint=page.locator('.product-family-card').filter({has:page.getByRole('heading',{name:'on! PLUS Mint',exact:true})});
+ await mint.getByRole('button',{name:'9 mg',exact:true}).click();assert.match(await mint.locator('h3 a').getAttribute('href'),/on-plus-mint-9mg/);
+ await mint.locator('img').waitFor();assert.match(await mint.locator('img').getAttribute('src'),/mint-9mg/);
+ await page.waitForFunction(()=>document.querySelector('img[src*="mint-9mg"]')?.naturalWidth>0);
+ const frame=await mint.locator('.product-image').boundingBox();const photo=await mint.locator('img').boundingBox();assert.ok(photo.height<=frame.height+1 && photo.width<=frame.width+1,'Package image overflows its frame');
+ await mint.getByRole('button',{name:'12 mg',exact:true}).click();assert.match(await mint.locator('h3 a').getAttribute('href'),/12-mg/);
+ await mint.getByText('Image temporarily unavailable').waitFor();
+ await page.locator('.family-display-control select').selectOption('variants');await page.waitForSelector('.product-card:not(.product-family-card)');
+ assert.equal(await page.locator('.product-card').count(),9);
+ await page.goto(root+'/products/?brand=on&strength=2',{waitUntil:'domcontentloaded'});await page.waitForSelector('.product-family-card');assert.equal(await page.locator('.product-family-card').count(),7);
+ assert.equal(await page.locator('.family-variants button').count(),7);
+ await page.goto(root+'/products/?brand=velo',{waitUntil:'domcontentloaded'});await page.waitForSelector('.product-family-card');assert.equal(await page.locator('.product-family-card').count(),24);
+ await page.getByRole('button',{name:/Show more/}).click();assert.equal(await page.locator('.product-family-card').count(),48);
+ await page.goto(root+'/products/?brand=on&imageStatus=missing',{waitUntil:'domcontentloaded'});await page.waitForSelector('.product-family-card');
+ assert.ok(await page.locator('.image-placeholder').count()>0);
+ await page.goto(root+'/products/on-plus-mint-6mg/',{waitUntil:'domcontentloaded'});await page.waitForSelector('.detail-variant-selector');assert.equal(await page.locator('.detail-variant-selector a').count(),3);
+ await page.goto(root+'/products/?brand=on-plus',{waitUntil:'domcontentloaded'});await page.waitForSelector('.product-family-card');await page.locator('.product-family-card').first().scrollIntoViewIfNeeded();await page.screenshot({path:'/tmp/catalog-grouped-desktop.png'});
+ await page.setViewportSize({width:390,height:844});await page.evaluate(()=>{localStorage.setItem('gonpd-locale','zh');window.dispatchEvent(new Event('gonpd-locale-change'))});
+ await page.waitForFunction(()=>document.documentElement.lang==='zh-CN');await page.locator('.product-family-card').first().scrollIntoViewIfNeeded();
+ assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth));await page.screenshot({path:'/tmp/catalog-grouped-mobile.png'});
+ assert.deepEqual(errors,[]);console.log('PASS: family grouping, strength image/URL switching, failure fallback, variant mode, numeric filter, load more, detail links, Chinese mobile layout; no page errors.');await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});

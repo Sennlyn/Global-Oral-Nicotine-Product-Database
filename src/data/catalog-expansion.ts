@@ -50,7 +50,7 @@ const researchNotes = {
   zh: "所列来源记录了该产品身份。购物网站展示或历史记载不等于已确认当前销售许可。未核实的参数留空；本次尚未核对到该具体规格的实物图片，不使用其他款式包装图替代。",
 };
 
-function pouch(brandId: string, brandName: string, flavor: string, strength: number | undefined, reference: Source, options: Partial<Product> = {}): Product {
+export function pouch(brandId: string, brandName: string, flavor: string, strength: number | undefined, reference: Source, options: Partial<Product> = {}): Product {
   const productName = `${brandName} ${flavor}${strength === undefined ? "" : ` ${strength} mg`}`;
   const id = slugify(productName);
   return {
@@ -67,7 +67,7 @@ function pouch(brandId: string, brandName: string, flavor: string, strength: num
 }
 
 type VariantRow = readonly [flavor: string, strengths: readonly number[]];
-function range(brandId: string, displayName: string, rows: readonly VariantRow[], reference: Source, options: Partial<Product> = {}): Product[] {
+export function range(brandId: string, displayName: string, rows: readonly VariantRow[], reference: Source, options: Partial<Product> = {}): Product[] {
   return rows.flatMap(([flavor, strengths]) => strengths.map(strength => pouch(brandId, displayName, flavor, strength, reference, options)));
 }
 

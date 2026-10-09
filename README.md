@@ -96,3 +96,13 @@ After reviewing V1.9.2, continue expanding source-backed product records across 
 Identical named variants across sources and countries share one record. Flavor, nicotine strength, pouch size and series changes can distinguish variants, but multipacks and artwork changes alone do not. Confirmed former names are searchable aliases; LOOP Cassis Bliss Strong resolves to Blackcurrant Strong. Evidence about UK factories, papaya flavor and medicine composition is applied only to the matching records.
 
 This catalog is not an exhaustive list of every product ever sold. The dated scope, unresolved leads and evidence limitations are recorded in `scripts/research/catalog-2026-10-09.md`. Run `node scripts/audit-catalog.cjs` to check provenance, identity collisions, retained baseline IDs, aliases and record joins.
+
+## Image evidence and product families
+
+The image research update retains all original IDs and adds 177 source-linked specifications: 747 records across 77 brands. `src/data/product-image-manifest.json` links product-page evidence to observed image assets. Images distinguish a matched variant, a pack reference, and historical context. References do not verify the selected dose, pack count or regional recipe. Existing local assets remain; new images use third-party HTTPS URLs and can be unavailable if the source blocks delivery or changes its assets. Missing packaging is never replaced with invented artwork.
+
+The default catalog groups strengths and pack sizes by series/flavor while retaining separate Mini/Mega/technology, format and historical identities. Each button selects its own variant image and detail URL. A sibling photograph is explicitly labelled as a family reference. `display=variants` restores individual records; `imageStatus=missing` shows specifications still awaiting pictures. Numeric strength filters match the dose exactly.
+
+The dated coverage inventory in `scripts/research/catalog-coverage-2026-10-09.json` lists remaining image gaps by brand. The update links images for 451 records, including 42 labelled references; 296 specifications still lack their own picture. This is an evidence-backed expansion, not a claim that every global or historical product has been identified.
+
+Run `node scripts/audit-catalog.cjs` for identity, source, image mapping, grouping and filter invariants. `scripts/check-catalog-ui.cjs` exercises a running static preview and requires Playwright/Chromium; set `CATALOG_PREVIEW_URL`, and optionally `PLAYWRIGHT_MODULE` and `CHROMIUM_EXECUTABLE`. The integration check intentionally blocks external images to verify the failure fallback, so it does not attest third-party image delivery.
