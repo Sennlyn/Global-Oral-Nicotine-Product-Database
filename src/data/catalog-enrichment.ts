@@ -37,7 +37,7 @@ export function enrichProduct(record: Product): Product {
   if (p.brandId === "zyn" && p.id.includes("ultra")) {
     p.sources.push(zynUltraOfficial);
   }
-  if (p.brandId === "nicorette") {
+  if (p.brandId === "nicorette" && smpcIds[p.id]) {
     const id = smpcIds[p.id];
     p.sources.push(reference("product-characteristics", "Nicorette: product composition and pharmaceutical form", `https://www.medicines.org.uk/emc/product/${id}/smpc`));
     p.containsTobacco = false; p.tobaccoFree = true;
@@ -63,7 +63,7 @@ export function enrichProduct(record: Product): Product {
       : flavorName.includes("tobacco") ? "tobacco flavor"
       : flavorName === "original" ? "original" : ["smooth","chill","signature smooth","chill mist"].includes(flavorName) ? "unflavored" : "Not documented in reviewed sources";
   }
-  if (p.brandId === "velo") {
+  if (p.id === "velo-uk-smooth-papaya-8mg") {
     p.flavor!.sensoryNotes = "Papaya with tropical fruit notes (manufacturer description)";
     p.sources.push(reference("velo-papaya-description", "VELO UK: Smooth Papaya product and use information", "https://www.velo.com/gb/en/our-products/product/smooth-papaya", "official-brand"));
   }
