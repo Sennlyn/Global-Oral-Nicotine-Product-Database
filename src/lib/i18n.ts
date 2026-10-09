@@ -396,6 +396,7 @@ const zh: Record<string, string> = {
 };
 
 Object.assign(zh, {
+  "More filters": "更多筛选",
   "Parent company / group": "母公司／所属集团",
   "Manufacturing location basis": "产地依据",
   "Huabao International Holdings Limited (group affiliation; direct parent not established)": "华宝国际控股有限公司（所属集团；直接母公司待核实）",

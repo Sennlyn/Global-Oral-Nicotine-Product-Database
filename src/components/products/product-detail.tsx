@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowUpRight, ImageOff } from "lucide-react";
+import { ImageOff } from "lucide-react";
 import type { Product } from "@/types/catalog";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { SpecificationTable } from "@/components/products/specification-table";
@@ -49,7 +48,7 @@ export function ProductDetail({ product }: { product: Product }) {
         <div className="chip-list"><span className="chip-link">{category?.name[locale]}</span><span className="chip-link">{format?.name[locale]}</span>{product.recordKind === "historical" && <span className="chip-link">{tr(locale,"Historical record")}</span>}<span className="chip-link">{lifecycle}</span><span className="chip-link">{product.markets.length} {tr(locale, "market records")}</span></div>
       </div>
     </div>
-    <div className="detail-layout"><div className="detail-main">
+    <div className="detail-main">
       {product.recordContext && <section className="content-panel record-context"><h2>{tr(locale,"Record context")}</h2><p>{product.recordContext[locale]}</p>{product.historicalNames?.length ? <p><strong>{tr(locale,"Historical names")}</strong> · {product.historicalNames.join(" / ")}</p> : null}</section>}
       <section className="content-panel"><h2>{tr(locale, "Basic information")}</h2><InfoGrid locale={locale} rows={[
         ["Brand", brand?.name], ["Brand country", brand?.brandCountry], ["Product name", product.productName], ["Series", product.series],
@@ -93,11 +92,5 @@ export function ProductDetail({ product }: { product: Product }) {
       <p className="data-provenance-note">{product.researchNotes?.[locale]}</p>
       <section className="content-panel"><h2>{tr(locale, "Sources")}</h2><ProductSources sources={linkedSources} /></section>
     </div>
-    <aside className="detail-side"><div className="side-panel"><p className="eyebrow">{tr(locale, "MARKET LISTING")}</p>
-      <h3>{product.marketListings?.length ?? 0} {tr(locale, "market records")}</h3>
-      <div className="side-list"><span>{lifecycle}</span><span>{linkedSources.length} {tr(locale, "linked sources")}</span></div>
-      {product.officialWebsite && <a className="text-link" href={product.officialWebsite} target="_blank" rel="noopener noreferrer">{tr(locale, "Official website")} <ArrowUpRight size={16} /></a>}
-      <Link className="text-link" href="/compare">{tr(locale, "Open comparison")} <ArrowUpRight size={16} /></Link>
-    </div></aside></div>
   </div>;
 }

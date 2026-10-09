@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Grid2X2, List, Search, SlidersHorizontal, X } from "lucide-react";
+import { ChevronDown, Grid2X2, List, Search, SlidersHorizontal } from "lucide-react";
 import { categories, resolveCategoryId } from "@/data/categories";
 import { formats, resolveFormatId } from "@/data/formats";
 import { brands, markets, products } from "@/data/products";
@@ -21,11 +21,103 @@ function FilterInput({ name, label, value, placeholder, locale }: { name:string;
 
 export function ProductExplorer({ initial }: { initial: ProductQuery }) {
   const { locale } = useLanguage();
-  const router=useRouter(); const [drawerOpen,setDrawerOpen]=useState(false); const [view,setView]=useState<"grid"|"list">("grid");
-  const result=searchProducts(initial, products);
+  const router = useRouter();
+  const [view, setView] = useState<"grid" | "list">("grid");
+  const result = searchProducts(initial, products);
   const selectedCategory = initial.category ? resolveCategoryId(initial.category) : undefined;
   const selectedFormat = initial.format ? resolveFormatId(initial.format) : undefined;
-  const submit=(event: React.FormEvent<HTMLFormElement>)=>{ event.preventDefault(); const values=new FormData(event.currentTarget); const params=new URLSearchParams(); values.forEach((value,key)=>{if(String(value).trim())params.set(key,String(value).trim());});router.push(`/products${params.size?`?${params.toString()}`:""}`);setDrawerOpen(false);};
-  const filters=<form className="filter-form" onSubmit={submit}><input type="hidden" name="query" value={initial.query ?? ""}/><div className="filter-header"><div><SlidersHorizontal size={17}/><strong>{tr(locale,"Filters")}</strong></div><button type="button" className="mobile-drawer-close" onClick={()=>setDrawerOpen(false)} aria-label={tr(locale,"Close filters")}><X size={21}/></button></div><div className="filter-body"><div className="filter-group-label">{tr(locale,"CLASSIFICATION")}</div><FilterSelect locale={locale} name="category" label="Product category" value={selectedCategory} options={categories.map((item)=>({value:item.id,label:item.name[locale]}))}/><FilterSelect locale={locale} name="format" label="Product format" value={selectedFormat} options={formats.map((item)=>({value:item.id,label:item.name[locale]}))}/><div className="filter-group-label">{tr(locale,"ORIGIN & IDENTITY")}</div><FilterSelect locale={locale} name="brand" label="Brand" value={initial.brand} options={brands.map((item)=>({value:item.id,label:item.name}))}/><FilterInput locale={locale} name="manufacturer" label="Manufacturer" value={initial.manufacturer}/><FilterInput locale={locale} name="country" label="Country of origin" value={initial.country}/><FilterSelect locale={locale} name="market" label="Market" value={initial.market} options={markets.map((item)=>({value:item.slug,label:item.name[locale]}))}/><FilterSelect locale={locale} name="marketStatus" label="Market listing status" value={initial.marketStatus} options={[{value:"marketed",label:"Listed"},{value:"pending",label:"Not on market"}]}/><FilterInput locale={locale} name="flavor" label="Flavor" value={initial.flavor}/><div className="filter-group-label">{tr(locale,"PRODUCT ATTRIBUTES")}</div><FilterInput locale={locale} name="strength" label="Nicotine strength" value={initial.strength} placeholder="e.g. mg per unit"/><FilterSelect locale={locale} name="nicotineSource" label="Nicotine source" value={initial.nicotineSource} options={sourceOptions.map((item)=>({value:item,label:item.replaceAll("-"," ")}))}/><FilterSelect locale={locale} name="containsTobacco" label="Contains tobacco" value={initial.containsTobacco ?? (initial.tobaccoFree === "true" ? "false" : initial.tobaccoFree === "false" ? "true" : undefined)} options={[{value:"true",label:"Yes"},{value:"false",label:"No"}]}/><FilterSelect locale={locale} name="deliveryRoute" label="Delivery route" value={initial.deliveryRoute} options={routeOptions.map((item)=>({value:item,label:item.replaceAll("-"," ")}))}/><FilterSelect locale={locale} name="recordKind" label="Record scope" value={initial.recordKind} options={[{value:"current",label:"Current record"},{value:"historical",label:"Historical record"}]}/><FilterSelect locale={locale} name="status" label="Product lifecycle" value={initial.status} options={[{value:"active",label:"Active"},{value:"discontinued",label:"Discontinued"},{value:"unknown",label:"Unknown"}]}/><details className="advanced-filters"><summary>{tr(locale,"Future technical filters")} <span>＋</span></summary><p>{tr(locale,"Reserved in the data model and UI for sourced product records.")}</p><div className="advanced-tags">{advanced.map((item)=><span key={item}>{tr(locale,item)}</span>)}</div></details></div><div className="filter-actions"><button type="submit" className="button button-primary">{tr(locale,"Apply filters")}</button><button type="button" className="clear-button" onClick={()=>{router.push("/products");setDrawerOpen(false);}}>{tr(locale,"Clear all")}</button></div></form>;
-  return <div className="products-explorer"><div className="products-toolbar"><div className="products-toolbar-top"><div><p className="eyebrow">{tr(locale,"PRODUCT DATABASE")}</p><h1>{tr(locale,"Product database")}<span className="heading-period">.</span></h1><p>{tr(locale,"Structured records for oral nicotine and smokeless tobacco products.")}</p></div><span className="results-count">{locale === "zh" ? `${result.length} ${tr(locale,"products")}` : `${result.length} products`}</span></div><form className="products-search" action="/products"><Search size={21}/><input name="query" defaultValue={initial.query ?? ""} placeholder={tr(locale,"Search products, brands, manufacturers, categories...")} aria-label={tr(locale,"Search products")}/><button type="submit">{tr(locale,"Search")} <span>↗</span></button></form><div className="results-controls"><button type="button" className="mobile-filter-button" onClick={()=>setDrawerOpen(true)}><SlidersHorizontal size={17}/> {tr(locale,"Filters")}</button><span>{locale === "zh" ? `${tr(locale,"Showing")} ${result.length} ${tr(locale,"results")}` : `Showing ${result.length} results`}</span><div className="controls-right"><label>{tr(locale,"Sort")} <select defaultValue={initial.sort ?? "name-asc"} onChange={(event)=>{const params=new URLSearchParams(window.location.search);params.set("sort",event.target.value);router.push(`/products?${params.toString()}`);}}><option value="name-asc">{tr(locale,"Name A–Z")}</option><option value="name-desc">{tr(locale,"Name Z–A")}</option></select></label><div className="view-toggle" role="group" aria-label={tr(locale,"Result view")}><button className={view==="grid"?"selected":""} onClick={()=>setView("grid")} aria-label={tr(locale,"Grid view")} aria-pressed={view==="grid"}><Grid2X2 size={17}/></button><button className={view==="list"?"selected":""} onClick={()=>setView("list")} aria-label={tr(locale,"List view")} aria-pressed={view==="list"}><List size={18}/></button></div></div></div></div><div className="products-layout"><aside className="filters-sidebar">{filters}</aside><div className="products-results">{result.length ? <div className={`product-grid ${view==="list"?"list-view":""}`}>{result.map((product)=><ProductCard key={product.id} product={product} view={view}/>)}</div> : <EmptyState title={products.length ? "No matching products." : "No product records yet."} description={products.length ? "Try a different query or clear the filters." : "The product database framework is ready for sourced product records."} action={{label:"Explore the category taxonomy",href:"/categories"}}/>}<div className="results-footnote">{tr(locale,"Records show product-country listing status, lifecycle and traceable sources. Database size:")} {products.length}.</div></div></div>{drawerOpen && <div className="drawer-overlay" onMouseDown={()=>setDrawerOpen(false)}><div className="filter-drawer" onMouseDown={(event)=>event.stopPropagation()} role="dialog" aria-modal="true" aria-label={tr(locale,"Product filters")}>{filters}</div></div>}</div>;
+  const hasMoreFilters = [initial.manufacturer, initial.country, initial.marketStatus, initial.nicotineSource, initial.containsTobacco, initial.tobaccoFree, initial.deliveryRoute, initial.recordKind, initial.status].some(Boolean);
+
+  const navigate = (params: URLSearchParams) => router.push("/products" + (params.size ? "?" + params.toString() : ""));
+  const submit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const params = new URLSearchParams();
+    new FormData(event.currentTarget).forEach((value, key) => {
+      if (String(value).trim()) params.set(key, String(value).trim());
+    });
+    navigate(params);
+  };
+  const search = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const query = String(new FormData(event.currentTarget).get("query") ?? "").trim();
+    const params = new URLSearchParams(window.location.search);
+    if (query) params.set("query", query);
+    else params.delete("query");
+    navigate(params);
+  };
+
+  return <div className="products-explorer">
+    <div className="products-toolbar">
+      <div className="products-toolbar-top">
+        <div><p className="eyebrow">{tr(locale, "PRODUCT DATABASE")}</p><h1>{tr(locale, "Product database")}<span className="heading-period">.</span></h1><p>{tr(locale, "Structured records for oral nicotine and smokeless tobacco products.")}</p></div>
+        <span className="results-count">{result.length} {locale === "zh" ? tr(locale, "products") : "products"}</span>
+      </div>
+      <form className="products-search" onSubmit={search}>
+        <Search size={21} />
+        <input name="query" defaultValue={initial.query ?? ""} placeholder={tr(locale, "Search products, brands, manufacturers, categories...")} aria-label={tr(locale, "Search products")} />
+        <button type="submit">{tr(locale, "Search")} <span>↗</span></button>
+      </form>
+    </div>
+
+    <div className="products-stack">
+      <form className="filter-form filters-horizontal" onSubmit={submit} aria-label={tr(locale, "Product filters")}>
+        <input type="hidden" name="query" value={initial.query ?? ""} />
+        <input type="hidden" name="sort" value={initial.sort ?? ""} />
+        <div className="filter-header"><div><SlidersHorizontal size={17} /><strong>{tr(locale, "Filters")}</strong></div></div>
+        <div className="filter-body">
+          <div className="filter-primary-grid">
+            <FilterSelect locale={locale} name="category" label="Product category" value={selectedCategory} options={categories.map(item => ({value:item.id, label:item.name[locale]}))} />
+            <FilterSelect locale={locale} name="format" label="Product format" value={selectedFormat} options={formats.map(item => ({value:item.id, label:item.name[locale]}))} />
+            <FilterSelect locale={locale} name="brand" label="Brand" value={initial.brand} options={brands.map(item => ({value:item.id, label:item.name}))} />
+            <FilterSelect locale={locale} name="market" label="Market" value={initial.market} options={markets.map(item => ({value:item.slug, label:item.name[locale]}))} />
+            <FilterInput locale={locale} name="flavor" label="Flavor" value={initial.flavor} />
+            <FilterInput locale={locale} name="strength" label="Nicotine strength" value={initial.strength} placeholder="e.g. mg per unit" />
+          </div>
+          <details className="filter-more" open={hasMoreFilters}>
+            <summary>{tr(locale, "More filters")}<ChevronDown size={16} aria-hidden="true" /></summary>
+            <div className="filter-extra-grid">
+              <FilterInput locale={locale} name="manufacturer" label="Manufacturer" value={initial.manufacturer} />
+              <FilterInput locale={locale} name="country" label="Country of origin" value={initial.country} />
+              <FilterSelect locale={locale} name="marketStatus" label="Market listing status" value={initial.marketStatus} options={[{value:"marketed", label:"Listed"}, {value:"pending", label:"Not on market"}]} />
+              <FilterSelect locale={locale} name="nicotineSource" label="Nicotine source" value={initial.nicotineSource} options={sourceOptions.map(item => ({value:item, label:item.replaceAll("-", " ")}))} />
+              <FilterSelect locale={locale} name="containsTobacco" label="Contains tobacco" value={initial.containsTobacco ?? (initial.tobaccoFree === "true" ? "false" : initial.tobaccoFree === "false" ? "true" : undefined)} options={[{value:"true", label:"Yes"}, {value:"false", label:"No"}]} />
+              <FilterSelect locale={locale} name="deliveryRoute" label="Delivery route" value={initial.deliveryRoute} options={routeOptions.map(item => ({value:item, label:item.replaceAll("-", " ")}))} />
+              <FilterSelect locale={locale} name="recordKind" label="Record scope" value={initial.recordKind} options={[{value:"current", label:"Current record"}, {value:"historical", label:"Historical record"}]} />
+              <FilterSelect locale={locale} name="status" label="Product lifecycle" value={initial.status} options={[{value:"active", label:"Active"}, {value:"discontinued", label:"Discontinued"}, {value:"unknown", label:"Unknown"}]} />
+            </div>
+            <details className="advanced-filters">
+              <summary>{tr(locale, "Future technical filters")} <span>＋</span></summary>
+              <p>{tr(locale, "Reserved in the data model and UI for sourced product records.")}</p>
+              <div className="advanced-tags">{advanced.map(item => <span key={item}>{tr(locale, item)}</span>)}</div>
+            </details>
+          </details>
+        </div>
+        <div className="filter-actions">
+          <button type="button" className="clear-button" onClick={() => router.push("/products")}>{tr(locale, "Clear all")}</button>
+          <button type="submit" className="button button-primary">{tr(locale, "Apply filters")}</button>
+        </div>
+      </form>
+
+      <div className="results-controls">
+        <span>{locale === "zh" ? tr(locale, "Showing") + " " + result.length + " " + tr(locale, "results") : "Showing " + result.length + " results"}</span>
+        <div className="controls-right">
+          <label>{tr(locale, "Sort")} <select defaultValue={initial.sort ?? "name-asc"} onChange={event => {
+            const params = new URLSearchParams(window.location.search);
+            params.set("sort", event.target.value);
+            navigate(params);
+          }}><option value="name-asc">{tr(locale, "Name A–Z")}</option><option value="name-desc">{tr(locale, "Name Z–A")}</option></select></label>
+          <div className="view-toggle" role="group" aria-label={tr(locale, "Result view")}>
+            <button type="button" className={view === "grid" ? "selected" : ""} onClick={() => setView("grid")} aria-label={tr(locale, "Grid view")} aria-pressed={view === "grid"}><Grid2X2 size={17} /></button>
+            <button type="button" className={view === "list" ? "selected" : ""} onClick={() => setView("list")} aria-label={tr(locale, "List view")} aria-pressed={view === "list"}><List size={18} /></button>
+          </div>
+        </div>
+      </div>
+      <div className="products-results">
+        {result.length ? <div className={"product-grid " + (view === "list" ? "list-view" : "")}>
+          {result.map(product => <ProductCard key={product.id} product={product} view={view} />)}
+        </div> : <EmptyState title={products.length ? "No matching products." : "No product records yet."} description={products.length ? "Try a different query or clear the filters." : "The product database framework is ready for sourced product records."} action={{label:"Explore the category taxonomy", href:"/categories"}} />}
+        <div className="results-footnote">{tr(locale, "Records show product-country listing status, lifecycle and traceable sources. Database size:")} {products.length}.</div>
+      </div>
+    </div>
+  </div>;
 }
