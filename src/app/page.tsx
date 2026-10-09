@@ -105,7 +105,7 @@ export default function Home() {
       <section className="overview-hero">
         <div className="container overview-hero-grid">
           <div className="overview-copy">
-            <p className="overview-eyebrow"><span className="live-dot" />{tr(locale, "GLOBAL ORAL NICOTINE DATABASE")}<span className="overview-version">V1.9</span></p>
+            <p className="overview-eyebrow"><span className="live-dot" />{tr(locale, "GLOBAL ORAL NICOTINE DATABASE")}<span className="overview-version">V1.9.2</span></p>
             <h1 className={locale === "zh" ? "overview-title-zh" : undefined}>
               {locale === "zh" ? <><span>全球口腔尼古丁产品</span><em>数据库</em></> : <>{tr(locale, "A clearer view of")} <em>{tr(locale, "oral nicotine.")}</em></>}
             </h1>

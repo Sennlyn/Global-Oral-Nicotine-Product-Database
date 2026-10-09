@@ -1,6 +1,6 @@
 # Global Oral Nicotine Product Database / 全球口腔尼古丁产品数据库
 
-V1.9 is a source-linked research website for oral nicotine and oral smokeless tobacco products. Each product-country pair records its market status separately; uncertain details are clearly marked. This is not an e-commerce site.
+V1.9.2 is a source-linked research website for oral nicotine and oral smokeless tobacco products. Each product-country pair records its market status separately; uncertain details are clearly marked. This is not an e-commerce site.
 
 ## Stack
 
@@ -81,10 +81,10 @@ Physical specifications are a discriminated union selected by `specifications.ki
 4. Keep official product images linked to an `imageSource`; do not create fictional packaging or imagery.
 5. Keep non-oral inhaled cigarettes, vapes, heated tobacco sticks and waterpipe products outside this database.
 
-## V1.9 interface status
+## V1.9.2 interface status
 
 Search, filtering, sorting, grid/list controls, taxonomy navigation, category and format detail pages, brand and market profiles, product records, country-specific listing status and a neutral comparison table are available. “Not on market” includes pre-market, withdrawn and historical records; lifecycle remains a separate field.
 
 ## Suggested next phase
 
-After reviewing V1.9, continue expanding source-backed product records across formats and markets. Database migration can follow once the content workflow is stable. New records must be supported by traceable sources and an exact product-image match.
+After reviewing V1.9.2, continue expanding source-backed product records across formats and markets. Database migration can follow once the content workflow is stable. New records must be supported by traceable sources and an exact product-image match.
