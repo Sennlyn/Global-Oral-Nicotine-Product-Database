@@ -250,6 +250,8 @@ export interface Product {
   shortDescription?: string;
   localizedShortDescription?: LocalizedText;
   productImage?: string;
+  imageMatch?: "exact-variant" | "pack-reference" | "historical-context";
+  imageCaption?: LocalizedText;
   /** Frame one identified product within an unchanged archival photograph. All coordinates are source pixels. */
   imageRegion?: { x: number; y: number; width: number; height: number; sourceWidth: number; sourceHeight: number };
   imageSource?: Source;

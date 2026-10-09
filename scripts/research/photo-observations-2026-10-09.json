@@ -1,0 +1,14 @@
+{
+  "reviewedAt": "2026-10-09",
+  "status": "intermediate image discovery is superseded by src/data/product-image-manifest.json",
+  "excluded": [
+    "Generic dosage-form icons are not package photographs.",
+    "Foreign-market packs cannot verify a UK variant.",
+    "Different-dose packs can only appear as labelled family references.",
+    "Caption/filename conflicts and generated packaging are excluded.",
+    "Plain pan masala does not illustrate the separately documented companion tobacco.",
+    "Taboca is not Taboka.",
+    "Modern snus is not Skoal Dry."
+  ],
+  "missingHistoricalImages": "Retain documented historical identities with image pending; do not invent artwork."
+}

@@ -1,0 +1,154 @@
+[
+  {
+    "brand": "copenhagen",
+    "name": "Copenhagen Long Cut Straight",
+    "format": "loose",
+    "series": "Long Cut Straight",
+    "pageUrl": "https://www.hy-vee.com/aisles-online/p/21780/copenhagen-straight-long-cut",
+    "id": "copenhagen-long-cut-straight"
+  },
+  {
+    "brand": "copenhagen",
+    "name": "Copenhagen Long Cut Mint",
+    "format": "loose",
+    "series": "Long Cut Mint",
+    "pageUrl": "https://www.gopuff.com/p/copenhagen-mint-long-cut-chewing-tobacco-1-2oz/p9612",
+    "id": "copenhagen-long-cut-mint"
+  },
+  {
+    "brand": "copenhagen",
+    "name": "Copenhagen Long Cut Wintergreen",
+    "format": "loose",
+    "series": "Long Cut Wintergreen",
+    "pageUrl": "https://www.gopuff.com/p/copenhagen-wintergreen-long-cut-chewing-tobacco-1-2oz/p9611",
+    "id": "copenhagen-long-cut-wintergreen"
+  },
+  {
+    "brand": "copenhagen",
+    "name": "Copenhagen Long Cut Southern Blend",
+    "format": "loose",
+    "series": "Long Cut Southern Blend",
+    "pageUrl": "https://chewdepot.ca/products/copenhagen-southern-blend?srsltid=AfmBOootFWADbm_FsyaqFMRnWB7ERMy5mMYUWqiUxKys1nteLlgBMpDc",
+    "id": "copenhagen-long-cut-southern-blend"
+  },
+  {
+    "brand": "copenhagen",
+    "name": "Copenhagen Original Long Cut",
+    "format": "loose",
+    "series": "Original Long Cut",
+    "pageUrl": "https://chewdepot.ca/products/copenhagen-original-long-cut",
+    "id": "copenhagen-original-long-cut"
+  },
+  {
+    "brand": "copenhagen",
+    "name": "Copenhagen Original Pouches",
+    "format": "pouch",
+    "series": "Original Pouches",
+    "pageUrl": "https://www.hy-vee.com/aisles-online/p/109410/Copenhagen-Smokeless-Tobacco-Pouches-Original",
+    "id": "copenhagen-original-pouches"
+  },
+  {
+    "brand": "copenhagen",
+    "name": "Copenhagen Extra Long Cut Natural",
+    "format": "loose",
+    "series": "Extra Long Cut Natural",
+    "pageUrl": "https://www.spring-market.com/sm/planning/rsid/720/product/copenhagen-smokeless-tobacco-natural-extra-long-cut-12-ounce-id-00073100008849",
+    "id": "copenhagen-extra-long-cut-natural"
+  },
+  {
+    "brand": "copenhagen",
+    "name": "Copenhagen Wintergreen Pouches",
+    "format": "pouch",
+    "series": "Wintergreen Pouches",
+    "pageUrl": "https://www.gopuff.com/p/copenhagen-wintergreen-chewing-tobacco-pouches-0-82oz/p9614",
+    "id": "copenhagen-wintergreen-pouches"
+  },
+  {
+    "brand": "americas-best-chew",
+    "name": "America's Best Chew Golden Blend",
+    "format": "loose",
+    "series": "America's Best Chew Golden Blend",
+    "pageUrl": "https://www.douglasfoodvalu.com/products/americas-best-chew-golden-blend-loose-leaf-chewing-tobacco-3-oz",
+    "id": "america-s-best-chew-golden-blend"
+  },
+  {
+    "brand": "general",
+    "name": "General Original Portion",
+    "format": "pouch",
+    "series": "General Original Portion",
+    "pageUrl": "https://www.swedishmatch.se/kop-snus/general/general-original-portion/",
+    "id": "general-original-portion"
+  },
+  {
+    "brand": "general",
+    "name": "General Lössnus",
+    "format": "loose",
+    "series": "General Lössnus",
+    "pageUrl": "https://gonic.se/general-los",
+    "id": "general-lossnus"
+  },
+  {
+    "brand": "grov",
+    "name": "Grov White Portion",
+    "format": "pouch",
+    "series": "Grov White Portion",
+    "pageUrl": "https://www.snusexpress.com/sb/en/snus/white-portion/grov-vit-884",
+    "id": "grov-white-portion"
+  },
+  {
+    "brand": "grov",
+    "name": "Grov Original Portion Strong",
+    "format": "pouch",
+    "series": "Grov Original Portion Strong",
+    "pageUrl": "https://www.swedishmatch.se/kop-snus/grov/grov-original-portion-strong/",
+    "id": "grov-original-portion-strong"
+  },
+  {
+    "brand": "grov",
+    "name": "Grov Lössnus",
+    "format": "loose",
+    "series": "Grov Lössnus",
+    "pageUrl": "https://www.snuset.se/produkt/grov-lossnus/",
+    "id": "grov-lossnus"
+  },
+  {
+    "brand": "kaliber",
+    "name": "Kaliber Salmiak Vit Portion",
+    "format": "pouch",
+    "series": "Kaliber Salmiak Vit Portion",
+    "pageUrl": "https://www.swedishmatch.se/kop-snus/kaliber/kaliber-salmiak-vit-portion/",
+    "id": "kaliber-salmiak-vit-portion"
+  },
+  {
+    "brand": "kaliber",
+    "name": "Kaliber Plus Stark Vit",
+    "format": "pouch",
+    "series": "Kaliber Plus Stark Vit",
+    "pageUrl": "https://www.snus.ch/kaliber/kaliber-plus-stark-vit-454",
+    "id": "kaliber-plus-stark-vit"
+  },
+  {
+    "brand": "kapten",
+    "name": "Kapten Mini Vit",
+    "format": "pouch",
+    "series": "Kapten Mini Vit",
+    "pageUrl": "https://www.mysnus.com/kapten/kapten-mini-vit-9181",
+    "id": "kapten-mini-vit"
+  },
+  {
+    "brand": "kapten",
+    "name": "Kapten Mint Vit Portion Extra Stark",
+    "format": "pouch",
+    "series": "Kapten Mint Vit Portion Extra Stark",
+    "pageUrl": "https://www.swedishmatch.se/kop-snus/kapten/kapten-mint-vit-portion-extra-stark/",
+    "id": "kapten-mint-vit-portion-extra-stark"
+  },
+  {
+    "brand": "kapten",
+    "name": "Kapten Vit Lakrits",
+    "format": "pouch",
+    "series": "Kapten Vit Lakrits",
+    "pageUrl": "https://snussidan.se/snus/kapten-vit-lakrits/",
+    "id": "kapten-vit-lakrits"
+  }
+]

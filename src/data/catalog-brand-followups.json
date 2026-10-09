@@ -1,0 +1,652 @@
+[
+  {
+    "id": "ace-x-cool-mint-slim",
+    "brand": "ace",
+    "name": "ACE X Cool Mint Slim",
+    "prefix": "ACE",
+    "flavor": "X Cool Mint Slim",
+    "series": "X",
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-x-cool-mint-slim-white"
+  },
+  {
+    "id": "ace-cool-mint-slim-white",
+    "brand": "ace",
+    "name": "ACE Cool Mint Slim White",
+    "prefix": "ACE",
+    "flavor": "Cool Mint Slim White",
+    "series": null,
+    "strength": 6.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-cool-mint-slim-white"
+  },
+  {
+    "id": "ace-eucalyptus-slim-white",
+    "brand": "ace",
+    "name": "ACE Eucalyptus Slim White",
+    "prefix": "ACE",
+    "flavor": "Eucalyptus Slim White",
+    "series": null,
+    "strength": 6.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-eucalyptus-slim-white"
+  },
+  {
+    "id": "ace-spearmint",
+    "brand": "ace",
+    "name": "ACE Spearmint",
+    "prefix": "ACE",
+    "flavor": "Spearmint",
+    "series": null,
+    "strength": 6.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-spearmint-slim"
+  },
+  {
+    "id": "ace-cool-mint-3mg",
+    "brand": "ace",
+    "name": "ACE Cool Mint 3mg",
+    "prefix": "ACE",
+    "flavor": "Cool Mint 3mg",
+    "series": null,
+    "strength": 3.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-cool-mint-low"
+  },
+  {
+    "id": "ace-x-guarana-chili-boost",
+    "brand": "ace",
+    "name": "ACE X Guarana Chili Boost",
+    "prefix": "ACE",
+    "flavor": "X Guarana Chili Boost",
+    "series": "X",
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-guarana-chili-boost"
+  },
+  {
+    "id": "ace-x-black-raspberry-chili",
+    "brand": "ace",
+    "name": "ACE X Black Raspberry Chili",
+    "prefix": "ACE",
+    "flavor": "X Black Raspberry Chili",
+    "series": "X",
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-x-black-raspberry-chili"
+  },
+  {
+    "id": "ace-berry-breeze-4mg",
+    "brand": "ace",
+    "name": "ACE Berry Breeze 4mg",
+    "prefix": "ACE",
+    "flavor": "Berry Breeze 4mg",
+    "series": null,
+    "strength": 4.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-berry-breeze-low"
+  },
+  {
+    "id": "ace-green-lemon-slim-white",
+    "brand": "ace",
+    "name": "ACE Green Lemon Slim White",
+    "prefix": "ACE",
+    "flavor": "Green Lemon Slim White",
+    "series": null,
+    "strength": null,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-green-lemon-slim-white"
+  },
+  {
+    "id": "ace-liquorice-mint-slim-white",
+    "brand": "ace",
+    "name": "ACE Liquorice Mint Slim White",
+    "prefix": "ACE",
+    "flavor": "Liquorice Mint Slim White",
+    "series": null,
+    "strength": null,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-liquorice-mint-slim"
+  },
+  {
+    "id": "ace-x-double-mint",
+    "brand": "ace",
+    "name": "ACE X Double Mint",
+    "prefix": "ACE",
+    "flavor": "X Double Mint",
+    "series": "X",
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-x-double-mint-strong-slim"
+  },
+  {
+    "id": "ace-x-nordic-freeze",
+    "brand": "ace",
+    "name": "ACE X Nordic Freeze",
+    "prefix": "ACE",
+    "flavor": "X Nordic Freeze",
+    "series": "X",
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-x-nordic-freeze-strong-slim"
+  },
+  {
+    "id": "ace-x-red-apple-cinnamon",
+    "brand": "ace",
+    "name": "ACE X Red Apple Cinnamon",
+    "prefix": "ACE",
+    "flavor": "X Red Apple Cinnamon",
+    "series": "X",
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-x-red-apple-cinnamon"
+  },
+  {
+    "id": "ace-x-spearmint",
+    "brand": "ace",
+    "name": "ACE X Spearmint",
+    "prefix": "ACE",
+    "flavor": "X Spearmint",
+    "series": "X",
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-x-spearmint-strong-slim"
+  },
+  {
+    "id": "ace-x-xmas-edition",
+    "brand": "ace",
+    "name": "ACE X Xmas Edition",
+    "prefix": "ACE",
+    "flavor": "X Xmas Edition",
+    "series": "X",
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/ace-nicotine-pouches/ace-x-xmas-edition"
+  },
+  {
+    "id": "skruf-superwhite-no-52-fresh-mint-medium",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite no.52 Fresh Mint Medium",
+    "prefix": "Skruf",
+    "flavor": "Superwhite no.52 Fresh Mint Medium",
+    "series": "Superwhite",
+    "strength": 6.0,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-super-white-slim-fresh-no-2"
+  },
+  {
+    "id": "skruf-superwhite-no-67-fresh-freeze-ultra-strong",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite no.67 Fresh Freeze Ultra Strong",
+    "prefix": "Skruf",
+    "flavor": "Superwhite no.67 Fresh Freeze Ultra Strong",
+    "series": "Superwhite",
+    "strength": 12.0,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-super-white-fresh-freeze-ultra-limited-edition"
+  },
+  {
+    "id": "skruf-superwhite-no-53-fresh-mint-strong",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite no.53 Fresh Mint Strong",
+    "prefix": "Skruf",
+    "flavor": "Superwhite no.53 Fresh Mint Strong",
+    "series": "Superwhite",
+    "strength": 10.0,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-super-white-slim-fresh-strong-no-3"
+  },
+  {
+    "id": "skruf-superwhite-no-60-frozen-mint-superslim-xtra-strong",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite no.60 Frozen Mint Superslim Xtra Strong",
+    "prefix": "Skruf",
+    "flavor": "Superwhite no.60 Frozen Mint Superslim Xtra Strong",
+    "series": "Superwhite",
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-super-white-slim-frozen-shot-no-4"
+  },
+  {
+    "id": "skruf-superwhite-no-74-crystal-fresh-xtra-strong",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite+ no.74 Crystal Fresh Xtra Strong",
+    "prefix": "Skruf",
+    "flavor": "Superwhite+ no.74 Crystal Fresh Xtra Strong",
+    "series": "Superwhite+",
+    "strength": 11.5,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-superwhite-crystal-fresh-xtra-strong"
+  },
+  {
+    "id": "skruf-superwhite-no-56-nordic-liquorice-medium",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite no.56 Nordic Liquorice Medium",
+    "prefix": "Skruf",
+    "flavor": "Superwhite no.56 Nordic Liquorice Medium",
+    "series": "Superwhite",
+    "strength": 6.0,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-super-white-slim-nordic-no-2"
+  },
+  {
+    "id": "skruf-superwhite-no-63-purple-cassice-strong",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite no.63 Purple Cassice Strong",
+    "prefix": "Skruf",
+    "flavor": "Superwhite no.63 Purple Cassice Strong",
+    "series": "Superwhite",
+    "strength": 10.0,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-super-white-slim-solbaer-no-3"
+  },
+  {
+    "id": "skruf-superwhite-no-58-nordic-liquorice-xtra-strong",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite no.58 Nordic Liquorice Xtra Strong",
+    "prefix": "Skruf",
+    "flavor": "Superwhite no.58 Nordic Liquorice Xtra Strong",
+    "series": "Superwhite",
+    "strength": 11.0,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-super-white-nordic-4"
+  },
+  {
+    "id": "skruf-superwhite-no-62-indigo-berry-medium",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite no.62 Indigo Berry Medium",
+    "prefix": "Skruf",
+    "flavor": "Superwhite no.62 Indigo Berry Medium",
+    "series": "Superwhite",
+    "strength": 6.0,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-super-white-slim-blackberry-no-2"
+  },
+  {
+    "id": "skruf-superwhite-no-64-fresh-apple-xtra-strong",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite no.64 Fresh Apple Xtra Strong",
+    "prefix": "Skruf",
+    "flavor": "Superwhite no.64 Fresh Apple Xtra Strong",
+    "series": "Superwhite",
+    "strength": 8.5,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-superwhite-no64-fresh-apple-xtra-strong-slim"
+  },
+  {
+    "id": "skruf-superwhite-no-72-aloe-fresh-medium",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite+ no.72 Aloe Fresh Medium",
+    "prefix": "Skruf",
+    "flavor": "Superwhite+ no.72 Aloe Fresh Medium",
+    "series": "Superwhite+",
+    "strength": 6.5,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-superwhite-aloe-fresh-medium-slim"
+  },
+  {
+    "id": "skruf-superwhite-no-71-purple-cassice-medium",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite no.71 Purple Cassice Medium",
+    "prefix": "Skruf",
+    "flavor": "Superwhite no.71 Purple Cassice Medium",
+    "series": "Superwhite",
+    "strength": 6.0,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-super-white-cassice-slim-no-2"
+  },
+  {
+    "id": "skruf-superwhite-no-60-fresh-mint-4-mini",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite No.60 Fresh Mint 4 Mini",
+    "prefix": "Skruf",
+    "flavor": "Superwhite No.60 Fresh Mint 4 Mini",
+    "series": "Superwhite",
+    "strength": null,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-superwhite-no60-fresh-mint-4-mini"
+  },
+  {
+    "id": "skruf-superwhite-no-57-polar-eucalyptus-strong",
+    "brand": "skruf-superwhite",
+    "name": "Skruf Superwhite no.57 Polar Eucalyptus Strong",
+    "prefix": "Skruf",
+    "flavor": "Superwhite no.57 Polar Eucalyptus Strong",
+    "series": "Superwhite",
+    "strength": 10.0,
+    "url": "https://www.snusdirect.eu/skruf-super-white/skruf-super-white-slim-polar-no-3"
+  },
+  {
+    "id": "apre-s-no-13-mochaccino-hype-r-strong",
+    "brand": "apres",
+    "name": "Après No.13 Mochaccino Hypèr Strong",
+    "prefix": "Après",
+    "flavor": "No.13 Mochaccino Hypèr Strong",
+    "series": null,
+    "strength": 11.0,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no13-mochaccino-hyper-strong"
+  },
+  {
+    "id": "apre-s-no-13-mochaccino-mini-3-2mg",
+    "brand": "apres",
+    "name": "Après No.13 Mochaccino Mini 3.2mg",
+    "prefix": "Après",
+    "flavor": "No.13 Mochaccino Mini 3.2mg",
+    "series": null,
+    "strength": 3.2,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no13-mochaccino-mini"
+  },
+  {
+    "id": "apre-s-no-2-mint",
+    "brand": "apres",
+    "name": "Après No.2 Mint",
+    "prefix": "Après",
+    "flavor": "No.2 Mint",
+    "series": null,
+    "strength": 4.4,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no2-mint"
+  },
+  {
+    "id": "apre-s-no-5-ice-tea-peach",
+    "brand": "apres",
+    "name": "Après No.5 Ice Tea Peach",
+    "prefix": "Après",
+    "flavor": "No.5 Ice Tea Peach",
+    "series": null,
+    "strength": 4.4,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no5-ice-tea-peach"
+  },
+  {
+    "id": "apre-s-no-7-very-berry",
+    "brand": "apres",
+    "name": "Après No.7 Very Berry",
+    "prefix": "Après",
+    "flavor": "No.7 Very Berry",
+    "series": null,
+    "strength": 4.4,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no7-very-berry"
+  },
+  {
+    "id": "apre-s-no-10-tangerine-spritz-hype-r-strong",
+    "brand": "apres",
+    "name": "Après No.10 Tangerine Spritz Hypèr Strong",
+    "prefix": "Après",
+    "flavor": "No.10 Tangerine Spritz Hypèr Strong",
+    "series": null,
+    "strength": 11.0,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no10-tangerine-spritz-hyper-strong"
+  },
+  {
+    "id": "apre-s-no-10-tangerine-spritz-extra-strong",
+    "brand": "apres",
+    "name": "Après No.10 Tangerine Spritz Extra Strong",
+    "prefix": "Après",
+    "flavor": "No.10 Tangerine Spritz Extra Strong",
+    "series": null,
+    "strength": null,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no10-tangerine-spritz-extra-strong"
+  },
+  {
+    "id": "apre-s-no-10-tangerine-spritz",
+    "brand": "apres",
+    "name": "Après No.10 Tangerine Spritz",
+    "prefix": "Après",
+    "flavor": "No.10 Tangerine Spritz",
+    "series": null,
+    "strength": 4.4,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no10-tangerine-spritz"
+  },
+  {
+    "id": "apre-s-no-5-ice-tea-peach-extra-strong",
+    "brand": "apres",
+    "name": "Après No.5 Ice Tea Peach Extra Strong",
+    "prefix": "Après",
+    "flavor": "No.5 Ice Tea Peach Extra Strong",
+    "series": null,
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no5-ice-tea-peach-extra-strong"
+  },
+  {
+    "id": "apre-s-no-11-bananas",
+    "brand": "apres",
+    "name": "Après No.11 Bananas",
+    "prefix": "Après",
+    "flavor": "No.11 Bananas",
+    "series": null,
+    "strength": 4.4,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no11-bananas"
+  },
+  {
+    "id": "apre-s-no-13-mochaccino",
+    "brand": "apres",
+    "name": "Après No.13 Mochaccino",
+    "prefix": "Après",
+    "flavor": "No.13 Mochaccino",
+    "series": null,
+    "strength": 4.4,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no13-mochaccino-normal"
+  },
+  {
+    "id": "apre-s-no-3-lemon-curd-hype-r-strong",
+    "brand": "apres",
+    "name": "Après No.3 Lemon Curd Hypèr Strong",
+    "prefix": "Après",
+    "flavor": "No.3 Lemon Curd Hypèr Strong",
+    "series": null,
+    "strength": 11.0,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no3-lemon-curd-hyper-strong"
+  },
+  {
+    "id": "apre-s-no-9-cactus-lime-extra-strong",
+    "brand": "apres",
+    "name": "Après No.9 Cactus Lime Extra Strong",
+    "prefix": "Après",
+    "flavor": "No.9 Cactus Lime Extra Strong",
+    "series": null,
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no9-cactus-lime-extra-strong"
+  },
+  {
+    "id": "apre-s-no-12-blueberry",
+    "brand": "apres",
+    "name": "Après No.12 Blueberry",
+    "prefix": "Après",
+    "flavor": "No.12 Blueberry",
+    "series": null,
+    "strength": 4.4,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no12-blueberry"
+  },
+  {
+    "id": "apre-s-no-4-cola-extra-strong",
+    "brand": "apres",
+    "name": "Après No.4 Cola Extra Strong",
+    "prefix": "Après",
+    "flavor": "No.4 Cola Extra Strong",
+    "series": null,
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no4-cola-extra-strong"
+  },
+  {
+    "id": "apre-s-no-5-ice-tea-peach-mini-3-2mg",
+    "brand": "apres",
+    "name": "Après No.5 Ice Tea Peach Mini 3.2mg",
+    "prefix": "Après",
+    "flavor": "No.5 Ice Tea Peach Mini 3.2mg",
+    "series": null,
+    "strength": 3.2,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no5-ice-tea-peach-mini"
+  },
+  {
+    "id": "apre-s-no-3-lemon-curd",
+    "brand": "apres",
+    "name": "Après No.3 Lemon Curd",
+    "prefix": "Après",
+    "flavor": "No.3 Lemon Curd",
+    "series": null,
+    "strength": null,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no3-lemon-curd"
+  },
+  {
+    "id": "apre-s-no-1-menthol-hype-r-strong",
+    "brand": "apres",
+    "name": "Après No.1 Menthol Hypèr Strong",
+    "prefix": "Après",
+    "flavor": "No.1 Menthol Hypèr Strong",
+    "series": null,
+    "strength": null,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no1-menthol-hyper-strong"
+  },
+  {
+    "id": "apre-s-no-9-cactus-lime",
+    "brand": "apres",
+    "name": "Après No.9 Cactus Lime",
+    "prefix": "Après",
+    "flavor": "No.9 Cactus Lime",
+    "series": null,
+    "strength": 4.4,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no9-cactus-lime"
+  },
+  {
+    "id": "apre-s-no-5-ice-tea-peach-hype-r-strong",
+    "brand": "apres",
+    "name": "Après No.5 Ice Tea Peach Hypèr Strong",
+    "prefix": "Après",
+    "flavor": "No.5 Ice Tea Peach Hypèr Strong",
+    "series": null,
+    "strength": 11.0,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no5-ice-tea-peach-hyper-strong"
+  },
+  {
+    "id": "apre-s-no-11-bananas-mini-3-2mg",
+    "brand": "apres",
+    "name": "Après No.11 Bananas Mini 3.2mg",
+    "prefix": "Après",
+    "flavor": "No.11 Bananas Mini 3.2mg",
+    "series": null,
+    "strength": 3.2,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no11-bananas-mini"
+  },
+  {
+    "id": "apre-s-no-1-menthol-extra-strong",
+    "brand": "apres",
+    "name": "Après No.1 Menthol Extra Strong",
+    "prefix": "Après",
+    "flavor": "No.1 Menthol Extra Strong",
+    "series": null,
+    "strength": 8.0,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no1-menthol-extra-strong"
+  },
+  {
+    "id": "apre-s-no-3-lemon-curd-extra-strong",
+    "brand": "apres",
+    "name": "Après No.3 Lemon Curd Extra Strong",
+    "prefix": "Après",
+    "flavor": "No.3 Lemon Curd Extra Strong",
+    "series": null,
+    "strength": null,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no3-lemon-curd-extra-strong"
+  },
+  {
+    "id": "apre-s-no-8-raspberry-liqorice",
+    "brand": "apres",
+    "name": "Après No.8 Raspberry Liqorice",
+    "prefix": "Après",
+    "flavor": "No.8 Raspberry Liqorice",
+    "series": null,
+    "strength": 4.4,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no8-raspberry-liqorice"
+  },
+  {
+    "id": "apre-s-no-12-blueberry-hype-r-strong",
+    "brand": "apres",
+    "name": "Après No.12 Blueberry Hypèr Strong",
+    "prefix": "Après",
+    "flavor": "No.12 Blueberry Hypèr Strong",
+    "series": null,
+    "strength": 11.0,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no12-blueberry-hyper-strong"
+  },
+  {
+    "id": "apre-s-no-4-cola-hype-r-strong",
+    "brand": "apres",
+    "name": "Après No.4 Cola Hypèr Strong",
+    "prefix": "Après",
+    "flavor": "No.4 Cola Hypèr Strong",
+    "series": null,
+    "strength": 11.0,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no4-cola-hyper-strong"
+  },
+  {
+    "id": "apre-s-no-11-bananas-hype-r-strong",
+    "brand": "apres",
+    "name": "Après No.11 Bananas Hypèr Strong",
+    "prefix": "Après",
+    "flavor": "No.11 Bananas Hypèr Strong",
+    "series": null,
+    "strength": 11.0,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no11-bananas-hyper-strong"
+  },
+  {
+    "id": "apre-s-no-10-tangerine-spritz-mini-3-2mg",
+    "brand": "apres",
+    "name": "Après No.10 Tangerine Spritz Mini 3.2mg",
+    "prefix": "Après",
+    "flavor": "No.10 Tangerine Spritz Mini 3.2mg",
+    "series": null,
+    "strength": 3.2,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no10-tangerine-spritz-mini"
+  },
+  {
+    "id": "apre-s-no-2-mint-mini-3-2mg",
+    "brand": "apres",
+    "name": "Après No.2 Mint Mini 3.2mg",
+    "prefix": "Après",
+    "flavor": "No.2 Mint Mini 3.2mg",
+    "series": null,
+    "strength": 3.2,
+    "url": "https://www.snusdirect.eu/apres-nicotine-pouches/apres-no2-mint-mini"
+  },
+  {
+    "id": "thor-black-mint-strong",
+    "brand": "thor",
+    "name": "THOR Black Mint Strong",
+    "prefix": "THOR",
+    "flavor": "Black Mint Strong",
+    "series": null,
+    "strength": null,
+    "url": "https://www.snusdirect.eu/thor-nicotine-pouches/thor-black-mint-strong"
+  },
+  {
+    "id": "thor-nordic-freeze-strong",
+    "brand": "thor",
+    "name": "THOR Nordic Freeze Strong",
+    "prefix": "THOR",
+    "flavor": "Nordic Freeze Strong",
+    "series": null,
+    "strength": null,
+    "url": "https://www.snusdirect.eu/thor-nicotine-pouches/thor-nordic-freeze-strong"
+  },
+  {
+    "id": "thor-hammer-black-mint-ultra-strong",
+    "brand": "thor",
+    "name": "THOR Hammer Black Mint Ultra Strong",
+    "prefix": "THOR",
+    "flavor": "Hammer Black Mint Ultra Strong",
+    "series": "Hammer",
+    "strength": null,
+    "url": "https://www.snusdirect.eu/thor-nicotine-pouches/thor-hammer-black-mint-ultra-strong"
+  },
+  {
+    "id": "thor-ginger-blast-strong",
+    "brand": "thor",
+    "name": "THOR Ginger Blast Strong",
+    "prefix": "THOR",
+    "flavor": "Ginger Blast Strong",
+    "series": null,
+    "strength": 9.5,
+    "url": "https://www.snusdirect.eu/thor-nicotine-pouches/thor-ginger-blast-strong"
+  },
+  {
+    "id": "thor-frost-kick-strong",
+    "brand": "thor",
+    "name": "THOR Frost Kick Strong",
+    "prefix": "THOR",
+    "flavor": "Frost Kick Strong",
+    "series": null,
+    "strength": 9.5,
+    "url": "https://www.snusdirect.eu/thor-nicotine-pouches/thor-frost-kick-strong"
+  },
+  {
+    "id": "thor-arctic-berries-strong",
+    "brand": "thor",
+    "name": "THOR Arctic Berries Strong",
+    "prefix": "THOR",
+    "flavor": "Arctic Berries Strong",
+    "series": null,
+    "strength": null,
+    "url": "https://www.snusdirect.eu/thor-nicotine-pouches/thor-arctic-berries-strong"
+  },
+  {
+    "id": "thor-hammer-nordic-freeze-ultra-strong",
+    "brand": "thor",
+    "name": "THOR Hammer Nordic Freeze Ultra Strong",
+    "prefix": "THOR",
+    "flavor": "Hammer Nordic Freeze Ultra Strong",
+    "series": "Hammer",
+    "strength": 16.0,
+    "url": "https://www.snusdirect.eu/thor-nicotine-pouches/thor-hammer-nordic-freeze-ultra-strong"
+  }
+]

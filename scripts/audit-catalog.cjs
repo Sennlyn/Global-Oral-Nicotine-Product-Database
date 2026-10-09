@@ -8,7 +8,7 @@ const originalResolve = Module._resolveFilename;
 Module._resolveFilename = function(request, ...args) {
   return originalResolve.call(this, request.startsWith("@/") ? path.join(root, "src", request.slice(2)) : request, ...args);
 };
-require.extensions[".ts"] = (module, filename) => module._compile(ts.transpileModule(fs.readFileSync(filename, "utf8"), {compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText, filename);
+require.extensions[".ts"] = (module, filename) => module._compile(ts.transpileModule(fs.readFileSync(filename, "utf8"), {compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText, filename);
 const {products, brands, manufacturers, markets} = require(path.join(root,"src/data/products.ts"));
 const {categories} = require(path.join(root,"src/data/categories.ts"));
 const {formats} = require(path.join(root,"src/data/formats.ts"));
@@ -41,9 +41,17 @@ for (const p of products) {
     if(listing.status==="marketed") assert(listing.officialProductSource?.sourceUrl && listing.regulatorySource?.sourceUrl && p.status!=="discontinued",`${p.id}: marketed without required evidence`);
   }
   if(p.productImage) {
-    assert(fs.existsSync(path.join(root,"public",p.productImage)),`${p.id}: missing image`);
     assert(p.imageSource,`${p.id}: unattributed image`);
-    assert(fs.statSync(path.join(root,"public",p.productImage)).size>500,`${p.id}: invalid image file`);
+    if(p.productImage.startsWith("https://")) {
+      const image = require(path.join(root,"src/data/product-image-manifest.json")).find(entry=>entry.productId===p.id);
+      assert(image?.imageUrl===p.productImage && image.pageUrl.startsWith("https://"),`${p.id}: remote image not curated`);
+      assert(!/default_icon|studio-image-generation/.test(p.productImage),`${p.id}: icon or invented package used as photo`);
+      assert(p.imageMatch && p.imageCaption?.zh && p.imageCaption?.en,`${p.id}: missing image match label`);
+    } else {
+      const file = path.join(root,"public",p.productImage);
+      assert(fs.existsSync(file),`${p.id}: missing image`);
+      if(fs.existsSync(file)) assert(fs.statSync(file).size>500,`${p.id}: invalid image file`);
+    }
   }
   if(p.imageRegion) {
     const r=p.imageRegion;
@@ -77,3 +85,26 @@ const normalizedNames=new Map();
 for(const p of products) {const key=p.brandId+"|"+p.productName.toLowerCase().replace(/[^a-z0-9]/g,""); assert(!normalizedNames.has(key),`${p.id}: duplicate name with ${normalizedNames.get(key)}`);normalizedNames.set(key,p.id);}
 console.log(JSON.stringify({products:products.length,brands:brands.length,historical:products.filter(p=>p.recordKind==="historical").length,photos:products.filter(p=>p.productImage).length,brandCountries:[...new Set(brands.map(b=>b.brandCountry))],marketedPairs:products.flatMap(p=>p.marketListings??[]).filter(x=>x.status==="marketed").length,failures},null,2));
 if(failures.length) process.exitCode=1;
+
+const {groupProductFamilies, productFamilyId} = require(path.join(root,"src/lib/product-families.ts"));
+const families = groupProductFamilies(products);
+const familyIds = families.flatMap(f=>f.variants.map(p=>p.id));
+assert(familyIds.length===products.length && new Set(familyIds).size===products.length,"Family grouping lost or repeated records");
+const find = name => products.find(p=>p.productName===name);
+for(const [left,right] of [["KLINT Arctic Mint X-Strong","KLINT Arctic Mint Max"],["LOOP Smooth Mint Hyper Strong","LOOP Smooth Mint Hyper Strong Mini"],["Lucy Mint 8 mg","Lucy Breakers Mint 8 mg"]]) assert(productFamilyId(find(left))!==productFamilyId(find(right)),`Distinct product formats merged: ${left}`);
+assert(productFamilyId(find("on! PLUS Mint 6 mg"))===productFamilyId(find("on! PLUS Mint 12 mg")),"on! PLUS 12mg is not grouped with 6/9mg");
+assert(productFamilyId(find("on! Mint 2 mg"))===productFamilyId(find("on! Mint 8 mg")),"Same flavor strengths not grouped");
+for(const entry of require(path.join(root,"src/data/product-image-manifest.json"))) assert(productIds.has(entry.productId),`Photo manifest has unknown product ${entry.productId}`);
+console.log(JSON.stringify({families:families.length,familiesWithPhoto:families.filter(f=>f.variants.some(p=>p.productImage)).length,photoReferences:products.filter(p=>p.imageMatch && p.imageMatch!=="exact-variant").length,failures},null,2));
+if(failures.length) process.exitCode=1;
+
+assert(searchProducts({brand:"on",strength:"2"}).length===7 && searchProducts({brand:"on",strength:"2"}).every(p=>p.nicotine.nicotinePerUnit===2),"2mg filter includes 12mg or misses a flavor");
+const partialFamilies=groupProductFamilies(searchProducts({brand:"on",strength:"2"}));
+assert(partialFamilies.every(f=>f.variants.length===1),"Filtered families reintroduce hidden strengths");
+assert(searchProducts({imageStatus:"missing"}).every(p=>!p.productImage),"Missing image filter includes pictured variants");
+assert(!searchProducts({marketStatus:"marketed"}).some(p=>p.brandId==="on-plus" && p.nicotine?.nicotineStrengthMg===12),"12mg inherits 6/9mg authorization");
+if(failures.length) { console.error(failures); process.exitCode=1; }
+
+const photoManifest = require(path.join(root,"src/data/product-image-manifest.json"));
+assert(new Set(photoManifest.map(p=>p.productId)).size===photoManifest.length,"Duplicate photo manifest mapping");
+if(failures.length) {console.error(failures);process.exitCode=1;}

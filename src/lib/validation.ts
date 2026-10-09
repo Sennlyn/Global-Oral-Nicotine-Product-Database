@@ -14,6 +14,7 @@ export function validateVerifiedProduct(product: Product): string[] {
   if (!formats.some((item) => item.id === resolveFormatId(product.formatId))) errors.push("Unknown physical form.");
   if (product.containsTobacco === true && product.tobaccoFree === true) errors.push("Tobacco status is contradictory.");
   if (product.verificationStatus === "verified") {
+    if (product.imageMatch && product.imageMatch !== "exact-variant") errors.push("Reference photographs do not verify a product specification.");
     if (!product.sources.length) errors.push("Verified products need at least one traceable source.");
     if (!product.lastVerified) errors.push("Verified products need a verification date.");
     if (!product.productImage || !product.imageSource) errors.push("Verified products need a matched product image and a traceable image source.");
