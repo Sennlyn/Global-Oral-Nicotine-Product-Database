@@ -1,6 +1,7 @@
 import type { Brand, LocalizedText, Manufacturer, Market, Product, ProductMarketListing, Source } from "@/types/catalog";
 import { enrichBrand, enrichProduct } from "./catalog-enrichment";
 import { traditionalBrands, traditionalManufacturers, traditionalProducts } from "./traditional-products";
+import { expandedBrands, expandedProducts } from "./catalog-expansion";
 
 const accessedAt = "2026-09-23";
 const researchAccessedAt = "2026-09-29";
@@ -691,7 +692,7 @@ const huabaoProducts: Product[] = [
   },
 ];
 
-const productRecords: Product[] = [...zynProducts, ...zynUltraProducts, ...zynSwissProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts, ...onPlusProducts, ...huabaoProducts, ...traditionalProducts];
+const productRecords: Product[] = [...zynProducts, ...zynUltraProducts, ...zynSwissProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts, ...onPlusProducts, ...huabaoProducts, ...traditionalProducts, ...expandedProducts];
 
 const marketRegulatorySources: Record<string, Source> = {
   "united-states": currentRegulatorSource(
@@ -740,7 +741,7 @@ function hasMarketAuthorization(product: Product, marketId: string): boolean {
       && (strength === 3 || strength === 6)
       && fdaAuthorizedClassicFlavors.has(product.flavor?.name ?? "");
   }
-  if (marketId === "united-kingdom") return product.brandId === "nicorette";
+  if (marketId === "united-kingdom") return product.brandId === "nicorette" && Boolean(nicoretteManufacturerReferences[product.id]);
   return false;
 }
 
@@ -785,7 +786,7 @@ const productRecordsWithManufacturerData: Product[] = productRecords.map((produc
       sources: [...product.sources, officialSource("manufacturer-location", "ZYN U.S. official FAQ", "https://us.zyn.com/zyn-ultra-11mg-nicotine-pouches/", "The FAQ says ZYN is produced at Swedish Match factories in Kentucky and Sweden; the package-specific site is not identified here. / 官网 FAQ 说明 ZYN 在 Swedish Match 位于肯塔基州和瑞典的工厂生产；此处无法据此确定单罐产地。")],
     };
   }
-  if (product.brandId === "nicorette") {
+  if (product.brandId === "nicorette" && nicoretteManufacturerReferences[product.id]) {
     const manufacturerReference = nicoretteManufacturerReferences[product.id];
     return {
       ...product,
@@ -801,6 +802,8 @@ const productRecordsWithManufacturerData: Product[] = productRecords.map((produc
     };
   }
   if (product.brandId === "velo") {
+    // UK factory-code evidence does not establish a US variant's production site.
+    if (!product.markets.includes("united-kingdom") || product.markets.includes("pakistan")) return { ...product, parentCompany: "British American Tobacco p.l.c." };
     return {
       ...product,
       manufacturerId: "bat-velo-sites",
@@ -918,7 +921,7 @@ const brandRecords: Brand[] = [
     parentCompany: "British American Tobacco p.l.c.",
     manufacturerIds: ["bat-velo-sites"],
     officialWebsite: "https://www.velo.com/en-gb/collections/our-products",
-    localizedDescription: { en: "U.K. nicotine pouch varieties documented from VELO's official product pages.", zh: "依据 VELO 英国官网产品页整理的尼古丁袋品种。" },
+    localizedDescription: { en: "Nicotine pouch variants documented from VELO UK and USA, including the original, PLUS and MAX ranges.", zh: "依据 VELO 英国及美国来源整理各款尼古丁袋，涵盖原系列、PLUS 与 MAX。" },
     categoryIds: ["nicotine-pouches"],
     formatIds: ["pouch"],
     marketIds: ["united-kingdom"],
@@ -987,7 +990,24 @@ const brandRecords: Brand[] = [
   },
 ];
 
-export const brands: Brand[] = [...brandRecords, ...traditionalBrands].map(enrichBrand);
+export const brands: Brand[] = [...brandRecords, ...traditionalBrands, ...expandedBrands].map(enrichBrand).map(brand => {
+  const records = products.filter(product => product.brandId === brand.id);
+  const knownSources = new Set(brand.sources.map(source => source.sourceUrl ?? source.id));
+  const additionalSources: Source[] = [];
+  for (const source of records.flatMap(product => product.sources)) {
+    const key = source.sourceUrl ?? source.id;
+    if (knownSources.has(key)) continue;
+    knownSources.add(key);
+    additionalSources.push({ ...source, id: `${brand.id}-product-evidence-${additionalSources.length}` });
+  }
+  return { ...brand,
+    categoryIds: [...new Set([...(brand.categoryIds ?? []), ...records.map(product => product.categoryId)])],
+    formatIds: [...new Set([...(brand.formatIds ?? []), ...records.map(product => product.formatId)])],
+    marketIds: [...new Set([...(brand.marketIds ?? []), ...records.flatMap(product => product.markets)])],
+    sources: [...brand.sources, ...additionalSources],
+    lastVerified: [brand.lastVerified ?? "", ...records.map(product => product.lastVerified ?? "")].sort().at(-1) || undefined,
+  };
+});
 
 export const manufacturers: Manufacturer[] = [
   ...traditionalManufacturers,
@@ -1049,6 +1069,9 @@ export const manufacturers: Manufacturer[] = [
 ];
 
 export const markets: Market[] = [
+  { id: "pakistan", slug: "pakistan", name: { en: "Pakistan", zh: "巴基斯坦" }, region: "Asia", countryCode: "PK" },
+  { id: "ireland", slug: "ireland", name: { en: "Ireland", zh: "爱尔兰" }, region: "Europe", countryCode: "IE" },
+  { id: "india", slug: "india", name: { en: "India", zh: "印度" }, region: "Asia", countryCode: "IN" },
   {
     id: "united-states", slug: "united-states", name: { en: "United States", zh: "美国" }, region: "North America", countryCode: "US",
     regulatoryNotes: { en: "For nicotine pouches, the FDA says only products on its authorized list may be lawfully sold. A listed product still needs exact product and manufacturer evidence.", zh: "对于尼古丁袋，FDA 说明只有其授权清单上的产品可在美国合法销售；仍需核对具体产品名称和制造商。" },

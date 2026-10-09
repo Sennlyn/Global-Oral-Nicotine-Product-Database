@@ -6,6 +6,7 @@ node_modules/
 .next-gh-pages-dev-final/
 out/
 .next-validation/
+.next-catalog-export-*/
 .next-i18n-dev/
 .next-i18n-build/
 .next-taxonomy-build/

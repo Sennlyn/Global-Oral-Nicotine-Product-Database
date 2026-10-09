@@ -63,7 +63,7 @@ Physical form is independent from product category. Each product record has one 
 
 The original nineteen entries are preserved in `legacyFormatDefinitions` for traceability. Exact structural aliases (such as Strip → Oral Film and Bead → Bead / Pellet) resolve to an active physical form. Ambiguous former entries redirect to the formats overview so a future source-backed record can be classified from its actual structure.
 
-The original ten category definitions remain in `originalCategories` for traceability. `categoryIdAliases` maps their IDs to the six active categories, and old category URLs redirect to the corresponding new page. The current catalog contains 72 source-linked product records.
+The original ten category definitions remain in `originalCategories` for traceability. `categoryIdAliases` maps their IDs to the six active categories, and old category URLs redirect to the corresponding new page. The 2026-10-09 catalog contains 570 source-linked records across 74 brands, including 66 historical records. All 81 pre-expansion records and their URLs remain available.
 
 Existing product records remain in the catalog while category aliases resolve legacy category IDs to the six active categories. No product record is deleted as part of taxonomy updates.
 
@@ -88,3 +88,11 @@ Search, filtering, sorting, grid/list controls, taxonomy navigation, category an
 ## Suggested next phase
 
 After reviewing V1.9.2, continue expanding source-backed product records across formats and markets. Database migration can follow once the content workflow is stable. New records must be supported by traceable sources and an exact product-image match.
+
+## Broad catalog research — 2026-10-09
+
+`src/data/catalog-expansion.ts` adds 489 records from official catalogs, retailer listings, medicines registers, scientific papers and historical company disclosures. These are research entries: `verificationStatus: "pending"` retains identities with sources while exact product photos and missing parameters await verification. They remain searchable and visible; they are not presented as fully verified entries. A missing manufacturer or brand country is left unknown.
+
+Identical named variants across sources and countries share one record. Flavor, nicotine strength, pouch size and series changes can distinguish variants, but multipacks and artwork changes alone do not. Confirmed former names are searchable aliases; LOOP Cassis Bliss Strong resolves to Blackcurrant Strong. Evidence about UK factories, papaya flavor and medicine composition is applied only to the matching records.
+
+This catalog is not an exhaustive list of every product ever sold. The dated scope, unresolved leads and evidence limitations are recorded in `scripts/research/catalog-2026-10-09.md`. Run `node scripts/audit-catalog.cjs` to check provenance, identity collisions, retained baseline IDs, aliases and record joins.
