@@ -4,7 +4,9 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight, BookOpenCheck, Database, Layers3, MapPinned, ShieldCheck } from "lucide-react";
 import { brands, markets, products } from "@/data/products";
 import { useLanguage } from "@/components/layout/language-provider";
-import { tr } from "@/lib/i18n";
+import { localize, tr } from "@/lib/i18n";
+import { homeNews, homeMilestones, milestoneKinds, HOME_UPDATES_CHECKED } from "@/data/home-updates";
+import { useRef } from "react";
 import { HomeCoverageMap } from "@/components/home-coverage-map";
 
 const overviewCards = [
@@ -37,62 +39,13 @@ const overviewCards = [
   },
 ];
 
-const newsItems = [
-  {
-    date: "2026-08-21",
-    dateLabel: "21 August 2026",
-    type: "FDA PRODUCT AUTHORISATION",
-    title: "FDA authorizes 11 new ZYN ULTRA pouch products",
-    description: "The U.S. FDA authorized 11 ZYN ULTRA nicotine pouches made by Swedish Match USA through the PMTA pathway.",
-    source: "https://www.fda.gov/tobacco-products/ctp-newsroom/fda-authorizes-11-new-nicotine-pouches",
-  },
-  {
-    date: "2026-08-04",
-    dateLabel: "4 August 2026",
-    type: "FDA PRODUCT AUTHORISATION",
-    title: "FDA authorizes four new on! nicotine pouches",
-    description: "The authorized products are Rich Berry 2 mg, Cappuccino 2 mg and 4 mg, and Autumn Spice 2 mg, made by Helix Innovations.",
-    source: "https://www.fda.gov/tobacco-products/ctp-newsroom/pilot-program-update-fda-authorizes-4-new-nicotine-pouches",
-  },
-  {
-    date: "2026-06-30",
-    dateLabel: "30 June 2026",
-    type: "FDA REGULATORY UPDATE",
-    title: "FDA grants modified-risk orders for 20 ZYN pouches",
-    description: "The order applies to 10 named ZYN varieties in 3 mg and 6 mg strengths and authorizes only the specified wording.",
-    source: "https://www.fda.gov/tobacco-products/ctp-newsroom/fda-authorizes-20-zyn-nicotine-pouches-be-marketed-specific-modified-risk-claim",
-  },
-];
-
-const timelineItems = [
-  {
-    year: "1822",
-    title: "Ettan is established",
-    description: "Swedish Match's company history identifies 1822 as the creation of the Ettan snus brand.",
-    source: "https://www.swedishmatch.com/globalassets/reports/annual-reports/2005_annualreport_en.pdf",
-  },
-  {
-    year: "1973",
-    title: "Portion snus arrives",
-    description: "Swedish Match dates the first portion-packed snus product to its 1973 launch in Sweden.",
-    source: "https://www.swedishmatch.com/globalassets/reports/annual-reports/2021_swedishmatchannualreport_interactive_en.pdf",
-  },
-  {
-    year: "1984",
-    title: "Flavored portions expand",
-    description: "Catch launched with a licorice flavor, which Swedish Match describes as the first non-traditional snus flavor.",
-    source: "https://www.swedishmatch.com/globalassets/reports/2009_annualreport_en.pdf",
-  },
-  {
-    year: "2025",
-    title: "U.S. pouch authorization begins",
-    description: "The FDA authorized its first 20 nicotine pouch products through the U.S. premarket tobacco application pathway.",
-    source: "https://www.fda.gov/news-events/press-announcements/fda-authorizes-marketing-20-zyn-nicotine-pouch-products-after-extensive-scientific-review",
-  },
-];
-
 export default function Home() {
   const { locale } = useLanguage();
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const scrollHistory = (direction: number) => {
+    const track = timelineRef.current;
+    if (track) track.scrollBy({ left: direction * track.clientWidth * 0.85, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+  };
   const marketsWithProducts = markets.filter((market) => products.some((product) => product.markets.includes(market.slug)));
   const metrics = [
     { label: "Product records", value: products.length, icon: Database },
@@ -135,13 +88,14 @@ export default function Home() {
           <div><p className="eyebrow">{tr(locale, "OFFICIAL PRODUCT & REGULATORY UPDATES")}</p><h2>{tr(locale, "Recent product updates")}</h2></div>
           <p>{tr(locale, "Selected announcements from official sources, with the original notice one click away.")}</p>
         </div>
+        <p className="overview-updated">{tr(locale, "Sources checked")} <time dateTime={HOME_UPDATES_CHECKED}>{locale === "zh" ? "2026 年 10 月 12 日" : "12 October 2026"}</time></p>
         <div className="overview-news-grid">
-          {newsItems.map((item) => (
-            <a className="overview-news-card" href={item.source} target="_blank" rel="noreferrer" key={item.date}>
-              <div className="overview-news-meta"><time dateTime={item.date}>{tr(locale, item.dateLabel)}</time><span>{tr(locale, item.type)}</span></div>
-              <h3>{tr(locale, item.title)}</h3>
-              <p>{tr(locale, item.description)}</p>
-              <div className="overview-news-source"><span>{tr(locale, "Read the FDA notice")}</span><ArrowUpRight size={17} /></div>
+          {homeNews.map((item) => (
+            <a className="overview-news-card" href={item.source} target="_blank" rel="noreferrer" key={item.id}>
+              <div className="overview-news-meta"><time dateTime={item.date}>{localize(locale, item.dateLabel)}</time><span>{localize(locale, item.type)}</span></div>
+              <h3>{localize(locale, item.title)}</h3>
+              <p>{localize(locale, item.description)}</p>
+              <div className="overview-news-source"><span>{tr(locale, "Read original notice")} · {item.publisher}</span><ArrowUpRight size={17} /></div>
             </a>
           ))}
         </div>
@@ -150,17 +104,19 @@ export default function Home() {
       <section className="overview-timeline">
         <div className="container">
           <div className="overview-section-heading">
-            <div><p className="eyebrow">{tr(locale, "A HISTORY OF ORAL PRODUCT FORMATS")}</p><h2>{tr(locale, "From loose snus to portion pouches")}</h2></div>
-            <p>{tr(locale, "A short, source-linked timeline of format changes and a regulatory milestone.")}</p>
+            <div><p className="eyebrow">{tr(locale, "A HISTORY OF ORAL PRODUCT FORMATS")}</p><h2>{tr(locale, "Oral product evolution and regulatory milestones")}</h2></div>
+            <p>{tr(locale, "Follow brands, packaging, nicotine replacement medicines and product-specific regulatory decisions through original sources.")}</p>
           </div>
-          <div className="overview-timeline-scroll" tabIndex={0} role="region" aria-label={tr(locale, "Oral product milestones")}>
+          <div className="overview-timeline-controls"><span>{homeMilestones.length} {tr(locale, "documented events")} · 1822–2026</span><div><button type="button" aria-label={tr(locale, "Earlier events")} onClick={() => scrollHistory(-1)}>←</button><button type="button" aria-label={tr(locale, "Later events")} onClick={() => scrollHistory(1)}>→</button></div></div>
+          <div id="home-history" ref={timelineRef} className="overview-timeline-scroll" tabIndex={0} role="region" aria-label={tr(locale, "Oral product milestones")}>
           <ol className="overview-timeline-track">
-            {timelineItems.map((item) => <li className="overview-timeline-item" key={item.year}>
-              <time dateTime={item.year}>{item.year}</time>
+            {homeMilestones.map((item) => <li className="overview-timeline-item" key={item.id}>
+              <time dateTime={item.date}>{localize(locale, item.dateLabel)}</time>
               <span className="overview-timeline-node" aria-hidden="true" />
-              <h3>{tr(locale, item.title)}</h3>
-              <p>{tr(locale, item.description)}</p>
-              <a href={item.source} target="_blank" rel="noreferrer">{tr(locale, "Read source")} ↗</a>
+              <span className="overview-timeline-kind">{localize(locale, milestoneKinds[item.kind])}</span>
+              <h3>{localize(locale, item.title)}</h3>
+              <p>{localize(locale, item.description)}</p>
+              <a href={item.source} target="_blank" rel="noreferrer">{tr(locale, "Read source")} · {item.publisher} ↗</a>
             </li>)}
           </ol>
           </div>
