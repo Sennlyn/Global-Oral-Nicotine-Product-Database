@@ -8,6 +8,7 @@ import { localize, tr } from "@/lib/i18n";
 import { homeNews, homeMilestones, milestoneKinds, HOME_UPDATES_CHECKED } from "@/data/home-updates";
 import { useRef } from "react";
 import { HomeCoverageMap } from "@/components/home-coverage-map";
+import { NewsGrid } from "@/components/news/news-grid";
 
 const overviewCards = [
   {
@@ -89,16 +90,8 @@ export default function Home() {
           <p>{tr(locale, "Selected announcements from official sources, with the original notice one click away.")}</p>
         </div>
         <p className="overview-updated">{tr(locale, "Sources checked")} <time dateTime={HOME_UPDATES_CHECKED}>{locale === "zh" ? "2026 年 10 月 12 日" : "12 October 2026"}</time></p>
-        <div className="overview-news-grid">
-          {homeNews.map((item) => (
-            <a className="overview-news-card" href={item.source} target="_blank" rel="noreferrer" key={item.id}>
-              <div className="overview-news-meta"><time dateTime={item.date}>{localize(locale, item.dateLabel)}</time><span>{localize(locale, item.type)}</span></div>
-              <h3>{localize(locale, item.title)}</h3>
-              <p>{localize(locale, item.description)}</p>
-              <div className="overview-news-source"><span>{tr(locale, "Read original notice")} · {item.publisher}</span><ArrowUpRight size={17} /></div>
-            </a>
-          ))}
-        </div>
+        <NewsGrid items={homeNews.slice(0, 3)} locale={locale} />
+        <div className="overview-news-more"><Link href="/news" className="overview-text-link">{tr(locale, "View all updates")}<ArrowRight size={16} /></Link></div>
       </section>
 
       <section className="overview-timeline">

@@ -6,6 +6,11 @@ export function localize<T extends { en: string; zh: string }>(locale: Locale, v
 }
 
 const zh: Record<string, string> = {
+  "View all updates": "查看全部动态",
+  "All product updates": "全部产品动态",
+  "Browse all recorded official announcements, newest first, with links to the original sources.": "按时间倒序查看已收录的官方产品与监管公告，每条均附原文链接。",
+  "recorded updates": "条动态",
+  "Back to home": "返回首页",
   "Brand countries": "品牌所属国家",
   "BRAND COUNTRIES": "品牌所属国家",
   "Read original notice": "查看原文",
