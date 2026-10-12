@@ -86,7 +86,7 @@ for(const p of products) {const key=p.brandId+"|"+p.productName.toLowerCase().re
 console.log(JSON.stringify({products:products.length,brands:brands.length,historical:products.filter(p=>p.recordKind==="historical").length,photos:products.filter(p=>p.productImage).length,brandCountries:[...new Set(brands.map(b=>b.brandCountry))],marketedPairs:products.flatMap(p=>p.marketListings??[]).filter(x=>x.status==="marketed").length,failures},null,2));
 if(failures.length) process.exitCode=1;
 
-const {groupProductFamilies, productFamilyId} = require(path.join(root,"src/lib/product-families.ts"));
+const {groupProductFamilies, productFamilyId, variantLabel} = require(path.join(root,"src/lib/product-families.ts"));
 const families = groupProductFamilies(products);
 const familyIds = families.flatMap(f=>f.variants.map(p=>p.id));
 assert(familyIds.length===products.length && new Set(familyIds).size===products.length,"Family grouping lost or repeated records");
@@ -94,6 +94,16 @@ const find = name => products.find(p=>p.productName===name);
 for(const [left,right] of [["KLINT Arctic Mint X-Strong","KLINT Arctic Mint Max"],["LOOP Smooth Mint Hyper Strong","LOOP Smooth Mint Hyper Strong Mini"],["Lucy Mint 8 mg","Lucy Breakers Mint 8 mg"]]) assert(productFamilyId(find(left))!==productFamilyId(find(right)),`Distinct product formats merged: ${left}`);
 assert(productFamilyId(find("on! PLUS Mint 6 mg"))===productFamilyId(find("on! PLUS Mint 12 mg")),"on! PLUS 12mg is not grouped with 6/9mg");
 assert(productFamilyId(find("on! Mint 2 mg"))===productFamilyId(find("on! Mint 8 mg")),"Same flavor strengths not grouped");
+for(const flavor of ["Cool Mint", "Peppermint", "Wintergreen", "Spearmint", "Cinnamon", "Coffee", "Citrus", "Menthol", "Smooth", "Chill"]) {
+  const sameFlavor = families.filter(f=>f.brandId === "zyn" && f.name === `ZYN ${flavor}`);
+  assert(sameFlavor.length === 1 && sameFlavor[0].variants.map(p=>p.nicotine.nicotinePerUnit).join(",") === "1.5,3,6", `ZYN ${flavor}: 1.5/3/6 mg split across cards`);
+  const lowStrength = find(`ZYN ${flavor} 1.5 mg`);
+  assert(lowStrength.sources.some(s=>s.id === "zyn-nicotine-origin" && s.verifiedAt === "2026-10-12"), `ZYN ${flavor}: origin lacks verified source`);
+  assert(lowStrength.specifications.unitWeightMg === undefined && !lowStrength.marketListings.some(l=>l.status === "marketed"), `ZYN ${flavor}: 1.5 mg inherits physical measurements or authorization`);
+}
+const skrufFreshmint = families.filter(f=>f.brandId === "skruf-superwhite" && f.name === "Skruf Superwhite Freshmint");
+assert(skrufFreshmint.length === 1 && skrufFreshmint[0].variants.length === 3,"Skruf Freshmint strength variants split by missing series");
+assert(variantLabel(find("Skruf Superwhite no.54 Fresh Mint Xtra Strong"),"en") === "Xtra Strong","Xtra Strong label truncated to Strong");
 for(const entry of require(path.join(root,"src/data/product-image-manifest.json"))) assert(productIds.has(entry.productId),`Photo manifest has unknown product ${entry.productId}`);
 console.log(JSON.stringify({families:families.length,familiesWithPhoto:families.filter(f=>f.variants.some(p=>p.productImage)).length,photoReferences:products.filter(p=>p.imageMatch && p.imageMatch!=="exact-variant").length,failures},null,2));
 if(failures.length) process.exitCode=1;

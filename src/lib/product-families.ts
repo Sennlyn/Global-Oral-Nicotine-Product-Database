@@ -57,7 +57,7 @@ export function groupProductFamilies(records: Product[]): ProductFamily[] {
 
 export function variantLabel(product: Product, locale: Locale): string {
   const strength = product.nicotine?.nicotinePerUnit ?? product.nicotine?.nicotineStrengthMg;
-  const textual = product.nicotine?.nicotineStrength ?? product.productName.match(/(?:Hyper Strong|Extra Strong|Ultra Strong|X[- ]Strong|Strong|Regular|Medium|Mellow|Max)/i)?.[0];
+  const textual = product.nicotine?.nicotineStrength ?? product.productName.match(/(?:Hyp[èe]r Strong|Extra Strong|Ultra Strong|Xtra Strong|X[- ]Strong|Strong|Regular|Medium|Mellow|Max)/i)?.[0];
   const count = "piecesPerPack" in product.specifications ? product.specifications.piecesPerPack : undefined;
   const label = strength !== undefined ? `${strength} mg` : textual ?? (locale === "zh" ? "规格未公开" : "Specification unknown");
   return label + (count ? ` · ${count}${locale === "zh" ? "片" : " pcs"}` : "");
