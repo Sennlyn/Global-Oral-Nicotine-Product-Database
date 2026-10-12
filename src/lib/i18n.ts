@@ -6,6 +6,15 @@ export function localize<T extends { en: string; zh: string }>(locale: Locale, v
 }
 
 const zh: Record<string, string> = {
+  "Brand countries": "品牌所属国家",
+  "BRAND COUNTRIES": "品牌所属国家",
+  "Read original notice": "查看原文",
+  "Sources checked": "来源核查日期：",
+  "Oral product evolution and regulatory milestones": "口腔产品与监管沿革",
+  "Follow brands, packaging, nicotine replacement medicines and product-specific regulatory decisions through original sources.": "沿着原始资料，回顾品牌沿革、包装变化、尼古丁替代药品及具体产品的监管决定。",
+  "documented events": "个有来源的事件",
+  "Earlier events": "查看较早事件",
+  "Later events": "查看较晚事件",
   ...{
     "Historical laboratory measurements": "历史样品实测数据", "Sample period": "样品时期",
     "Nicotine per gram (wet weight)": "每克尼古丁量（湿重）", "Measured pH": "实测 pH", "Measured moisture": "实测水分",
