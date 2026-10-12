@@ -171,7 +171,9 @@ const otherEuropeanRows: [string, string, string, Source][] = [
   ["apres", "Après", "No.4 Cola", refs.snusdirectRegular],
   ["thor", "Thor", "Honeymelon Heaven Strong", refs.snusdirectAll],
 ];
-const otherEuropeanPouches = otherEuropeanRows.map(([id, name, variant, reference]) => pouch(id, name, variant, undefined, reference));
+const otherEuropeanPouches = otherEuropeanRows.map(([id, name, variant, reference]) => pouch(id, name, variant, undefined, reference,
+  id === "skruf-superwhite" ? { series: "Superwhite" } : {},
+));
 
 function oralProduct(brandId: string, productName: string, formatId: string, specifications: Product["specifications"], reference: Source, options: Partial<Product> = {}): Product {
   const id = slugify(productName);

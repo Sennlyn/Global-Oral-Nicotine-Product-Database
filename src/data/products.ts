@@ -134,6 +134,15 @@ function makeZynProduct(
     "https://us.zyn.com/questions/",
     "The official FAQ documents nicotine salt form and other product-level details. / 官网 FAQ 记录尼古丁盐形式及其他产品信息。",
   );
+  const nicotineOriginSource: Source = {
+    id: "zyn-nicotine-origin",
+    sourceName: "PMI: ZYN nicotine source FAQ",
+    sourceUrl: "https://www.pmi.com/faq-section/nicotine-pouches-snus-oral-smokeless-products",
+    sourceType: "manufacturer",
+    accessedAt: "2026-10-12",
+    verifiedAt: "2026-10-12",
+    notes: "PMI states that ZYN nicotine is extracted from tobacco. This supports nicotine origin across strengths, not a specific dose's physical dimensions or marketing authorization. / PMI 说明 ZYN 尼古丁提取自烟草；该依据支持各浓度的尼古丁来源，不证明具体剂量的物理尺寸或上市许可。",
+  };
   const imageSource = officialSource(
     "official-product-image",
     "ZYN U.S. official package image",
@@ -164,11 +173,12 @@ function makeZynProduct(
       nicotineStrengthMg: strength,
       nicotinePerUnit: strength,
       nicotineForm: "Nicotine bitartrate dihydrate",
+      nicotineSource: "tobacco-derived",
     },
     deliveryRoute: ["gingival", "buccal"],
     productTechnology: ["pouch-matrix"],
     specifications: { kind: "pouch", portionsPerCan: 15 },
-    sources: [listingSource, detailsSource],
+    sources: [listingSource, detailsSource, nicotineOriginSource],
     verificationStatus: "verified",
     lastVerified: accessedAt,
   };
