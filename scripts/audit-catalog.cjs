@@ -13,6 +13,7 @@ const {products, brands, manufacturers, markets} = require(path.join(root,"src/d
 const {categories} = require(path.join(root,"src/data/categories.ts"));
 const {formats} = require(path.join(root,"src/data/formats.ts"));
 const {searchProducts} = require(path.join(root,"src/lib/catalog.ts"));
+const {hasVariantImage} = require(path.join(root,"src/lib/product-image-policy.ts"));
 const {validateVerifiedProduct} = require(path.join(root,"src/lib/validation.ts"));
 const {expandedProducts} = require(path.join(root,"src/data/catalog-expansion.ts"));
 const baseline = JSON.parse(fs.readFileSync(path.join(root,"scripts/research/catalog-baseline-2026-10-09.json"),"utf8"));
@@ -111,7 +112,13 @@ if(failures.length) process.exitCode=1;
 assert(searchProducts({brand:"on",strength:"2"}).length===7 && searchProducts({brand:"on",strength:"2"}).every(p=>p.nicotine.nicotinePerUnit===2),"2mg filter includes 12mg or misses a flavor");
 const partialFamilies=groupProductFamilies(searchProducts({brand:"on",strength:"2"}));
 assert(partialFamilies.every(f=>f.variants.length===1),"Filtered families reintroduce hidden strengths");
-assert(searchProducts({imageStatus:"missing"}).every(p=>!p.productImage),"Missing image filter includes pictured variants");
+assert(searchProducts({imageStatus:"missing"}).every(p=>!hasVariantImage(p)),"Missing image filter includes matched variant images");
+assert(searchProducts({imageStatus:"exact"}).every(hasVariantImage),"Exact image filter includes reference photos");
+const referenceIds = new Set(products.filter(p=>p.imageMatch && p.imageMatch!=="exact-variant").map(p=>p.id));
+const pendingImageIds = new Set(searchProducts({imageStatus:"missing"}).map(p=>p.id));
+assert([...referenceIds].every(id=>pendingImageIds.has(id)),"Reference-only records do not appear as pending variant photos");
+for(const p of products) assert(hasVariantImage(p) === Boolean(p.productImage && (!p.imageMatch || p.imageMatch === "exact-variant")),`${p.id}: wrong product-image policy`);
+console.log(JSON.stringify({matchedVariantPhotos:products.filter(hasVariantImage).length,pendingVariantPhotos:products.filter(p=>!hasVariantImage(p)).length},null,2));
 assert(!searchProducts({marketStatus:"marketed"}).some(p=>p.brandId==="on-plus" && p.nicotine?.nicotineStrengthMg===12),"12mg inherits 6/9mg authorization");
 if(failures.length) { console.error(failures); process.exitCode=1; }
 

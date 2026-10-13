@@ -10,6 +10,7 @@ import { searchProducts, type ProductQuery } from "@/lib/catalog";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ProductCard } from "@/components/products/product-card";
 import { ProductFamilyCard } from "@/components/products/product-family-card";
+import { hasVariantImage } from "@/lib/product-image-policy";
 import { groupProductFamilies } from "@/lib/product-families";
 import { useLanguage } from "@/components/layout/language-provider";
 import { tr, type Locale } from "@/lib/i18n";
@@ -65,7 +66,7 @@ export function ProductExplorer({ initial }: { initial: ProductQuery }) {
       </form>
     </div>
 
-    <p className="catalog-coverage-note">{locale === "zh" ? `图片核对：${result.filter(p=>p.productImage).length} / ${result.length} 个规格有图片依据（含参考图）；其余规格保留待补，系列参考图另行标注。` : `Image coverage: ${result.filter(p=>p.productImage).length} / ${result.length} variants have image evidence, including labelled references. Missing variant photos remain pending.`}</p>
+    <p className="catalog-coverage-note">{locale === "zh" ? `图片核对：${result.filter(hasVariantImage).length} / ${result.length} 个规格有对应图片；缺图规格显示占位提示，不借用其他浓度或包装参考图。` : `Image coverage: ${result.filter(hasVariantImage).length} / ${result.length} variants have matched images. Missing photos use placeholders; other strengths and reference packs are not substituted.`}</p>
 
     <div className="products-stack">
       <form className="filter-form filters-horizontal" onSubmit={submit} aria-label={tr(locale, "Product filters")}>
@@ -85,7 +86,7 @@ export function ProductExplorer({ initial }: { initial: ProductQuery }) {
           <details className="filter-more" open={hasMoreFilters}>
             <summary>{tr(locale, "More filters")}<ChevronDown size={16} aria-hidden="true" /></summary>
             <div className="filter-extra-grid">
-              <FilterSelect locale={locale} name="imageStatus" label={locale === "zh" ? "图片状态" : "Image coverage"} value={initial.imageStatus} options={[{value:"exact",label:locale === "zh" ? "对应规格图" : "Matched variant image"},{value:"reference",label:locale === "zh" ? "包装／历史参考图" : "Pack / archive reference"},{value:"missing",label:locale === "zh" ? "具体规格图片待补" : "Variant image pending"}]} />
+              <FilterSelect locale={locale} name="imageStatus" label={locale === "zh" ? "图片状态" : "Image coverage"} value={initial.imageStatus} options={[{value:"exact",label:locale === "zh" ? "对应规格图" : "Matched variant image"},{value:"reference",label:locale === "zh" ? "仅有参考资料" : "Reference evidence only"},{value:"missing",label:locale === "zh" ? "具体规格图片待补" : "Variant image pending"}]} />
               <FilterInput locale={locale} name="manufacturer" label="Manufacturer" value={initial.manufacturer} />
               <FilterInput locale={locale} name="country" label="Country of origin" value={initial.country} />
               <FilterSelect locale={locale} name="marketStatus" label="Market listing status" value={initial.marketStatus} options={[{value:"marketed", label:"Listed"}, {value:"pending", label:"Not on market"}]} />

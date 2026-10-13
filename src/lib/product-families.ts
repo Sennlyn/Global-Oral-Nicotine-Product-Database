@@ -22,12 +22,6 @@ export function familyName(product: Product): string {
     .replace(/\s+/g, " ").trim();
 }
 
-/** A sibling photograph is a labelled reference, never evidence of the selected dose. */
-export function familyPicture(product: Product, family: ProductFamily): Product {
-  if (product.productImage) return product;
-  return family.variants.find(variant => variant.productImage && variant.imageMatch !== "historical-context") ?? product;
-}
-
 export function productFamilyId(product: Product): string {
   // Series, nicotine origin, format, moisture and historical scope are boundaries.
   // Mini/Mega and named technologies remain in the family name.
