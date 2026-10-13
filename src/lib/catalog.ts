@@ -2,6 +2,7 @@ import { brands, manufacturers, products } from "@/data/products";
 import { resolveCategoryId } from "@/data/categories";
 import { resolveFormatId } from "@/data/formats";
 import type { Product, ProductSpecification } from "@/types/catalog";
+import { hasVariantImage } from "@/lib/product-image-policy";
 import { productMatchesMarketListingStatus } from "@/lib/market-listings";
 import { tr, type Locale } from "@/lib/i18n";
 
@@ -48,7 +49,7 @@ export function searchProducts(filters: ProductQuery, records: Product[] = produ
     const manufacturer = manufacturers.find((item) => item.id === product.manufacturerId)?.name ?? product.manufacturerId ?? "";
     const searchable = [product.productName, ...(product.historicalNames ?? []), brand, product.series, manufacturer, tr("zh", manufacturer), product.categoryId, product.subcategory, product.formatId, product.recordContext?.en, product.recordContext?.zh, product.countryOfOrigin, product.flavor?.name, ...product.markets].filter(Boolean).join(" ").toLowerCase();
     return (!q || searchable.includes(q)) &&
-      (!filters.imageStatus || (filters.imageStatus === "missing" ? !product.productImage : filters.imageStatus === "reference" ? !!product.imageMatch && product.imageMatch !== "exact-variant" : !!product.productImage && (!product.imageMatch || product.imageMatch === "exact-variant"))) &&
+      (!filters.imageStatus || (filters.imageStatus === "missing" ? !hasVariantImage(product) : filters.imageStatus === "reference" ? !!product.imageMatch && product.imageMatch !== "exact-variant" : hasVariantImage(product))) &&
       (!filters.category || resolveCategoryId(product.categoryId) === resolveCategoryId(filters.category)) &&
       (!filters.format || resolveFormatId(product.formatId) === resolveFormatId(filters.format)) &&
       (!filters.brand || product.brandId === filters.brand) &&

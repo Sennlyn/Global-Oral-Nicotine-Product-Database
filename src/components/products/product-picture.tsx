@@ -5,13 +5,14 @@ import { useId, useState } from "react";
 import { ImageOff } from "lucide-react";
 import { publicAssetPath } from "@/lib/public-path";
 import { useLanguage } from "@/components/layout/language-provider";
+import { hasVariantImage } from "@/lib/product-image-policy";
 
 /** Archival framing preserves the original photograph; it never synthesizes packaging. */
 export function ProductPicture({ product, lazy = false }: { product: Product; lazy?: boolean }) {
   const clipId = useId();
   const { locale } = useLanguage();
   const [failedSource, setFailedSource] = useState<string>();
-  if (!product.productImage || failedSource === product.productImage) return <div className="image-placeholder"><ImageOff size={28} strokeWidth={1.3}/><span>{locale === "zh" ? (product.productImage ? "图片暂无法加载" : "包装图片待查") : product.productImage ? "Image temporarily unavailable" : "Packaging image not found"}</span><small>{locale === "zh" ? "保留真实档案与来源" : "Product record and sources retained"}</small></div>;
+  if (!hasVariantImage(product) || failedSource === product.productImage) return <div className="image-placeholder"><ImageOff size={28} strokeWidth={1.3}/><span>{locale === "zh" ? (hasVariantImage(product) ? "图片暂无法加载" : "该规格图片待查") : hasVariantImage(product) ? "Image temporarily unavailable" : "Variant image not found"}</span><small>{locale === "zh" ? "保留真实档案与来源" : "Product record and sources retained"}</small></div>;
   const src = publicAssetPath(product.productImage);
   const region = product.imageRegion;
   if (region) return <svg className="catalog-product-image archival-product-picture" role="img" aria-label={product.productName} viewBox={`${region.x} ${region.y} ${region.width} ${region.height}`} preserveAspectRatio="xMidYMid meet">

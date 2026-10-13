@@ -6,6 +6,25 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
  const page=await browser.newPage({viewport:{width:1440,height:1000}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
  const root=process.env.CATALOG_PREVIEW_URL || 'http://127.0.0.1:8769/Global-Oral-Nicotine-Product-Database';
  await page.route('https://**/*',route=>route.abort());
+ await page.goto(root+'/brands/velo/',{waitUntil:'domcontentloaded'});await page.waitForSelector('.product-family-card');
+ const spearmint=page.locator('.product-family-card').filter({has:page.getByRole('heading',{name:'VELO Bright Spearmint',exact:true})});
+ for(const dose of ['4','8','14']) {
+  await spearmint.getByRole('button',{name:dose+' mg',exact:true}).click();
+  assert.equal(await spearmint.locator('.catalog-product-image').count(),0,`Missing ${dose} mg borrows sibling photograph`);
+  await spearmint.locator('.image-placeholder').waitFor();assert.match(await spearmint.locator('.product-image').getAttribute('href'),new RegExp('spearmint-'+dose+'-mg'));
+ }
+ await spearmint.getByRole('button',{name:'6 mg',exact:true}).click();await spearmint.getByText('Image temporarily unavailable').waitFor();
+ await spearmint.getByRole('button',{name:'14 mg',exact:true}).click();await spearmint.locator('.family-card-footer a').click();await page.waitForSelector('.record-image .image-placeholder');
+ assert.equal(await page.locator('.record-image .catalog-product-image').count(),0,'Detail page borrows sibling photograph');
+ await page.goto(root+'/products/velo-strawberry-ice-10-mg/',{waitUntil:'domcontentloaded'});await page.waitForSelector('.record-image .image-placeholder');
+ assert.equal(await page.locator('.record-image .catalog-product-image').count(),0,'10 mg record displays 10.9 mg pack reference');
+ assert.ok(await page.locator('.source-list a[href*="10.9mg"]').count()>0,'Reference source removed from record');
+ await page.goto(root+'/products/camel-snus-original/',{waitUntil:'domcontentloaded'});await page.waitForSelector('.record-image .image-placeholder');assert.equal(await page.locator('.record-image .catalog-product-image').count(),0,'Historical composite used as specification image');
+ for(const display of ['families','variants']) {
+  await page.goto(root+'/products/?imageStatus=reference&display='+display,{waitUntil:'domcontentloaded'});await page.waitForSelector('.product-card');
+  assert.equal(await page.locator('.product-card .catalog-product-image').count(),0,'Reference records render packaging photos');
+  assert.equal(await page.locator('.product-card .image-placeholder').count(),await page.locator('.product-card').count());
+ }
  await page.goto(root+'/brands/zyn/',{waitUntil:'domcontentloaded'});await page.waitForSelector('.product-family-card');
  const coolMint=page.locator('.product-family-card').filter({has:page.getByRole('heading',{name:'ZYN Cool Mint',exact:true})});
  assert.equal(await coolMint.count(),1);assert.deepEqual(await coolMint.locator('.family-variants button').allTextContents(),['1.5 mg','3 mg','6 mg']);
@@ -47,6 +66,9 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
  await page.setViewportSize({width:390,height:844});await page.evaluate(()=>{localStorage.setItem('gonpd-locale','zh');window.dispatchEvent(new Event('gonpd-locale-change'))});
  await page.waitForFunction(()=>document.documentElement.lang==='zh-CN');await page.locator('.product-family-card').first().scrollIntoViewIfNeeded();
  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth));await page.screenshot({path:'/tmp/catalog-grouped-mobile.png'});
+ await page.goto(root+'/brands/velo/',{waitUntil:'domcontentloaded'});await page.waitForSelector('.product-family-card');await spearmint.getByRole('button',{name:'14 mg',exact:true}).click();await spearmint.locator('.image-placeholder').waitFor();
+ assert.equal(await spearmint.locator('.catalog-product-image').count(),0);assert.ok((await spearmint.innerText()).includes('该规格图片待查'));
+ await spearmint.screenshot({path:'/tmp/velo-missing-14mg-mobile-20261013.png'});
  await page.goto(root+'/brands/zyn/',{waitUntil:'domcontentloaded'});await page.waitForSelector('.product-family-card');
  assert.equal(await coolMint.locator('.family-variants button').count(),3);
  assert.ok((await coolMint.boundingBox()).width>250,'Mobile brand card remains squeezed into three columns');

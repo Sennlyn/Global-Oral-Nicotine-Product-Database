@@ -13,7 +13,8 @@ import { useLanguage } from "@/components/layout/language-provider";
 import { tr, type Locale } from "@/lib/i18n";
 import { containsTobacco, nicotineStrengthLabel } from "@/lib/catalog";
 import { ProductPicture } from "@/components/products/product-picture";
-import { familyPicture, groupProductFamilies, productFamilyId, variantLabel } from "@/lib/product-families";
+import { groupProductFamilies, productFamilyId, variantLabel } from "@/lib/product-families";
+import { hasVariantImage } from "@/lib/product-image-policy";
 
 type Value = string | number | boolean | undefined | null;
 function InfoGrid({ rows, locale }: { rows: [string, Value][]; locale: Locale }) {
@@ -41,12 +42,10 @@ export function ProductDetail({ product }: { product: Product }) {
   const perUnitMissing = product.physicalFormDetails?.unitization === "loose" ? "Not applicable: loose product has no fixed portion" : undefined;
   const family = groupProductFamilies(products.filter(p => productFamilyId(p) === productFamilyId(product)))[0];
 
-  const pictured = familyPicture(product, family);
-
   return <div className="container page-shell">
     <Breadcrumb items={[{ label: "Products", href: "/products" }, { label: product.productName }]} />
     <div className="record-head">
-      <div className="record-image"><ProductPicture key={pictured.id} product={pictured} /><p className="photo-caption">{pictured.id !== product.id ? (locale === "zh" ? "系列参考图：" : "Family reference: ") + pictured.productName + (locale === "zh" ? "。所选规格图片待查。" : ". Selected variant photo pending.") : product.imageCaption?.[locale]}{pictured.id !== product.id && pictured.imageSource?.sourceUrl && <a href={pictured.imageSource.sourceUrl} target="_blank" rel="noreferrer">{locale === "zh" ? " 图片来源" : " Image source"}</a>}</p></div>
+      <div className="record-image"><ProductPicture key={product.id} product={product} />{hasVariantImage(product) && product.imageCaption?.[locale] && <p className="photo-caption">{product.imageCaption[locale]}</p>}</div>
       <div><p className="eyebrow">{brand?.name ?? tr(locale, "Brand pending")} / {tr(locale, "PRODUCT RECORD")}</p>
         <h1>{product.productName}</h1><p>{product.localizedShortDescription?.[locale] ?? product.shortDescription}</p>
         <div className="chip-list"><span className="chip-link">{category?.name[locale]}</span><span className="chip-link">{format?.name[locale]}</span>{product.recordKind === "historical" && <span className="chip-link">{tr(locale,"Historical record")}</span>}<span className="chip-link">{lifecycle}</span><span className="chip-link">{product.markets.length} {tr(locale, "market records")}</span></div>
