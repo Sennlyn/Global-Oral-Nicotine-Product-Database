@@ -1,4 +1,6 @@
 import type { Brand, LocalizedText, Manufacturer, Market, Product, ProductMarketListing, Source } from "@/types/catalog";
+import { applyResearchedAffiliation } from "./brand-affiliations";
+import { asianProducts, asianBrands, asianManufacturers } from "./asian-products";
 import { enrichBrand, enrichProduct } from "./catalog-enrichment";
 import { traditionalBrands, traditionalManufacturers, traditionalProducts } from "./traditional-products";
 import { expandedBrands, expandedProducts } from "./catalog-expansion";
@@ -704,7 +706,7 @@ const huabaoProducts: Product[] = [
   },
 ];
 
-const productRecords: Product[] = [...zynProducts, ...zynUltraProducts, ...zynSwissProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts, ...onPlusProducts, ...huabaoProducts, ...traditionalProducts, ...expandedProducts, ...supplementalProducts];
+const productRecords: Product[] = [...zynProducts, ...zynUltraProducts, ...zynSwissProducts, ...nicoretteProducts, ...veloProducts, ...swedishSnusProducts, ...onPlusProducts, ...huabaoProducts, ...traditionalProducts, ...expandedProducts, ...supplementalProducts, ...asianProducts];
 
 const marketRegulatorySources: Record<string, Source> = {
   "united-states": currentRegulatorSource(
@@ -734,6 +736,9 @@ const marketRegulatorySources: Record<string, Source> = {
 };
 
 const marketNamesBySlug: Record<string, LocalizedText> = {
+  japan: { en: "Japan", zh: "日本" },
+  russia: { en: "Russia", zh: "俄罗斯" },
+  "south-korea": { en: "South Korea", zh: "韩国" },
   "united-states": { en: "United States", zh: "美国" },
   "united-kingdom": { en: "United Kingdom", zh: "英国" },
   sweden: { en: "Sweden", zh: "瑞典" },
@@ -1002,7 +1007,7 @@ const brandRecords: Brand[] = [
   },
 ];
 
-export const brands: Brand[] = [...brandRecords, ...traditionalBrands, ...expandedBrands, ...supplementalBrands].map(enrichBrand).map(brand => {
+export const brands: Brand[] = [...brandRecords, ...traditionalBrands, ...expandedBrands, ...supplementalBrands, ...asianBrands].map(enrichBrand).map(applyResearchedAffiliation).map(brand => {
   const records = products.filter(product => product.brandId === brand.id);
   const knownSources = new Set(brand.sources.map(source => source.sourceUrl ?? source.id));
   const additionalSources: Source[] = [];
@@ -1022,6 +1027,7 @@ export const brands: Brand[] = [...brandRecords, ...traditionalBrands, ...expand
 });
 
 export const manufacturers: Manufacturer[] = [
+  ...asianManufacturers,
   ...traditionalManufacturers,
   {
     id: "helix-innovations",
@@ -1081,6 +1087,9 @@ export const manufacturers: Manufacturer[] = [
 ];
 
 export const markets: Market[] = [
+  { id: "japan", slug: "japan", name: { en: "Japan", zh: "日本" }, region: "Asia", countryCode: "JP" },
+  { id: "russia", slug: "russia", name: { en: "Russia", zh: "俄罗斯" }, region: "Asia / Europe", countryCode: "RU" },
+  { id: "south-korea", slug: "south-korea", name: { en: "South Korea", zh: "韩国" }, region: "Asia", countryCode: "KR" },
   { id: "pakistan", slug: "pakistan", name: { en: "Pakistan", zh: "巴基斯坦" }, region: "Asia", countryCode: "PK" },
   { id: "ireland", slug: "ireland", name: { en: "Ireland", zh: "爱尔兰" }, region: "Europe", countryCode: "IE" },
   { id: "india", slug: "india", name: { en: "India", zh: "印度" }, region: "Asia", countryCode: "IN" },

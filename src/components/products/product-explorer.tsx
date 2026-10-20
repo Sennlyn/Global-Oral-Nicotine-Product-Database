@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { ChevronDown, Grid2X2, List, Search, SlidersHorizontal } from "lucide-react";
 import { categories, resolveCategoryId } from "@/data/categories";
 import { formats, resolveFormatId } from "@/data/formats";
-import { brands, markets, products } from "@/data/products";
+import { brands, products } from "@/data/products";
+import { countryProfiles } from "@/lib/countries";
 import { searchProducts, type ProductQuery } from "@/lib/catalog";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ProductCard } from "@/components/products/product-card";
@@ -66,11 +67,13 @@ export function ProductExplorer({ initial }: { initial: ProductQuery }) {
       </form>
     </div>
 
+    {initial.market && <p className="catalog-coverage-note">{locale === "zh" ? "此旧链接仍按销售资料限定结果；国家分类按品牌归属单独筛选。" : "This legacy link retains its sales-evidence scope. Brand country is a separate filter."}</p>}
     <p className="catalog-coverage-note">{locale === "zh" ? `图片核对：${result.filter(hasVariantImage).length} / ${result.length} 个规格有对应图片；缺图规格显示占位提示，不借用其他浓度或包装参考图。` : `Image coverage: ${result.filter(hasVariantImage).length} / ${result.length} variants have matched images. Missing photos use placeholders; other strengths and reference packs are not substituted.`}</p>
 
     <div className="products-stack">
       <form className="filter-form filters-horizontal" onSubmit={submit} aria-label={tr(locale, "Product filters")}>
         <input type="hidden" name="query" value={initial.query ?? ""} />
+        {initial.market && <input type="hidden" name="market" value={initial.market} />}
         <input type="hidden" name="sort" value={initial.sort ?? ""} />
         <input type="hidden" name="display" value={initial.display ?? "families"} />
         <div className="filter-header"><div><SlidersHorizontal size={17} /><strong>{tr(locale, "Filters")}</strong></div></div>
@@ -79,7 +82,7 @@ export function ProductExplorer({ initial }: { initial: ProductQuery }) {
             <FilterSelect locale={locale} name="category" label="Product category" value={selectedCategory} options={categories.map(item => ({value:item.id, label:item.name[locale]}))} />
             <FilterSelect locale={locale} name="format" label="Product format" value={selectedFormat} options={formats.map(item => ({value:item.id, label:item.name[locale]}))} />
             <FilterSelect locale={locale} name="brand" label="Brand" value={initial.brand} options={brands.map(item => ({value:item.id, label:item.name}))} />
-            <FilterSelect locale={locale} name="market" label="Market" value={initial.market} options={markets.map(item => ({value:item.slug, label:item.name[locale]}))} />
+            <FilterSelect locale={locale} name="brandCountry" label="Brand country / region" value={initial.brandCountry} options={countryProfiles.map(item => ({value:item.slug, label:item.name[locale]}))} />
             <FilterInput locale={locale} name="flavor" label="Flavor" value={initial.flavor} />
             <FilterInput locale={locale} name="strength" label="Nicotine strength" value={initial.strength} placeholder="e.g. mg per unit" />
           </div>

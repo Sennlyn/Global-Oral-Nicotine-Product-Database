@@ -49,7 +49,7 @@ src/
 
 ## Routes
 
-`/`, `/products`, `/products/template`, `/products/[slug]`, `/categories`, `/categories/[slug]`, `/formats`, `/formats/[slug]`, `/brands`, `/brands/[slug]`, `/markets`, `/markets/[slug]`, `/compare`, `/about`.
+`/`, `/products`, `/products/template`, `/products/[slug]`, `/categories`, `/categories/[slug]`, `/formats`, `/formats/[slug]`, `/brands`, `/brands/[slug]`, `/countries`, `/countries/[slug]`, `/compare`, `/about`.
 
 `/products/template` is a field layout preview and contains no product claim. Dynamic product and brand routes show actual profiles only when matching records have been entered. Unknown slugs return 404.
 
@@ -83,7 +83,7 @@ Physical specifications are a discriminated union selected by `specifications.ki
 
 ## V1.9.2 interface status
 
-Search, filtering, sorting, grid/list controls, taxonomy navigation, category and format detail pages, brand and market profiles, product records, country-specific listing status and a neutral comparison table are available. “Not on market” includes pre-market, withdrawn and historical records; lifecycle remains a separate field.
+Search, filtering, sorting, grid/list controls, taxonomy navigation, category and format detail pages, brand and country/region profiles, product records, country-specific listing status and a neutral comparison table are available. “Not on market” includes pre-market, withdrawn and historical records; lifecycle remains a separate field.
 
 ## Suggested next phase
 
@@ -106,3 +106,11 @@ The default catalog groups strengths and pack sizes by series/flavor while retai
 The dated coverage inventory in `scripts/research/catalog-coverage-2026-10-09.json` lists remaining image gaps by brand. The update links images for 451 records, including 42 labelled references; 296 specifications have no image link; 42 linked references are retained as source evidence and are not rendered as product photos. As of 2026-10-13, 409 specifications have matched image evidence and 338 use missing-image placeholders. This is an evidence-backed expansion, not a claim that every global or historical product has been identified.
 
 Run `node scripts/audit-catalog.cjs` for identity, source, image mapping, grouping and filter invariants. `scripts/check-catalog-ui.cjs` exercises a running static preview and requires Playwright/Chromium; set `CATALOG_PREVIEW_URL`, and optionally `PLAYWRIGHT_MODULE` and `CHROMIUM_EXECUTABLE`. The integration check intentionally blocks external images to verify the failure fallback, so it does not attest third-party image delivery.
+
+## Brand-country classification and Asian research (19 October 2026)
+
+Navigation and primary product filtering now use brand country/region (`/countries`, query `brandCountry`). All 747 prior specifications remain. Sixteen historical specifications were added from Japanese JT/government records, Russian judicial records, and Korean medicine/manufacturer material: **763 variants, 82 brands**. Seven new corresponding pictures are displayed; nine added records use an explicit missing-photo placeholder. There are seven documented brand countries and a separate group of 58 brands whose affiliation remains unconfirmed. Russia is discoverable in both Asian and European region filters and counted once globally.
+
+`src/data/countries.ts` defines the country registry; `src/lib/countries.ts` computes profiles from `Brand.brandCountry`. Manufacturing and sales/authorization fields remain independent. Retired `/markets` bookmarks use static-host-compatible client redirects; no active browse navigation points to market classification.
+
+Run `node scripts/audit-country-classification.cjs` for ID preservation, country aggregation, filter joins and Asian evidence/image checks. The source trail and unresolved candidates are in `scripts/research/asian-products-2026-10-19.md`.

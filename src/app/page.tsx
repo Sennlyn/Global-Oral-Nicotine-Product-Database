@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, BookOpenCheck, Database, Layers3, MapPinned, ShieldCheck } from "lucide-react";
-import { brands, markets, products } from "@/data/products";
+import { brands, products } from "@/data/products";
 import { useLanguage } from "@/components/layout/language-provider";
 import { localize, tr } from "@/lib/i18n";
 import { homeNews, homeMilestones, milestoneKinds, HOME_UPDATES_CHECKED } from "@/data/home-updates";
 import { useRef } from "react";
+import { confirmedCountryProfiles } from "@/lib/countries";
 import { HomeCoverageMap } from "@/components/home-coverage-map";
 import { NewsGrid } from "@/components/news/news-grid";
 
@@ -30,12 +31,12 @@ const overviewCards = [
     kind: "framework",
   },
   {
-    href: "/markets",
+    href: "/countries",
     icon: MapPinned,
     number: "03",
-    title: "Market index",
-    description: "Navigate the country and market framework, and review product coverage where source-backed records are available.",
-    action: "Browse markets",
+    title: "Country index",
+    description: "Browse products by their brand's documented country or region of affiliation.",
+    action: "Browse countries",
     kind: "markets",
   },
 ];
@@ -47,11 +48,10 @@ export default function Home() {
     const track = timelineRef.current;
     if (track) track.scrollBy({ left: direction * track.clientWidth * 0.85, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
   };
-  const marketsWithProducts = markets.filter((market) => products.some((product) => product.markets.includes(market.slug)));
   const metrics = [
     { label: "Product records", value: products.length, icon: Database },
     { label: "Brand profiles", value: brands.length, icon: BookOpenCheck },
-    { label: "Markets with records", value: marketsWithProducts.length, icon: MapPinned },
+    { label: "Brand countries / regions", value: confirmedCountryProfiles.length, icon: MapPinned },
   ];
 
   return (
@@ -120,7 +120,7 @@ export default function Home() {
       <section className="overview-explore section container">
         <div className="overview-section-heading">
           <div><p className="eyebrow">{tr(locale, "START WITH THE OVERVIEW")}</p><h2>{tr(locale, "Explore the database")}</h2></div>
-          <p>{tr(locale, "A single entry point to the catalog, its classification system and current market index.")}</p>
+          <p>{tr(locale, "A single entry point to products, classification and brand countries or regions.")}</p>
         </div>
         <div className="overview-card-grid">
           {overviewCards.map((card) => <Link href={card.href} className={`overview-card overview-card-${card.kind}`} key={card.href}>

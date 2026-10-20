@@ -9,7 +9,7 @@ import { useLanguage } from "@/components/layout/language-provider";
 import { tr, type Locale } from "@/lib/i18n";
 import { OralNicotineMark } from "@/components/oral-nicotine-mark";
 
-const links = [{ href: "/", label: "Home" }, { href: "/products", label: "Products" }, { href: "/categories", label: "Categories" }, { href: "/formats", label: "Formats" }, { href: "/brands", label: "Brands" }, { href: "/markets", label: "Markets" }, { href: "/compare", label: "Compare" }, { href: "/about", label: "About" }];
+const links = [{ href: "/", label: "Home" }, { href: "/products", label: "Products" }, { href: "/categories", label: "Categories" }, { href: "/formats", label: "Formats" }, { href: "/brands", label: "Brands" }, { href: "/countries", label: "Countries / regions" }, { href: "/compare", label: "Compare" }, { href: "/about", label: "About" }];
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);

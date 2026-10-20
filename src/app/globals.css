@@ -250,3 +250,26 @@
 .news-archive-meta .overview-text-link{flex-shrink:0}
 @media(max-width:700px){.overview-news-more{justify-content:flex-start}.news-archive-meta{flex-direction:column;align-items:flex-start;gap:15px}}
 @media(max-width:700px){.content-panel>.product-grid{grid-template-columns:minmax(0,1fr)}}
+/* Brand-country browsing uses the same card and spacing system as the catalog. */
+.country-region-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:32px 0 18px; }
+.country-region-tabs button { border:1px solid var(--line); border-radius:99px; padding:9px 18px; background:transparent; color:inherit; cursor:pointer; font:inherit; font-size:14px; }
+.country-region-tabs button[aria-pressed="true"] { background:#195c46; color:white; border-color:#195c46; }
+.country-region-tabs button:focus-visible, .country-brand-card:focus-visible { outline:2px solid #195c46; outline-offset:4px; }
+.country-index-note { font-size:13px; color:#677b74; margin-bottom:20px; }
+.country-index-grid .region-card { min-height:150px; }
+.country-index-grid .region-card > div { min-width:0; }
+.country-index-grid small { line-height:1.7; overflow-wrap:anywhere; }
+.country-unconfirmed { margin-top:40px; padding:28px; border:1px solid var(--line); border-radius:10px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.country-unconfirmed h2 { font-size:20px; margin:0 0 10px; }
+.country-unconfirmed p { max-width:650px; font-size:14px; line-height:1.8; color:#677b74; margin:0; }
+.country-unconfirmed .button { flex-shrink:0; }
+.country-brand-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+.country-brand-card { display:flex; flex-direction:column; border:1px solid var(--line); padding:22px; border-radius:8px; }
+.country-brand-card:hover { background:#f0f5ef; }
+.country-brand-card h3 { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:20px; margin:0 0 14px; }
+.country-brand-card p { font-size:13px; line-height:1.85; color:#677b74; margin:0 0 18px; }
+.country-brand-card small { margin-top:auto; color:#195c46; }
+.coverage-tooltip { max-height:270px; overflow-y:auto; }
+.coverage-country-link { margin-top:6px; border-top:1px solid #ffffff33; padding-top:8px; }
+@media(max-width:900px) { .country-brand-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .country-unconfirmed { align-items:flex-start; flex-direction:column; } }
+@media(max-width:560px) { .country-brand-grid { grid-template-columns:1fr; } .country-unconfirmed { padding:20px; } }

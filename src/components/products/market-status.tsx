@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Product } from "@/types/catalog";
 import { markets } from "@/data/products";
 import { getMarketListing, getMarketListingStatus, marketListingLabel, marketListingNotes } from "@/lib/market-listings";
@@ -42,7 +41,6 @@ export function ProductMarketStatusDetails({ product, locale }: { product: Produ
         <div className="market-listing-sources">
           {listing?.officialProductSource?.sourceUrl && <a href={listing.officialProductSource.sourceUrl} target="_blank" rel="noopener noreferrer">{tr(locale, "Official product source")} ↗</a>}
           {listing?.regulatorySource?.sourceUrl && <a href={listing.regulatorySource.sourceUrl} target="_blank" rel="noopener noreferrer">{tr(locale, "Government / regulator source")} ↗</a>}
-          {!listing?.officialProductSource?.sourceUrl && <Link href={`/markets/${marketId}`}>{tr(locale, "Market profile")} ↗</Link>}
         </div>
       </article>;
     })}
